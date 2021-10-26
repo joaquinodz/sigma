@@ -1,30 +1,60 @@
-def memotest_juego(diccionario_fichas):
-    imagenes = ("s", "D")
-    tablero = [[0, False], [1, False], [0, False], [1, False]]
-    contador = 0
-    posiciones = diccionario_fichas.keys()
-    posiciones = list(posiciones)
-    posiciones_provisorias = posiciones
 
-    while contador < 2:
-        print(posiciones)
-        primer_ficha = int(input("Por favor, ingrese el numero de la primer ficha: "))
-        posiciones_provisorias = construccion_tablero(primer_ficha, posiciones_provisorias)
 
-        tablero[posicion-1][1] = True
+def memotest_juego():
 
-        #aca se da el problema, por alguna razon, "posiciones" tiene el mismo valor que "posiciones_provisorias"
+    tablero = [["s", False], ["D", False], ["s", False], ["D", False]] #Acá tengo acomodado el tablero con su posicion (indice, letra y estado del juego). 
+    
 
-        print(posiciones_provisorias)
-        segunda_ficha = int(input("Por favor, ingrese el numero de la segunda ficha: "))
-        posiciones_provisorias = construccion_tablero(segunda_ficha , posiciones_provisorias)
-        print(posiciones_provisorias)
+    while not finalizar(tablero):
+        posiciones= [[1],[2],[3],[4]]
+        posiciones_provisorias = [[1],[2],[3],[4]]
 
-        if diccionario[primer_ficha] == diccionario[segunda_ficha]:
-            contador += 1
-            posiciones = posiciones_provisorias
+        print("Fichas y posiciones: ", posiciones_provisorias)
+        primera_posicion = int(input("1er. Posición: "))
+        imagen_primera_posicion = tablero [primera_posicion -1][0] #en este caso obtengo la ubicación con su imagen
+        tablero[primera_posicion-1][1] = True 
+        posiciones_provisorias[primera_posicion -1]= imagen_primera_posicion
+
+        print("Fichas y posiciones: ", posiciones_provisorias)
+        segunda_posicion = int(input("2da. Posición: "))
+        imagen_segunda_posicion = tablero [segunda_posicion -1][0] #en este caso obtengo la ubicación con su imagen
+        tablero[segunda_posicion-1][1] = True
+        posiciones_provisorias[segunda_posicion -1]= imagen_segunda_posicion
+        
+        print("Fichas y posiciones: ", posiciones_provisorias)
+
+        if imagen_primera_posicion != imagen_segunda_posicion:
+
+            posiciones_provisorias=posiciones
+            tablero[primera_posicion-1][1] = False
+            tablero[segunda_posicion-1][1] = False
         else:
-            posiciones_provisorias = posiciones
+            
+            finalizar(tablero)
+            
+        print("Fichas y posiciones: ", posiciones_provisorias)
+        tercera_posicion = int(input("1er. Posición: "))
+        imagen_tercera_posicion = tablero [tercera_posicion -1][0] #en este caso obtengo la ubicación con su imagen
+        tablero[tercera_posicion-1][1] = True 
+        posiciones_provisorias[tercera_posicion -1]= imagen_tercera_posicion
+        
+        print("Fichas y posiciones: ", posiciones_provisorias)
+        cuarta_posicion = int(input("2da. Posición: "))
+        imagen_cuarta_posicion = tablero [cuarta_posicion -1][0] #en es1te caso obtengo la ubicación con su imagen
+        tablero[cuarta_posicion-1][1] = True 
+        posiciones_provisorias[cuarta_posicion -1]= imagen_cuarta_posicion
+        print("Fichas y posiciones: ", posiciones_provisorias)
+
+        if imagen_tercera_posicion == imagen_cuarta_posicion:
+
+            finalizar(tablero)
+        else:
+
+            posiciones_provisorias= posiciones
+            tablero[tercera_posicion-1][1] = False
+            tablero[cuarta_posicion-1][1] = False
+        
+    return tablero
 
 def refresca_tablero(tablero, imagenes):
     """ Felipe: esta funcion se encarga de printear por pantalla el tablero dado por parametro """
@@ -51,6 +81,6 @@ def finalizar(tablero):
 
     
 def main():
-    memotest_juego(diccionario)
+    memotest_juego()
 
 main()
