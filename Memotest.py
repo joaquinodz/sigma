@@ -3,13 +3,13 @@
 def memotest_juego():
 
     tablero = [["s", False], ["D", False], ["s", False], ["D", False]] # Acá tengo acomodado el tablero con su posicion (indice, letra y estado del juego). 
-    
+    posiciones = [[1],[2],[3],[4]]
+    posiciones_provisorias = [[1],[2],[3],[4]]
 
     while not finalizar(tablero):
-        posiciones = [[1],[2],[3],[4]]
-        posiciones_provisorias = [[1],[2],[3],[4]]
         
         try:
+        
             print("Fichas y posiciones: ", posiciones_provisorias)
             primera_posicion = int(input("1er. Posición: "))
             imagen_primera_posicion = tablero[primera_posicion - 1][0] # en este caso obtengo la ubicación con su imagen
@@ -21,7 +21,7 @@ def memotest_juego():
             imagen_segunda_posicion = tablero [segunda_posicion - 1][0] # en este caso obtengo la ubicación con su imagen
             tablero[segunda_posicion - 1][1] = True
             posiciones_provisorias[segunda_posicion - 1]= imagen_segunda_posicion
-            
+                
             print("Fichas y posiciones: ", posiciones_provisorias)
 
             if imagen_primera_posicion != imagen_segunda_posicion:
@@ -29,35 +29,19 @@ def memotest_juego():
                 tablero[primera_posicion - 1][1] = False
                 tablero[segunda_posicion - 1][1] = False
             else:
-                finalizar(tablero)
-                
-            print("Fichas y posiciones: ", posiciones_provisorias)
-            tercera_posicion = int(input("1er. Posición: "))
-            imagen_tercera_posicion = tablero [tercera_posicion -1][0] # en este caso obtengo la ubicación con su imagen
-            tablero[tercera_posicion - 1][1] = True 
-            posiciones_provisorias[tercera_posicion - 1]= imagen_tercera_posicion
-            
-            print("Fichas y posiciones: ", posiciones_provisorias)
-            cuarta_posicion = int(input("2da. Posición: "))
-            imagen_cuarta_posicion = tablero [cuarta_posicion - 1][0] # en es1te caso obtengo la ubicación con su imagen
-            tablero[cuarta_posicion - 1][1] = True 
-            posiciones_provisorias[cuarta_posicion - 1]= imagen_cuarta_posicion
-            print("Fichas y posiciones: ", posiciones_provisorias)
-            
-            if imagen_tercera_posicion == imagen_cuarta_posicion:
-                finalizar(tablero)
-            else:
-                posiciones_provisorias = posiciones
-                tablero[tercera_posicion - 1][1] = False
-                tablero[cuarta_posicion - 1][1] = False
-            
-            return tablero
+                posiciones = posiciones_provisorias
         
         except ValueError:
             print("Has ingresado un número inválido. Intente nuevamente...")
-            
+
         except IndexError:
             print(f"Debes ingresar un número entre 0 y {len(tablero)}")
+                
+            
+            
+    return tablero
+        
+       
         
 def refresca_tablero(tablero, imagenes):
     """ Felipe: esta funcion se encarga de printear por pantalla el tablero dado por parametro """
@@ -76,7 +60,7 @@ def refresca_tablero(tablero, imagenes):
             tablero_string += f" [{casillero_posicion}] "
 
 def finalizar(tablero):
-    """ Chequea que todos los elementos de la tabla tengan valor """
+    """ rodrigo: chequea que todos los valores del tablero sean True, si lo son devuelve True, si no, devuelve False """
     devolver = True
     
     for elemento in tablero:
