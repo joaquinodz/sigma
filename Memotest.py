@@ -76,6 +76,7 @@ def refresca_tablero(tablero, imagenes):
             tablero_string += f" [{casillero_posicion}] "
 
 def finalizar(tablero):
+    """ Chequea que todos los elementos de la tabla tengan valor """
     devolver = True
     
     for elemento in tablero:
