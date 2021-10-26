@@ -41,6 +41,14 @@ def refresca_tablero(tablero, imagenes):
             tablero_string += " " + imagenes[casillero[0]] + " "
         else:
             tablero_string += f" [{casillero_posicion}] "
+
+def finalizar(tablero):
+    devolver = True
+    for elemento in tablero:
+        if not elemento[1]:
+            devolver = False
+    return devolver
+
     
 def main():
     memotest_juego(diccionario)
