@@ -16,12 +16,15 @@ def memotest_juego():
             refresca_tablero(tablero)
             segunda_posicion = int(input("2da. Posición: ")) - 1
 
+    
             if tablero[primera_posicion][0] == tablero[segunda_posicion][0]:
                 tablero[primera_posicion][1] = True
                 tablero[segunda_posicion][1] = True
+                
             else:
                 tablero[primera_posicion][1] = False
 
+            refresca_tablero(tablero)   
         except ValueError:
             print("Has ingresado un número inválido. Intente nuevamente...")
 
