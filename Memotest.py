@@ -6,6 +6,7 @@ def memotest_juego():
     y el segundo valor representa si esta descubierto o no.
     """
     tablero = [["s", False], ["D", False], ["s", False], ["D", False]]
+    descubiertos = []
 
     while not finalizar(tablero):
         try:
@@ -16,20 +17,24 @@ def memotest_juego():
             refresca_tablero(tablero)
             segunda_posicion = int(input("2da. Posición: ")) - 1
 
-    
-            if tablero[primera_posicion][0] == tablero[segunda_posicion][0]:
-                tablero[primera_posicion][1] = True
-                tablero[segunda_posicion][1] = True
-                
-            else:
-                tablero[primera_posicion][1] = False
+            if tablero[segunda_posicion][1] == False:
+                if tablero[primera_posicion][0] == tablero[segunda_posicion][0]:
+                    tablero[primera_posicion][1] = True
+                    tablero[segunda_posicion][1] = True
+                    
+                else:
+                    tablero[primera_posicion][1] = False
 
-            refresca_tablero(tablero)   
+                refresca_tablero(tablero)
+
+            else:
+                print("Esa posición ya se encuentra visible. Elige otra...")
+
         except ValueError:
             print("Has ingresado un número inválido. Intente nuevamente...")
 
         except IndexError:
-            print(f"Debes ingresar un número entre 0 y {len(tablero)}")
+            print(f"Debes ingresar un número entre 1 y {len(tablero)}")
 
 
 def refresca_tablero(tablero):
