@@ -1,6 +1,8 @@
+import time
+
 IMAGEN_FICHA = 0
 ESTADO_FICHA = 1
-CANTIDAD_DE_FICHAS = 4
+CANTIDAD_DE_FICHAS = 8
 FICHAS_POR_FILA = 4
 
 def memotest_juego(tablero):
@@ -21,6 +23,7 @@ def memotest_juego(tablero):
 
 def refresca_tablero(tablero):
     """ Felipe: esta funcion se encarga de printear por pantalla el tablero dado por parametro """
+    os.system("clear")
     tablero_string = "Fichas y Posiciones: \n"
     casillero_posicion = 0
 
@@ -35,6 +38,10 @@ def refresca_tablero(tablero):
         else:
             tablero_string += f" [{casillero_posicion}] "
 
+    time.sleep(1)
+    
+    # TODO: Limpiar consola.
+    
     print(tablero_string)
 
 def pedir_datos(mensaje, tablero):
