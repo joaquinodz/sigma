@@ -29,9 +29,6 @@ def pedir_datos(mensaje, tablero, numero_posicion):
                 
         except ValueError:
             print("Has ingresado un número inválido. Intente nuevamente...")
-        
-        except IndexError:
-            print(f"Debes ingresar un número entre 1 y {len(tablero)}")
 
     return valor
 
