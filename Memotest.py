@@ -1,10 +1,13 @@
+ESTADO_FICHA = 1
+
+
 def analizar_resultados(tablero, primera_posicion, segunda_posicion):
     if tablero[primera_posicion][0] == tablero[segunda_posicion][0]:
-        tablero[primera_posicion][1] = True
-        tablero[segunda_posicion][1] = True
+        tablero[primera_posicion][ESTADO_FICHA] = True
+        tablero[segunda_posicion][ESTADO_FICHA] = True
         
     else:
-        tablero[primera_posicion][1] = False
+        tablero[primera_posicion][ESTADO_FICHA] = False
 
 def pedir_datos(mensaje, tablero, numero_posicion):
     """
@@ -21,7 +24,7 @@ def pedir_datos(mensaje, tablero, numero_posicion):
             if valor < 0 or valor > len(tablero):
                 print(f"Debes ingresar un número entre 1 y {len(tablero)}")
             
-            elif numero_posicion == 2 and tablero[valor][1] == True:
+            elif numero_posicion == 2 and tablero[valor][ESTADO_FICHA] == True:
                 print("Esa posición ya se encuentra visible. Elige otra...")
 
             else:
@@ -48,7 +51,7 @@ def memotest_juego():
         primera_posicion = pedir_datos("1° Posición: ", tablero, 1)
 
         # Mostramos que tiene esa posición
-        tablero[primera_posicion][1] = True
+        tablero[primera_posicion][ESTADO_FICHA] = True
         refresca_tablero(tablero)
 
         # Solicitamos al usuario la 2° posicion y validamos el valor    
@@ -81,15 +84,14 @@ def finalizar(tablero):
     devolver = True
 
     estado_tablero = True
-    primer_lista = 0
-    ESTADO_FICHA = 1
+    listas = 0
 
-    while estado_tablero and primer_lista < len(tablero):
-        if not tablero[primer_lista][ESTADO_FICHA]:
+    while estado_tablero and listas < len(tablero):
+        if not tablero[listas][ESTADO_FICHA]:
             devolver = False
             estado_tablero = False
         else:
-            primer_lista +=1
+            listas +=1
 
     return devolver
 
