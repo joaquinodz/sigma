@@ -80,9 +80,16 @@ def finalizar(tablero):
     """ rodrigo: chequea que todos los valores del tablero sean True, si lo son devuelve True, si no, devuelve False """
     devolver = True
 
-    for elemento in tablero:
-        if not elemento[1]:
+    estado_tablero = True
+    primer_lista = 0
+    ESTADO_FICHA = 1
+
+    while estado_tablero and primer_lista < len(tablero):
+        if not tablero[primer_lista][ESTADO_FICHA]:
             devolver = False
+            estado_tablero = False
+        else:
+            primer_lista +=1
 
     return devolver
 
