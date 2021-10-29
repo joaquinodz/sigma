@@ -19,18 +19,21 @@ def pedir_datos(mensaje, tablero, numero_posicion):
             valor = int(input(mensaje)) - 1
             
             if valor < 0 or valor > len(tablero):
-                raise IndexError
+                print(f"Debes ingresar un número entre 1 y {len(tablero)}")
             
-            if numero_posicion == 2 and tablero[valor][1] == True:
+            elif numero_posicion == 2 and tablero[valor][1] == True:
                 print("Esa posición ya se encuentra visible. Elige otra...")
-            
-            return valor
+
+            else:
+                pedir = False
+                
         except ValueError:
             print("Has ingresado un número inválido. Intente nuevamente...")
         
         except IndexError:
             print(f"Debes ingresar un número entre 1 y {len(tablero)}")
 
+    return valor
 
 def memotest_juego():
     """
