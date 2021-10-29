@@ -9,7 +9,7 @@ def analizar_resultados(tablero, primera_posicion, segunda_posicion):
     else:
         tablero[primera_posicion][ESTADO_FICHA] = False
 
-def pedir_datos(mensaje, tablero, numero_posicion):
+def pedir_datos(mensaje, tablero):
     """
     Joaquin: Le pide las posiciones al usuario las veces que sea necesario hasta que ingrese datos válidos
              Devuelve un entero con la posición que introdujo el usuario
@@ -21,10 +21,10 @@ def pedir_datos(mensaje, tablero, numero_posicion):
         try:
             valor = int(input(mensaje)) - 1
             
-            if valor < 0 or valor > len(tablero):
+            if valor < 0 or valor >= len(tablero):
                 print(f"Debes ingresar un número entre 1 y {len(tablero)}")
             
-            elif numero_posicion == 2 and tablero[valor][ESTADO_FICHA] == True:
+            elif tablero[valor][ESTADO_FICHA] == True:
                 print("Esa posición ya se encuentra visible. Elige otra...")
 
             else:
@@ -48,14 +48,14 @@ def memotest_juego():
         refresca_tablero(tablero)
         
         # Solicitamos al usuario la 1° posicion y validamos el valor
-        primera_posicion = pedir_datos("1° Posición: ", tablero, 1)
+        primera_posicion = pedir_datos("1° Posición: ", tablero)
 
         # Mostramos que tiene esa posición
         tablero[primera_posicion][ESTADO_FICHA] = True
         refresca_tablero(tablero)
 
         # Solicitamos al usuario la 2° posicion y validamos el valor    
-        segunda_posicion = pedir_datos("2° Posición: ", tablero, 1)
+        segunda_posicion = pedir_datos("2° Posición: ", tablero)
 
         analizar_resultados(tablero, primera_posicion, segunda_posicion)
             
