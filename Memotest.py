@@ -21,7 +21,7 @@ def pedir_datos(mensaje, tablero):
         try:
             valor = int(input(mensaje)) - 1
             
-            if valor < 0 or valor >= len(tablero):
+            if valor < 0 or valor > len(tablero) - 1:
                 print(f"Debes ingresar un número entre 1 y {len(tablero)}")
             
             elif tablero[valor][ESTADO_FICHA] == True:
@@ -35,6 +35,25 @@ def pedir_datos(mensaje, tablero):
 
     return valor
 
+def inicializar_tablero(cantidad_de_fichas):
+    """Joaquin: crea la estructura del tablero y decide el orden de las fichas"""
+    tablero = []
+
+    for i in range(cantidad_de_fichas):
+        """
+        POR AHORA:
+            Meto las "s" en los casilleros impares y las "D" en los pares
+            Parece que en la siguiente etapa vamos a tener que hacer un random
+        """
+        
+        if i % 2 != 0:
+            tablero.append(["s", False])
+
+        else:
+            tablero.append(["D", False])
+
+    return tablero
+
 def memotest_juego():
     """
     tablero es una lista cuyos elementos representan cada "casillero" de el tablero
@@ -42,7 +61,7 @@ def memotest_juego():
     el primer valor representa la imagen que tiene el casillero
     y el segundo valor representa si esta descubierto o no.
     """
-    tablero = [["s", False], ["D", False], ["s", False], ["D", False]]
+    tablero = inicializar_tablero(8)
     
     while not finalizar(tablero):
         refresca_tablero(tablero)
@@ -63,14 +82,15 @@ def memotest_juego():
 
 def refresca_tablero(tablero):
     """ Felipe: esta funcion se encarga de printear por pantalla el tablero dado por parametro """
-    tablero_string = "Fichas y Posiciones: "
+    tablero_string = "Fichas y Posiciones: \n"
     casillero_posicion = 0
-
+    FICHAS_POR_FILA = 4
+    
     for casillero in tablero:
         casillero_posicion += 1
 
-        if casillero_posicion % 4 == 1 and casillero_posicion != 1:
-            tablero_string += "/n"
+        if casillero_posicion % FICHAS_POR_FILA == 1 and casillero_posicion != 1:
+            tablero_string += "\n"
 
         if casillero[1]:
             tablero_string += "  " + casillero[0] + "  "
