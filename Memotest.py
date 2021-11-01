@@ -109,6 +109,16 @@ def inicializar_tablero(cantidad_de_pares):
     random.shuffle(tablero)
 
     return tablero
+def tiempo_de_juego(inicio):
+    """ Sandra: Muestra el  tiempo que ha tomado la partida."""
+    fin = time.time()
+    tiempo_transcurrido = fin - inicio
+    
+    horas = round(tiempo_transcurrido // 3600)
+    minutos = round(tiempo_transcurrido // 60) % 60
+    segundos = round(tiempo_transcurrido % 60)
+
+    print(f"Tiempo de juego = {horas} horas : {minutos} minutos : {segundos} segundos")
 
 def main():
     """
@@ -117,7 +127,9 @@ def main():
     el primer valor representa la imagen que tiene el casillero
     y el segundo valor representa si esta descubierto o no.
     """
+    inicio = time.time()
     tablero = inicializar_tablero(CANTIDAD_DE_FICHAS)
     memotest_juego(tablero)
+    tiempo_de_juego(inicio)
 
 main()
