@@ -1,4 +1,5 @@
 import time
+import random
 
 IMAGEN_FICHA = 0
 ESTADO_FICHA = 1
@@ -86,22 +87,26 @@ def finalizar(tablero):
 
     return estado_tablero
 
-def inicializar_tablero(cantidad_de_fichas):
-    """Joaquin: crea la estructura del tablero y decide el orden de las fichas"""
+
+def inicializar_tablero(cantidad_de_pares):
+    """
+    Inicializar tablero genera un tablero aleatoriamente a través de random.
+    Comienza escogiendo una ficha al azar de la lista de fichas.
+    Lo apendea a la lista del tablero que va a devolver, junto con el estado "False" que se va a utilizar en el juego.
+    Al agregarlo a la lista lo remueve de las fichas posibles.
+    Al final, al tablero se le hace un shuffle para mezclar el tablero.
+    Rodrigo, Fátima.
+    """
+    fichas = ['S', 'I', 'G', 'M', 'A', 'X', 'Y', 'Z', 'W', 'O', 's', 'Q', 'R', 'U', 't', 'p']
     tablero = []
-
-    for i in range(cantidad_de_fichas):
-        """
-        POR AHORA:
-            Meto las "s" en los casilleros impares y las "D" en los pares
-            Parece que en la siguiente etapa vamos a tener que hacer un random
-        """
-
-        if i % 2 != 0:
-            tablero.append(["s", False])
-
-        else:
-            tablero.append(["D", False])
+    i=1
+    while i <= cantidad_de_pares:
+        ficha_random = random.choice(fichas)
+        tablero.append([ficha_random, False])
+        tablero.append([ficha_random, False])
+        fichas.remove(ficha_random)
+        i += 1
+    random.shuffle(tablero)
 
     return tablero
 
