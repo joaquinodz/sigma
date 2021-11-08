@@ -1,5 +1,6 @@
 import time
 import random
+import os
 
 IMAGEN_FICHA = 0
 ESTADO_FICHA = 1
@@ -24,7 +25,7 @@ def memotest_juego(tablero):
 
 def refresca_tablero(tablero):
     """ Felipe: esta funcion se encarga de printear por pantalla el tablero dado por parametro """
-    os.system("clear")
+    os.system("cls")
     tablero_string = "Fichas y Posiciones: \n"
     casillero_posicion = 0
 
@@ -39,7 +40,7 @@ def refresca_tablero(tablero):
         else:
             tablero_string += f" [{casillero_posicion}] "
 
-    time.sleep(1)
+    time.sleep(5)
     
     # TODO: Limpiar consola.
     
@@ -48,7 +49,7 @@ def refresca_tablero(tablero):
 def pedir_datos(mensaje, tablero):
     """
     Joaquin: Le pide las posiciones al usuario las veces que sea necesario hasta que ingrese datos válidos
-             Devuelve un entero con la posición que introdujo el usuario
+    Devuelve un entero con la posición que introdujo el usuario
     """
     pedir = True
     valor = 0
@@ -88,7 +89,7 @@ def finalizar(tablero):
     return estado_tablero
 
 
-def inicializar_tablero(cantidad_de_pares):
+def inicializar_tablero(cantidad_de_fichas):
     """
     Inicializar tablero genera un tablero aleatoriamente a través de random.
     Comienza escogiendo una ficha al azar de la lista de fichas.
@@ -97,6 +98,7 @@ def inicializar_tablero(cantidad_de_pares):
     Al final, al tablero se le hace un shuffle para mezclar el tablero.
     Rodrigo, Fátima.
     """
+    cantidad_de_pares = cantidad_de_fichas/2
     fichas = ['S', 'I', 'G', 'M', 'A', 'X', 'Y', 'Z', 'W', 'O', 's', 'Q', 'R', 'U', 't', 'p']
     tablero = []
     i=1
