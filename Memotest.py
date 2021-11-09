@@ -9,7 +9,7 @@ FICHAS_POR_FILA = 4
 
 def memotest_juego(tablero):
     refresca_tablero(tablero)
-
+    intento = 1
     while not finalizar(tablero):
 
         # Solicitamos al usuario la 1° posicion, validamos el valor y mostramos la ficha seleccionada
@@ -26,6 +26,8 @@ def memotest_juego(tablero):
             tablero[primera_posicion][ESTADO_FICHA] = False
             tablero[segunda_posicion][ESTADO_FICHA] = False
             refresca_tablero(tablero)
+            intento += 1 
+    print(f"Intentos realizados: {intento}")
 
 def refresca_tablero(tablero):
     """ Felipe: esta funcion se encarga de printear por pantalla el tablero dado por parametro """
@@ -111,7 +113,19 @@ def inicializar_tablero(cantidad_de_fichas):
     random.shuffle(tablero)
 
     return tablero
+def tiempo_de_juego(inicio):
+    """ Sandra: Muestra el  tiempo que ha tomado la partida."""
+    fin = time.time()
+    tiempo_transcurrido = fin - inicio
+    segundos_a_horas = tiempo_transcurrido / 3600
+    segundos_a_minutos = tiempo_transcurrido / 60
+    
+    horas = round(segundos_a_horas)
+    minutos = round(segundos_a_minutos) % 60
+    segundos = round(tiempo_transcurrido % 60)
 
+    print(f"Tiempo de juego = {horas} horas: {minutos} minutos :{segundos} segundos")
+    
 def main():
     """
     tablero es una lista cuyos elementos representan cada "casillero" de el tablero
@@ -119,7 +133,10 @@ def main():
     el primer valor representa la imagen que tiene el casillero
     y el segundo valor representa si esta descubierto o no.
     """
+ 
     tablero = inicializar_tablero(CANTIDAD_DE_FICHAS)
+    inicio = time.time()
     memotest_juego(tablero)
+    tiempo_de_juego(inicio)
 
 main()
