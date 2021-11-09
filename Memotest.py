@@ -13,14 +13,13 @@ def memotest_juego(tablero):
     while not finalizar(tablero):
 
         # Solicitamos al usuario la 1° posicion, validamos el valor y mostramos la ficha seleccionada
-        
         primera_posicion = pedir_datos("1° Posición: ", tablero)
         
 
         # Solicitamos al usuario la 2° posicion, validamos el valor y mostramos la ficha seleccionada
         segunda_posicion = pedir_datos("2° Posición: ", tablero)
         time.sleep(2)
-        os.system("cls")
+        limpiar_consola()
 
         if tablero[primera_posicion][IMAGEN_FICHA] != tablero[segunda_posicion][IMAGEN_FICHA]:
             tablero[primera_posicion][ESTADO_FICHA] = False
@@ -125,7 +124,10 @@ def tiempo_de_juego(inicio):
     segundos = round(tiempo_transcurrido % 60)
 
     print(f"Tiempo de juego = {horas} horas: {minutos} minutos :{segundos} segundos")
-    
+   
+def limpiar_consola():
+    os.system('cls' if os.name=='nt' else 'clear')
+
 def main():
     """
     tablero es una lista cuyos elementos representan cada "casillero" de el tablero
