@@ -13,10 +13,14 @@ def memotest_juego(tablero):
     while not finalizar(tablero):
 
         # Solicitamos al usuario la 1° posicion, validamos el valor y mostramos la ficha seleccionada
+        
         primera_posicion = pedir_datos("1° Posición: ", tablero)
+        
 
         # Solicitamos al usuario la 2° posicion, validamos el valor y mostramos la ficha seleccionada
         segunda_posicion = pedir_datos("2° Posición: ", tablero)
+        time.sleep(2)
+        os.system("cls")
 
         if tablero[primera_posicion][IMAGEN_FICHA] != tablero[segunda_posicion][IMAGEN_FICHA]:
             tablero[primera_posicion][ESTADO_FICHA] = False
@@ -25,7 +29,7 @@ def memotest_juego(tablero):
 
 def refresca_tablero(tablero):
     """ Felipe: esta funcion se encarga de printear por pantalla el tablero dado por parametro """
-    os.system("cls")
+    
     tablero_string = "Fichas y Posiciones: \n"
     casillero_posicion = 0
 
@@ -39,10 +43,6 @@ def refresca_tablero(tablero):
             tablero_string += "  " + casillero[IMAGEN_FICHA] + "  "
         else:
             tablero_string += f" [{casillero_posicion}] "
-
-    time.sleep(5)
-    
-    # TODO: Limpiar consola.
     
     print(tablero_string)
 
