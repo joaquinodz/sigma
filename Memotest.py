@@ -4,12 +4,12 @@ import os
 
 IMAGEN_FICHA = 0
 ESTADO_FICHA = 1
-CANTIDAD_DE_FICHAS = 8
+CANTIDAD_DE_FICHAS = 16
 FICHAS_POR_FILA = 4
 
 def memotest_juego(tablero):
     refresca_tablero(tablero)
-    intento = 1
+    intento = 0
     while not finalizar(tablero):
 
         # Solicitamos al usuario la 1° posicion, validamos el valor y mostramos la ficha seleccionada
@@ -25,7 +25,12 @@ def memotest_juego(tablero):
             tablero[primera_posicion][ESTADO_FICHA] = False
             tablero[segunda_posicion][ESTADO_FICHA] = False
             refresca_tablero(tablero)
-            intento += 1 
+            
+        else:
+            refresca_tablero(tablero)
+        
+        intento += 1
+
     print(f"Intentos realizados: {intento}")
 
 def refresca_tablero(tablero):
@@ -112,6 +117,7 @@ def inicializar_tablero(cantidad_de_fichas):
     random.shuffle(tablero)
 
     return tablero
+
 def tiempo_de_juego(inicio):
     """ Sandra: Muestra el  tiempo que ha tomado la partida."""
     fin = time.time()
@@ -123,7 +129,7 @@ def tiempo_de_juego(inicio):
     minutos = round(segundos_a_minutos) % 60
     segundos = round(tiempo_transcurrido % 60)
 
-    print(f"Tiempo de juego = {horas} horas: {minutos} minutos :{segundos} segundos")
+    print(f"Tiempo de juego = horas: {horas}  minutos: {minutos}  segundos: {segundos}")
    
 def limpiar_consola():
     os.system('cls' if os.name=='nt' else 'clear')
