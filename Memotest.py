@@ -126,6 +126,7 @@ def tiempo_de_juego(inicio):
     print(f"Tiempo de juego = {horas} horas: {minutos} minutos :{segundos} segundos")
    
 def limpiar_consola():
+    """Joaquin: Limpiamos la consola (compatible con Windows, Linix y Mac)"""
     os.system('cls' if os.name=='nt' else 'clear')
 
 def main():
