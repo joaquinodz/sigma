@@ -1,3 +1,7 @@
+"""
+    Acá van las funciones conceptualmente independientes al manejo del tablero y de la partida.
+"""
+
 import random
 import time
 import os
