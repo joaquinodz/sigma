@@ -13,12 +13,12 @@ def crear_interfaz():
     """
     raiz = Tk()
     raiz.title("Memotest: pon a prueba tu memoria")
-    raiz.iconbitmap("D:\\facultad\\sigma\\sigma.ico")
+    raiz.iconbitmap("sigma.ico")
     raiz.geometry("500x500")
     raiz.config(bg="white")
     raiz.resizable(False,False)
     
-    img= PhotoImage(file='D:\\facultad\\sigma\\fondo.png')
+    img= PhotoImage(file='fondo.png')
     fondo = ttk.Label(raiz, image=img, anchor="center", background="white")
     fondo.pack(side=TOP, fill=BOTH, padx=10, pady=5)
 
