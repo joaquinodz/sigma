@@ -7,11 +7,18 @@ from util import limpiar_consola, tiempo_de_juego
 from tablero import inicializar_tablero, refresca_tablero, pedir_datos, finalizar, IMAGEN_FICHA, ESTADO_FICHA, CANTIDAD_DE_FICHAS
 from jugador import procesar_resultados, NOMBRE
 
-def obtener_jugadores(raiz,jugadoruno,jugadordos):
-    print(jugadoruno.get())
-    print(jugadordos.get())
+def obtener_jugadores(raiz,jugador_uno,jugador_dos):
+    INTENTOS = 0
+    PUNTOS = 0
+    """
+    Rodrigo: obtiene los jugadores ingresados en la interfaz grafica, genera la lista de jugadores
+    con sus puntos y sus intentos, la mezcla para ser almacenada en una variable global
+    """
+    global lista_jugadores
+    lista_jugadores = [[jugador_uno.get(),INTENTOS,PUNTOS],[jugador_dos.get(),INTENTOS,PUNTOS]]
+    random.shuffle(lista_jugadores)
     raiz.destroy()
-
+    
 def crear_interfaz():
     """
     Fátima: se crea interfaz gráfica para el ingreso de jugadores.
