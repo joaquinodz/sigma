@@ -97,11 +97,11 @@ def main():
     el primer valor representa la imagen que tiene el casillero
     y el segundo valor representa si esta descubierto o no.
     """
-    jugadores = [["juan", 0, 0], ["manuel", 0, 0]]
+    crear_interfaz()
     tablero = inicializar_tablero(CANTIDAD_DE_FICHAS)
     inicio = time.time()
 
-    memotest_juego(tablero, jugadores)
+    memotest_juego(tablero, lista_jugadores)
 
     tiempo_de_juego(inicio)
     
