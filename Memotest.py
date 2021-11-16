@@ -33,6 +33,31 @@ def finaliza_turno(tablero, intento, primera_posicion, segunda_posicion):
     refresca_tablero(tablero)
     intento += 1
 
+def finaliza_juego(jugadores):
+    """
+    Felipe: Calcula el ganador y lo muestra por pantalla junto con los puntos de cada jugador.
+    """
+    ganador = -1
+    msj_resultados = ""
+
+    msj_resultados += f"\n {jugadores[0][NOMBRE_JUGADOR]}: {jugadores[0][PUNTOS_JUGADOR]} pts. \n"
+    msj_resultados += f"{jugadores[1][NOMBRE_JUGADOR]}: {jugadores[1][PUNTOS_JUGADOR]} pts. \n"
+
+    if jugadores[0][PUNTOS_JUGADOR] > jugadores[1][PUNTOS_JUGADOR]:
+        ganador = 0
+    elif jugadores[1][PUNTOS_JUGADOR] > jugadores[0][PUNTOS_JUGADOR]:
+        ganador = 1
+    else:
+        if jugadores[0][TURNOS_JUGADOR] > jugadores[1][TURNOS_JUGADOR]:
+            ganador = 1
+        else:
+            ganador = 0
+
+    msj_resultados += f"\n Ganador: {jugadores[ganador][NOMBRE_JUGADOR]}"
+    msj_resultados += ", por menor cantidad de turnos \n" if jugadores[0][PUNTOS_JUGADOR] == jugadores[1][PUNTOS_JUGADOR] else "\n"
+
+    print(msj_resultados)
+
 def main():
     """
     tablero es una lista cuyos elementos representan cada "casillero" de el tablero
@@ -45,5 +70,6 @@ def main():
     inicio = time.time()
     memotest_juego(tablero)
     tiempo_de_juego(inicio)
+    finaliza_juego(jugadores)
 
 main()
