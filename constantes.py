@@ -1,7 +1,7 @@
 #Constantes del tablero.
 IMAGEN_FICHA = 0
 ESTADO_FICHA = 1
-CANTIDAD_DE_FICHAS = 8
+CANTIDAD_DE_FICHAS = 16
 FICHAS_POR_FILA = 4
 
 #Constantes del Jugador.
