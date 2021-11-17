@@ -1,5 +1,8 @@
+import random
 from tkinter import *
 from tkinter import ttk
+
+jugadores = []
 
 def crear_interfaz():
     """
@@ -45,3 +48,13 @@ def crear_interfaz():
     boton_jugar.pack(side=BOTTOM, fill=BOTH,padx=20, pady=20, ipady=15)   
 
     raiz.mainloop()
+
+def obtener_jugadores(raiz,jugador_uno,jugador_dos):
+    """
+    Rodrigo: obtiene los jugadores ingresados en la interfaz grafica, genera la lista de jugadores
+    con sus puntos y sus intentos inicializados en 0, la mezcla para ser almacenada en una variable global
+    """
+    global jugadores
+    jugadores = [[jugador_uno.get(),0,0], [jugador_dos.get(),0,0]]
+    random.shuffle(jugadores)
+    raiz.destroy()  

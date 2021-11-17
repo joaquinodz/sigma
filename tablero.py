@@ -1,11 +1,9 @@
 import random
+from constantes import IMAGEN_FICHA, ESTADO_FICHA, CANTIDAD_DE_FICHAS, FICHAS_POR_FILA
 
-IMAGEN_FICHA = 0
-ESTADO_FICHA = 1
-CANTIDAD_DE_FICHAS = 16
-FICHAS_POR_FILA = 4
+tablero = []
 
-def inicializar_tablero(cantidad_de_fichas):
+def inicializar_tablero():
     """
     Inicializar tablero genera un tablero aleatoriamente a través de random.
     Comienza escogiendo una ficha al azar de la lista de fichas.
@@ -14,9 +12,8 @@ def inicializar_tablero(cantidad_de_fichas):
     Al final, al tablero se le hace un shuffle para mezclar el tablero.
     Rodrigo, Fátima.
     """
-    cantidad_de_pares = cantidad_de_fichas / 2
+    cantidad_de_pares = CANTIDAD_DE_FICHAS / 2
     fichas = ['S', 'I', 'G', 'M', 'A', 'X', 'Y', 'Z', 'W', 'O', 's', 'Q', 'R', 'U', 't', 'p']
-    tablero = []
     i = 1
     
     while i <= cantidad_de_pares:
@@ -28,9 +25,7 @@ def inicializar_tablero(cantidad_de_fichas):
     
     random.shuffle(tablero)
 
-    return tablero
-
-def refresca_tablero(tablero):
+def refresca_tablero():
     """ Felipe: esta funcion se encarga de printear por pantalla el tablero dado por parametro """
     
     tablero_string = "Fichas y Posiciones: \n"
@@ -49,7 +44,7 @@ def refresca_tablero(tablero):
     
     print(tablero_string)
 
-def pedir_datos(mensaje, tablero):
+def pedir_datos(mensaje):
     """
     Joaquin: Le pide las posiciones al usuario las veces que sea necesario hasta que ingrese datos válidos
     Devuelve un entero con la posición que introdujo el usuario
@@ -74,11 +69,11 @@ def pedir_datos(mensaje, tablero):
             print("Has ingresado un número inválido. Intente nuevamente...")
 
     tablero[valor][ESTADO_FICHA] = True
-    refresca_tablero(tablero)
+    refresca_tablero()
 
     return valor
 
-def finalizar(tablero):
+def finalizar():
     """ rodrigo: chequea que todos los valores del tablero sean True, si lo son devuelve True, si no, devuelve False """
     estado_tablero = True
     casillero = 0
