@@ -46,5 +46,7 @@ def main():
     tiempo_de_juego(inicio)
 
     mostrar_resultados()
+    #la variable finalizar permite que el usuario lea el resultado antes de que se cierre la ventana
+    variable_finalizar = input("Pulse enter para finalizar")
 
 main()
