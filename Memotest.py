@@ -7,6 +7,10 @@ from jugador import procesar_resultados, mostrar_resultados
 from util import limpiar_consola, tiempo_de_juego
 
 def memotest_juego():
+    """
+    Logica general del juego, loop principal
+    Hecha por todo el grupo (cada uno implemento su funcion).
+    """
     jugador_actual_id = 0
 
     while not finalizar():
@@ -33,12 +37,6 @@ def finalizar_turno():
     limpiar_consola()
 
 def main():
-    """
-    tablero es una lista cuyos elementos representan cada "casillero" de el tablero
-    cada casillero tiene a su vez una lista con dos valores
-    el primer valor representa la imagen que tiene el casillero
-    y el segundo valor representa si esta descubierto o no.
-    """
     interfaz.crear_interfaz()
     inicializar_tablero()
     inicio = time.time()

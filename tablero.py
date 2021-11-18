@@ -1,6 +1,12 @@
 import random
 from constantes import IMAGEN_FICHA, ESTADO_FICHA, CANTIDAD_DE_FICHAS, FICHAS_POR_FILA
 
+"""
+tablero es una lista cuyos elementos representan cada "casillero" de el tablero
+cada casillero tiene a su vez una lista con dos valores
+el primer valor representa la imagen que tiene el casillero
+y el segundo valor representa si esta descubierto o no.
+"""
 tablero = []
 
 def inicializar_tablero():
