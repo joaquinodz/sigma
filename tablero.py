@@ -13,15 +13,15 @@ def inicializar_tablero():
     Rodrigo, Fátima.
     """
     cantidad_de_pares = CANTIDAD_DE_FICHAS / 2
-    fichas = ['S', 'I', 'G', 'M', 'A', 'X', 'Y', 'Z', 'W', 'O', 's', 'Q', 'R', 'U', 't', 'p']
-    i = 1
+    fichas = ['S', 'I', 'G', 'M', 'A', 'X', 'Y', 'Z', 'W', 'O', 'Q', 'R', 'U', 't', 'p','a','b','c','d','f','r','j','F','s']
+    ciclo = 1
     
-    while i <= cantidad_de_pares:
+    while ciclo <= cantidad_de_pares:
         ficha_random = random.choice(fichas)
         tablero.append([ficha_random, False])
         tablero.append([ficha_random, False])
         fichas.remove(ficha_random)
-        i += 1
+        ciclo += 1
     
     random.shuffle(tablero)
 
