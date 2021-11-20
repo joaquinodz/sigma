@@ -1,6 +1,7 @@
 import random
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 
 
 archivo_contrasenia = open("contrasenia.csv","r")
@@ -128,6 +129,7 @@ def obtener_jugadores(raiz,nombre,contrasenia):
         random.shuffle(jugadores)
         raiz.destroy()
     else:
+        mensaje_incorrecto()
         pass  
 
 def comprobar_usuario(usuario , contrasenia):
@@ -145,7 +147,6 @@ def comprobar_usuario(usuario , contrasenia):
                 usuario_encontrado = True
             else:
                 contrasenia_correcta = False
-                mensaje_incorrecto()
         else:
             usuario_almacenado, contrasenia_almacenada = leer_Archivo(archivo_contrasenia)
     
