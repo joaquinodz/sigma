@@ -145,12 +145,17 @@ def comprobar_usuario(usuario , contrasenia):
                 usuario_encontrado = True
             else:
                 contrasenia_correcta = False
+                mensaje_incorrecto()
         else:
             usuario_almacenado, contrasenia_almacenada = leer_Archivo(archivo_contrasenia)
     
     return True if contrasenia_correcta and usuario_encontrado else False
     
-    
+def mensaje_incorrecto():
+    """
+    Fátima: cuadro de mensaje ante usuario y/o contraseña incorrectos
+    """
+    messagebox.showinfo('Error al ingresar', 'Usuario y/o contraseña incorrectos')    
 
 
 def leer_Archivo(archivo):
