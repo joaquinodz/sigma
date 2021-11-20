@@ -3,6 +3,11 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 
+INEXISTENTE = "Usuario inexistente. Por favor, registrese"
+INCORRECTO = "Usuario y/o contraseña incorrectos. Ingrese nuevamente."
+NO_VALIDO_CONTRA = "Contraseña no válida. Debe contener al menos una letra mayúscula, una letra minúscula, un número, y alguno de los siguientes caracteres: “_” “-“ "
+NO_VALIDO_USUARIO = "Usuario no válido. Debe contener como mínimo un largo de 4 caracteres y un máximo de 15, y estar formado sólo por letras, números y el guión bajo."
+
 
 archivo_contrasenia = open("contrasenia.csv","r")
 
@@ -129,7 +134,6 @@ def obtener_jugadores(raiz,nombre,contrasenia):
         random.shuffle(jugadores)
         raiz.destroy()
     else:
-        mensaje_incorrecto()
         pass  
 
 def comprobar_usuario(usuario , contrasenia):
@@ -147,16 +151,17 @@ def comprobar_usuario(usuario , contrasenia):
                 usuario_encontrado = True
             else:
                 contrasenia_correcta = False
+                mensaje_incorrecto(INCORRECTO)
         else:
             usuario_almacenado, contrasenia_almacenada = leer_Archivo(archivo_contrasenia)
     
     return True if contrasenia_correcta and usuario_encontrado else False
     
-def mensaje_incorrecto():
+def mensaje_incorrecto(mensaje):
     """
-    Fátima: cuadro de mensaje ante usuario y/o contraseña incorrectos
+    Fátima: cuadro de mensaje ante un error. El mensaje es pasado por parámetro.
     """
-    messagebox.showinfo('Error al ingresar', 'Usuario y/o contraseña incorrectos')    
+    messagebox.showinfo('ERROR!', mensaje)    
 
 
 def leer_Archivo(archivo):
