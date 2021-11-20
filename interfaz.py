@@ -131,6 +131,10 @@ def obtener_jugadores(raiz,nombre,contrasenia):
         pass  
 
 def comprobar_usuario(usuario , contrasenia):
+    """
+    Rodrigo: comprueba que el usuario ingresado se encuentre en el archivo de usuarios y contraseñas, en caso de 
+    estarlo y que tanto usuario como contraseña coincidan, devuelve True, caso contrario, devuelve False
+    """
     usuario_encontrado = False
     contrasenia_correcta = True
     usuario_almacenado , contrasenia_almacenada = leer_Archivo(archivo_contrasenia)
@@ -150,6 +154,9 @@ def comprobar_usuario(usuario , contrasenia):
 
 
 def leer_Archivo(archivo):
+    """
+    Rodrigo: lee un archivo linea a linea
+    """
     linea = archivo.readline()
     linea = linea.rstrip('\n')
     if linea:
