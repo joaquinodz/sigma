@@ -1,4 +1,6 @@
 import random
+import os
+
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
@@ -9,8 +11,8 @@ NO_VALIDO_CONTRA = "Contraseña no válida. Debe contener al menos una letra may
 NO_VALIDO_USUARIO = "Usuario no válido. Debe contener como mínimo un largo de 4 caracteres y un máximo de 15, y estar formado sólo por letras, números y el guión bajo."
 YA_INGRESADO = "Ese usuario ya ha sido ingresado"
 
-
 jugadores = []
+jugador_actual = 0
 
 def crear_interfaz():
     """
@@ -18,10 +20,13 @@ def crear_interfaz():
     """
     raiz = Tk()
     raiz.title("Memotest: pon a prueba tu memoria")
-    raiz.iconbitmap("sigma.ico")
     raiz.geometry("560x500")
     raiz.config(bg="white")
     raiz.resizable(False,False)
+    
+    # NO funciona en Linux
+    if os.name != 'posix':
+        raiz.iconbitmap("sigma.ico")
 
     menubar = Menu(raiz)
     raiz.config(menu=menubar)
@@ -75,11 +80,13 @@ def ventana_de_registro():
 
     raiz_registro = Tk()
     raiz_registro.title("Registro de usuario")
-    raiz_registro.iconbitmap("sigma.ico")
     raiz_registro.geometry("500x300")
     raiz_registro.config(bg="white")
     raiz_registro.resizable(False,False)
 
+    # NO funciona en Linux
+    if os.name != 'posix':
+        raiz_registro.iconbitmap("sigma.ico")
 
     mi_frame= Frame(raiz_registro, width="500", height="300")
     mi_frame.config(bg="white")

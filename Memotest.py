@@ -11,10 +11,8 @@ def memotest_juego():
     Logica general del juego, loop principal
     Hecha por todo el grupo (cada uno implemento su funcion).
     """
-    jugador_actual_id = 0
-
     while not finalizar():
-        print(f"Turno de {interfaz.jugadores[jugador_actual_id][NOMBRE]}")
+        print(f"Turno de {interfaz.jugadores[interfaz.jugador_actual][NOMBRE]}")
         refresca_tablero()
 
         # Solicitamos al usuario la 1° posicion, validamos el valor y mostramos la ficha seleccionada
@@ -23,9 +21,7 @@ def memotest_juego():
         # Solicitamos al usuario la 2° posicion, validamos el valor y mostramos la ficha seleccionada
         segunda_posicion = pedir_datos("2° Posición: ")
         
-        if not procesar_resultados(jugador_actual_id, (primera_posicion, segunda_posicion)):
-            # Ahora es turno del otro jugador
-            jugador_actual_id = (1 - jugador_actual_id)
+        procesar_resultados((primera_posicion, segunda_posicion))
 
         finalizar_turno()
 
