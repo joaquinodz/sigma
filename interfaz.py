@@ -7,9 +7,7 @@ INEXISTENTE = "Usuario inexistente. Por favor, registrese"
 INCORRECTO = "Usuario y/o contraseña incorrectos. Ingrese nuevamente."
 NO_VALIDO_CONTRA = "Contraseña no válida. Debe contener al menos una letra mayúscula, una letra minúscula, un número, y alguno de los siguientes caracteres: “_” “-“ "
 NO_VALIDO_USUARIO = "Usuario no válido. Debe contener como mínimo un largo de 4 caracteres y un máximo de 15, y estar formado sólo por letras, números y el guión bajo."
-
-
-archivo_contrasenia = open("contrasenia.csv","r")
+YA_INGRESADO = "Ese usuario ya ha sido ingresado"
 
 
 jugadores = []
@@ -132,30 +130,48 @@ def obtener_jugadores(raiz,nombre,contrasenia):
         global jugadores
         jugadores.append([nombre.get(),0,0])
         random.shuffle(jugadores)
-        raiz.destroy()
-    else:
-        pass  
+        #raiz.destroy()
+    
+        
 
 def comprobar_usuario(usuario , contrasenia):
     """
     Rodrigo: comprueba que el usuario ingresado se encuentre en el archivo de usuarios y contraseñas, en caso de 
     estarlo y que tanto usuario como contraseña coincidan, devuelve True, caso contrario, devuelve False
     """
-    usuario_encontrado = False
-    contrasenia_correcta = True
-    usuario_almacenado , contrasenia_almacenada = leer_Archivo(archivo_contrasenia)
-
-    while usuario_almacenado and contrasenia_correcta and not usuario_encontrado:
-        if (usuario_almacenado == usuario):
-            if contrasenia_almacenada == contrasenia:
-                usuario_encontrado = True
-            else:
-                contrasenia_correcta = False
-                mensaje_incorrecto(INCORRECTO)
-        else:
-            usuario_almacenado, contrasenia_almacenada = leer_Archivo(archivo_contrasenia)
+    if [usuario,0,0] in jugadores:
+        mensaje_incorrecto(YA_INGRESADO)
     
-    return True if contrasenia_correcta and usuario_encontrado else False
+    else:
+
+        with open("contrasenia.csv","r") as archivo_contrasenia:
+            usuario_encontrado = False
+            contrasenia_correcta = True
+            usuario_almacenado , contrasenia_almacenada = leer_Archivo(archivo_contrasenia)
+
+            while usuario_almacenado and contrasenia_correcta and not usuario_encontrado:
+                if (usuario_almacenado == usuario):
+                    usuario_encontrado = True
+                    if contrasenia_almacenada != contrasenia:
+                        contrasenia_correcta = False
+                            
+                else:
+                    usuario_almacenado, contrasenia_almacenada = leer_Archivo(archivo_contrasenia)
+                
+            if not usuario_encontrado:
+                mensaje_incorrecto(INEXISTENTE)
+                devolver = False
+                
+            elif usuario_encontrado and not contrasenia_correcta:
+                mensaje_incorrecto(INCORRECTO)
+                devolver = False
+                    
+            else:
+                devolver = True
+            
+            archivo_contrasenia.seek(0)
+
+            return devolver
     
 def mensaje_incorrecto(mensaje):
     """
@@ -174,4 +190,11 @@ def leer_Archivo(archivo):
         return linea.split(',')
     else:
         return None, None 
+
+def main():
+
+    crear_interfaz()
+   
+
+main()
 
