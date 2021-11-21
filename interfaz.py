@@ -191,10 +191,5 @@ def leer_Archivo(archivo):
     else:
         return None, None 
 
-def main():
 
-    crear_interfaz()
-   
-
-main()
 
