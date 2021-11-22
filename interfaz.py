@@ -10,6 +10,7 @@ INCORRECTO = "Usuario y/o contraseña incorrectos. Ingrese nuevamente."
 NO_VALIDO_CONTRA = "Contraseña no válida. Debe contener al menos una letra mayúscula, una letra minúscula, un número, y alguno de los siguientes caracteres: “_” “-“ "
 NO_VALIDO_USUARIO = "Usuario no válido. Debe contener como mínimo un largo de 4 caracteres y un máximo de 15, y estar formado sólo por letras, números y el guión bajo."
 YA_INGRESADO = "Ese usuario ya ha sido ingresado"
+EXITO = "Usuario ingresado con exito"
 
 jugadores = []
 jugador_actual = 0
@@ -62,11 +63,11 @@ def crear_interfaz():
     entry_contrasenia.config(bg="black", width=35, insertbackground="blue", fg="white",font=10)
     entry_contrasenia.grid(padx=10, pady=10, row=2, column=1, ipady=8)
 
-    boton_jugar = Button(raiz, text="¡Comenzar el juego!", command= lambda:obtener_jugadores(raiz, entry_nombre_usuario, entry_contrasenia))
+    boton_jugar = Button(raiz, text="¡Comenzar el juego!", command= lambda:comenzar_el_juego(raiz))
     boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_jugar.place(x= 20, y=430)
 
-    boton_otro_usuario = Button(raiz, text="Ingresar otro usuario", command= lambda:ventana_de_registro())
+    boton_otro_usuario = Button(raiz, text="Ingresar usuario", command= lambda:obtener_jugadores(entry_nombre_usuario, entry_contrasenia))
     boton_otro_usuario.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_otro_usuario.place(x= 290, y=430)
 
@@ -126,25 +127,31 @@ def ventana_de_registro():
 
     raiz_registro.mainloop()
 
+def comenzar_el_juego(raiz):
+    global jugadores
+    random.shuffle(jugadores)
+    raiz.destroy()
 
-def obtener_jugadores(raiz,nombre,contrasenia):
+
+def obtener_jugadores(nombre,contrasenia):
     """
-    Rodrigo: obtiene los jugadores ingresados en la interfaz grafica, genera la lista de jugadores
-    con sus puntos y sus intentos inicializados en 0, la mezcla para ser almacenada en una variable global
+    Rodrigo: obtiene los jugadores ingresados en la interfaz grafica, comprueba mediante la funcion "comprobar_usuario", en caso de que 
+    pase las comprobaciones appendea al jugador a la lista de jugadores, con sus intentos y puntos inicializados en 0.
     """
     usuario_comprobado = comprobar_usuario(nombre.get(),contrasenia.get())
     if usuario_comprobado:
         global jugadores
         jugadores.append([nombre.get(),0,0])
-        random.shuffle(jugadores)
-        #raiz.destroy()
+        mensaje_incorrecto(EXITO)
     
         
 
 def comprobar_usuario(usuario , contrasenia):
     """
-    Rodrigo: comprueba que el usuario ingresado se encuentre en el archivo de usuarios y contraseñas, en caso de 
-    estarlo y que tanto usuario como contraseña coincidan, devuelve True, caso contrario, devuelve False
+    Rodrigo: comprueba que el usuario ingresado se encuentre en la lista de jugadores si lo esta, devuelve un mensaje de error, 
+    en caso de que no lo este comprueba que este en el archivo de usuarios y contraseñas, en caso de 
+    estarlo y que tanto usuario como contraseña coincidan, devuelve True, caso contrario, devuelve False ademas de un mensaje de error dependiendo 
+    el caso
     """
     if [usuario,0,0] in jugadores:
         mensaje_incorrecto(YA_INGRESADO)
@@ -199,4 +206,5 @@ def leer_Archivo(archivo):
         return None, None 
 
 
-
+crear_interfaz()
+print(jugadores)
