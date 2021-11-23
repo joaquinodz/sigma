@@ -11,6 +11,7 @@ NO_VALIDO_CONTRA = "Contraseña no válida. Debe contener al menos una letra may
 NO_VALIDO_USUARIO = "Usuario no válido. Debe contener como mínimo un largo de 4 caracteres y un máximo de 15, y estar formado sólo por letras, números y el guión bajo."
 YA_INGRESADO = "Ese usuario ya ha sido ingresado"
 EXITO = "Usuario ingresado con exito"
+LISTA_JUGADORES_VACIA = "No se ha ingresado ningun jugador"
 
 jugadores = []
 jugador_actual = 0
@@ -21,7 +22,7 @@ def crear_interfaz():
     """
     raiz = Tk()
     raiz.title("Memotest: pon a prueba tu memoria")
-    raiz.geometry("700x530")
+    raiz.geometry("560x500")
     raiz.config(bg="white")
     raiz.resizable(False,False)
     
@@ -38,7 +39,7 @@ def crear_interfaz():
     fondo = ttk.Label(raiz, image=img, anchor="center", background="white")
     fondo.pack(side=TOP, fill=BOTH, padx=10, pady=5)
 
-    mi_frame= Frame(raiz, width="700", height="530")
+    mi_frame= Frame(raiz, width="560", height="500")
     mi_frame.config(bg="white")
     mi_frame.pack()
 
@@ -64,21 +65,17 @@ def crear_interfaz():
     entry_contrasenia.grid(padx=10, pady=10, row=2, column=1, ipady=8)
 
     boton_jugar = Button(raiz, text="¡Comenzar el juego!", command= lambda:comenzar_el_juego(raiz))
-    boton_jugar.config(width=20, font=("Courier", 14), bg="whitesmoke")
-    boton_jugar.place(x= 10, y=450)
+    boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
+    boton_jugar.place(x= 20, y=430)
 
     boton_otro_usuario = Button(raiz, text="Ingresar usuario", command= lambda:obtener_jugadores(entry_nombre_usuario, entry_contrasenia))
     boton_otro_usuario.config(width=22, font=("Courier", 14), bg="whitesmoke")
-    boton_otro_usuario.place(x= 250, y=450)
-    
-    boton_limpiar = Button(raiz, text="Limpiar texto", command= lambda: limpiar(raiz, entry_nombre_usuario, entry_contrasenia))
-    boton_limpiar.config(width=15, font=("Courier", 14), bg="whitesmoke")
-    boton_limpiar.place(x= 510, y=450)
+    boton_otro_usuario.place(x= 290, y=430)
 
     raiz.mainloop()
     
     
-def limpiar(raiz, entry_nombre_usuario, entry_contrasenia):
+def limpiar(entry_nombre_usuario, entry_contrasenia):
     """
     Fátima: limpia los entrys para un nuevo ingreso
     """
@@ -141,9 +138,14 @@ def ventana_de_registro():
     raiz_registro.mainloop()
 
 def comenzar_el_juego(raiz):
+    """Rodrigo: se fija si la lista de jugadores esta vacia, si lo esta, da un mensaje de error, caso contrario, mezcla el orden de jugadores
+    y destruye la interfaz"""
     global jugadores
-    random.shuffle(jugadores)
-    raiz.destroy()
+    if not jugadores:
+        mensaje_al_usuario(LISTA_JUGADORES_VACIA)
+    else:
+        random.shuffle(jugadores)
+        raiz.destroy()
 
 
 def obtener_jugadores(nombre,contrasenia):
@@ -155,8 +157,11 @@ def obtener_jugadores(nombre,contrasenia):
     if usuario_comprobado:
         global jugadores
         jugadores.append([nombre.get(),0,0])
-        mensaje_incorrecto(EXITO)
-        ventana_jugadores_aceptados() #Mostrar los usuarios aceptados. Solucionar las muultiples ventanas
+        mensaje_al_usuario(EXITO)
+        mensaje_jugadores()
+    
+    limpiar(nombre,contrasenia)
+        
         
 
 def comprobar_usuario(usuario , contrasenia):
@@ -167,7 +172,7 @@ def comprobar_usuario(usuario , contrasenia):
     el caso
     """
     if [usuario,0,0] in jugadores:
-        mensaje_incorrecto(YA_INGRESADO)
+        mensaje_al_usuario(YA_INGRESADO)
     
     else:
 
@@ -186,11 +191,11 @@ def comprobar_usuario(usuario , contrasenia):
                     usuario_almacenado, contrasenia_almacenada = leer_Archivo(archivo_contrasenia)
                 
             if not usuario_encontrado:
-                mensaje_incorrecto(INEXISTENTE)
+                mensaje_al_usuario(INEXISTENTE)
                 devolver = False
                 
             elif usuario_encontrado and not contrasenia_correcta:
-                mensaje_incorrecto(INCORRECTO)
+                mensaje_al_usuario(INCORRECTO)
                 devolver = False
                     
             else:
@@ -200,11 +205,11 @@ def comprobar_usuario(usuario , contrasenia):
 
             return devolver
     
-def mensaje_incorrecto(mensaje):
+def mensaje_al_usuario(mensaje):
     """
     Fátima: cuadro de mensaje ante un error. El mensaje es pasado por parámetro.
     """
-    messagebox.showinfo('ERROR!', mensaje) 
+    messagebox.showinfo('Atencion!', mensaje) 
 
 
 def obtener_nombres():
@@ -216,6 +221,9 @@ def obtener_nombres():
         for elemento in jugadores: 
             nombres += elemento[0] +"\n"
     return nombres
+
+def mensaje_jugadores():
+    mensaje_al_usuario("Los jugadores al momento son: \n\n" + obtener_nombres())
 
 def leer_Archivo(archivo):
     """
@@ -230,4 +238,4 @@ def leer_Archivo(archivo):
 
 
 crear_interfaz()
-print(jugadores)
+print(obtener_nombres())
