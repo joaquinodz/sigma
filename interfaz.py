@@ -205,7 +205,7 @@ def mensaje_incorrecto(mensaje):
     Fátima: cuadro de mensaje ante un error. El mensaje es pasado por parámetro.
     """
     messagebox.showinfo('ERROR!', mensaje) 
-#_________________________DISCUTIBLE___________________________________#
+
 
 def obtener_nombres():
     """
@@ -216,33 +216,6 @@ def obtener_nombres():
         for elemento in jugadores: 
             nombres += elemento[0] +"\n"
     return nombres
-
-def ventana_jugadores_aceptados():
-    """
-    Fátima: ventana emergente para indicar jugadores aceptados
-    """
-    raiz_aceptados = Tk()
-    raiz_aceptados.title("Usuarios ingresados")
-    raiz_aceptados.geometry("350x250")
-    raiz_aceptados.config(bg="white")
-    raiz_aceptados.resizable(False,False)
-
-    mi_frame= Frame(raiz_aceptados, width="250", height="250")
-    mi_frame.config(bg="white")
-    mi_frame.pack()
-
-    label_inicial = Label(mi_frame, text="Jugadores que fueron aceptados: ")
-    label_inicial.config(font=("Courier", 12), bg="white")
-    label_inicial.grid(padx=10, pady=10, row=0, column=0, columnspan=2)
-
-    nombres = obtener_nombres()
-
-    label_variable = Label(mi_frame, width = 45, text= nombres )
-    label_variable.config(font=("Courier", 10), bg="white")
-    label_variable.grid(padx=10, pady=10, row=1, column=0,columnspan=2, ipady=50)
-
-    raiz_aceptados.mainloop()
-#_______________SE ABRE CADA UNA CADA VEZ QUE SE LA LLAMA. SOLUCIONAR _________________________________#
 
 def leer_Archivo(archivo):
     """
