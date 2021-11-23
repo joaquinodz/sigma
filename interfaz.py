@@ -21,7 +21,7 @@ def crear_interfaz():
     """
     raiz = Tk()
     raiz.title("Memotest: pon a prueba tu memoria")
-    raiz.geometry("560x500")
+    raiz.geometry("700x530")
     raiz.config(bg="white")
     raiz.resizable(False,False)
     
@@ -38,7 +38,7 @@ def crear_interfaz():
     fondo = ttk.Label(raiz, image=img, anchor="center", background="white")
     fondo.pack(side=TOP, fill=BOTH, padx=10, pady=5)
 
-    mi_frame= Frame(raiz, width="560", height="500")
+    mi_frame= Frame(raiz, width="700", height="530")
     mi_frame.config(bg="white")
     mi_frame.pack()
 
@@ -64,15 +64,28 @@ def crear_interfaz():
     entry_contrasenia.grid(padx=10, pady=10, row=2, column=1, ipady=8)
 
     boton_jugar = Button(raiz, text="¡Comenzar el juego!", command= lambda:comenzar_el_juego(raiz))
-    boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
-    boton_jugar.place(x= 20, y=430)
+    boton_jugar.config(width=20, font=("Courier", 14), bg="whitesmoke")
+    boton_jugar.place(x= 10, y=450)
 
     boton_otro_usuario = Button(raiz, text="Ingresar usuario", command= lambda:obtener_jugadores(entry_nombre_usuario, entry_contrasenia))
     boton_otro_usuario.config(width=22, font=("Courier", 14), bg="whitesmoke")
-    boton_otro_usuario.place(x= 290, y=430)
+    boton_otro_usuario.place(x= 250, y=450)
+    
+    boton_limpiar = Button(raiz, text="Limpiar texto", command= lambda: limpiar(raiz, entry_nombre_usuario, entry_contrasenia))
+    boton_limpiar.config(width=15, font=("Courier", 14), bg="whitesmoke")
+    boton_limpiar.place(x= 510, y=450)
 
     raiz.mainloop()
-
+    
+    
+def limpiar(raiz, entry_nombre_usuario, entry_contrasenia):
+    """
+    Fátima: limpia los entrys para un nuevo ingreso
+    """
+    entry_nombre_usuario.delete(0, 'end')
+    entry_contrasenia.delete(0, 'end')
+    
+    
 def ventana_de_registro():
 
     """
@@ -143,7 +156,7 @@ def obtener_jugadores(nombre,contrasenia):
         global jugadores
         jugadores.append([nombre.get(),0,0])
         mensaje_incorrecto(EXITO)
-    
+        ventana_jugadores_aceptados() #Mostrar los usuarios aceptados. Solucionar las muultiples ventanas
         
 
 def comprobar_usuario(usuario , contrasenia):
@@ -191,8 +204,45 @@ def mensaje_incorrecto(mensaje):
     """
     Fátima: cuadro de mensaje ante un error. El mensaje es pasado por parámetro.
     """
-    messagebox.showinfo('ERROR!', mensaje)    
+    messagebox.showinfo('ERROR!', mensaje) 
+#_________________________DISCUTIBLE___________________________________#
 
+def obtener_nombres():
+    """
+    Fátima: obtener todos los nombres de los jugadores
+    """
+    nombres = ""
+    if jugadores!= "":
+        for elemento in jugadores: 
+            nombres += elemento[0] +"\n"
+    return nombres
+
+def ventana_jugadores_aceptados():
+    """
+    Fátima: ventana emergente para indicar jugadores aceptados
+    """
+    raiz_aceptados = Tk()
+    raiz_aceptados.title("Usuarios ingresados")
+    raiz_aceptados.geometry("350x250")
+    raiz_aceptados.config(bg="white")
+    raiz_aceptados.resizable(False,False)
+
+    mi_frame= Frame(raiz_aceptados, width="250", height="250")
+    mi_frame.config(bg="white")
+    mi_frame.pack()
+
+    label_inicial = Label(mi_frame, text="Jugadores que fueron aceptados: ")
+    label_inicial.config(font=("Courier", 12), bg="white")
+    label_inicial.grid(padx=10, pady=10, row=0, column=0, columnspan=2)
+
+    nombres = obtener_nombres()
+
+    label_variable = Label(mi_frame, width = 45, text= nombres )
+    label_variable.config(font=("Courier", 10), bg="white")
+    label_variable.grid(padx=10, pady=10, row=1, column=0,columnspan=2, ipady=50)
+
+    raiz_aceptados.mainloop()
+#_______________SE ABRE CADA UNA CADA VEZ QUE SE LA LLAMA. SOLUCIONAR _________________________________#
 
 def leer_Archivo(archivo):
     """
