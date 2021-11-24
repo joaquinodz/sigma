@@ -4,14 +4,9 @@ import os
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from constantes import INEXISTENTE,INCORRECTO,NO_VALIDO_CONTRA, NO_VALIDO_USUARIO , YA_INGRESADO ,EXITO ,LISTA_JUGADORES_VACIA
 
-INEXISTENTE = "Usuario inexistente. Por favor, registrese"
-INCORRECTO = "Usuario y/o contraseña incorrectos. Ingrese nuevamente."
-NO_VALIDO_CONTRA = "Contraseña no válida. Debe contener al menos una letra mayúscula, una letra minúscula, un número, y alguno de los siguientes caracteres: “_” “-“ "
-NO_VALIDO_USUARIO = "Usuario no válido. Debe contener como mínimo un largo de 4 caracteres y un máximo de 15, y estar formado sólo por letras, números y el guión bajo."
-YA_INGRESADO = "Ese usuario ya ha sido ingresado"
-EXITO = "Usuario ingresado con exito"
-LISTA_JUGADORES_VACIA = "No se ha ingresado ningun jugador"
+
 
 jugadores = []
 jugador_actual = 0
