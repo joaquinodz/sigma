@@ -4,7 +4,7 @@ import os
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-from constantes import INEXISTENTE,INCORRECTO,NO_VALIDO_CONTRA, NO_VALIDO_USUARIO , YA_INGRESADO ,EXITO ,LISTA_JUGADORES_VACIA
+from constantes import INEXISTENTE,INCORRECTO,NO_VALIDO_CONTRA, NO_VALIDO_USUARIO , YA_INGRESADO ,EXITO ,LISTA_JUGADORES_VACIA, MAXIMO_JUGADORES
 
 
 
@@ -63,7 +63,7 @@ def crear_interfaz():
     boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_jugar.place(x= 20, y=430)
 
-    boton_otro_usuario = Button(raiz, text="Ingresar usuario", command= lambda:obtener_jugadores(entry_nombre_usuario, entry_contrasenia))
+    boton_otro_usuario = Button(raiz, text="Ingresar usuario", command= lambda:obtener_jugadores(raiz, entry_nombre_usuario, entry_contrasenia))
     boton_otro_usuario.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_otro_usuario.place(x= 290, y=430)
 
@@ -143,31 +143,38 @@ def comenzar_el_juego(raiz):
         raiz.destroy()
 
 
-def obtener_jugadores(nombre,contrasenia):
+def obtener_jugadores(raiz ,nombre,contrasenia):
     """
     Rodrigo: obtiene los jugadores ingresados en la interfaz grafica, comprueba mediante la funcion "comprobar_usuario", en caso de que 
     pase las comprobaciones appendea al jugador a la lista de jugadores, con sus intentos y puntos inicializados en 0.
     """
-    usuario_comprobado = comprobar_usuario(nombre.get(),contrasenia.get())
+    usuario_comprobado = comprobar_usuario(raiz,nombre.get(),contrasenia.get())
     if usuario_comprobado:
         global jugadores
         jugadores.append([nombre.get(),0,0])
         mensaje_al_usuario(EXITO)
         mensaje_jugadores()
+        limpiar(nombre,contrasenia)
     
-    limpiar(nombre,contrasenia)
         
         
 
-def comprobar_usuario(usuario , contrasenia):
+def comprobar_usuario(raiz, usuario , contrasenia):
     """
-    Rodrigo: comprueba que el usuario ingresado se encuentre en la lista de jugadores si lo esta, devuelve un mensaje de error, 
+    Rodrigo: primero, comprueba que no se haya alcanzado el maximo de jugadores , luego , comprueba que el usuario ingresado se encuentre 
+    en la lista de jugadores si lo esta, devuelve un mensaje de error, 
     en caso de que no lo este comprueba que este en el archivo de usuarios y contraseñas, en caso de 
     estarlo y que tanto usuario como contraseña coincidan, devuelve True, caso contrario, devuelve False ademas de un mensaje de error dependiendo 
     el caso
     """
-    if [usuario,0,0] in jugadores:
+    if len(jugadores)+1 == MAXIMO_JUGADORES:
+        mensaje_al_usuario("Se alcanzo el limite de jugadores, el juego iniciara automaticamente")
+        raiz.destroy()
+        devolver = False
+
+    elif [usuario,0,0] in jugadores:
         mensaje_al_usuario(YA_INGRESADO)
+        devolver = False
     
     else:
 
@@ -198,7 +205,7 @@ def comprobar_usuario(usuario , contrasenia):
             
             archivo_contrasenia.seek(0)
 
-            return devolver
+        return devolver
     
 def mensaje_al_usuario(mensaje):
     """

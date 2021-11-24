@@ -8,6 +8,7 @@ FICHAS_POR_FILA = 4
 NOMBRE = 0
 INTENTOS = 1
 ACIERTOS = 2
+MAXIMO_JUGADORES = 2
 
 #mensajes al usuario
 INEXISTENTE = "Usuario inexistente. Por favor, registrese"
