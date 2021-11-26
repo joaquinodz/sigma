@@ -4,12 +4,13 @@ import os
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-from constantes import INEXISTENTE,INCORRECTO,NO_VALIDO_CONTRA, NO_VALIDO_USUARIO , YA_INGRESADO ,EXITO ,LISTA_JUGADORES_VACIA, MAXIMO_JUGADORES
+from constantes import INEXISTENTE,INCORRECTO,NO_VALIDO_CONTRA, NO_VALIDO_USUARIO , YA_INGRESADO ,EXITO ,LISTA_JUGADORES_VACIA, MAXIMO_JUGADORES,USUARIO,CONTRASENIA
+from manejo_de_archivos import convertir_contraseña_a_diccionario
 
-
-
+diccionario_usuarios_contrasenia = {}
 jugadores = []
 jugador_actual = 0
+diccionario_usuarios_contrasenias = convertir_contraseña_a_diccionario()
 
 def crear_interfaz():
     """
@@ -145,68 +146,55 @@ def comenzar_el_juego(raiz):
 
 def obtener_jugadores(raiz ,nombre,contrasenia):
     """
-    Rodrigo: obtiene los jugadores ingresados en la interfaz grafica, comprueba mediante la funcion "comprobar_usuario", en caso de que 
+    Rodrigo: obtiene los jugadores ingresados en la interfaz grafica, comprueba mediante la funcion "usuario_valido", en caso de que 
     pase las comprobaciones appendea al jugador a la lista de jugadores, con sus intentos y puntos inicializados en 0.
+    Luego comprueba si la cantidad maxima de jugadores fue alcanzada.
     """
-    usuario_comprobado = comprobar_usuario(raiz,nombre.get(),contrasenia.get())
-    if usuario_comprobado:
+
+    if usuario_valido(nombre.get(),contrasenia.get()):
         global jugadores
         jugadores.append([nombre.get(),0,0])
         mensaje_al_usuario(EXITO)
         mensaje_jugadores()
         limpiar(nombre,contrasenia)
+
+        if len(jugadores) == MAXIMO_JUGADORES:
+            mensaje_al_usuario("Se alcanzo el limite de jugadores, el juego iniciara automaticamente")
+            raiz.destroy()    
+
+def usuario_valido(usuario , contrasenia):
+    """
+    Rodrigo: primero comprueba que el usuario ingresado se encuentre 
+    en la lista de jugadores si lo esta, devuelve un mensaje de error, luego, comprueba la contrasenia mediante contrasenia_comprobada()
+    si es valida, devuelve True
+    """
     
-        
-        
-
-def comprobar_usuario(raiz, usuario , contrasenia):
-    """
-    Rodrigo: primero, comprueba que no se haya alcanzado el maximo de jugadores , luego , comprueba que el usuario ingresado se encuentre 
-    en la lista de jugadores si lo esta, devuelve un mensaje de error, 
-    en caso de que no lo este comprueba que este en el archivo de usuarios y contraseñas, en caso de 
-    estarlo y que tanto usuario como contraseña coincidan, devuelve True, caso contrario, devuelve False ademas de un mensaje de error dependiendo 
-    el caso
-    """
-    if len(jugadores)+1 == MAXIMO_JUGADORES:
-        mensaje_al_usuario("Se alcanzo el limite de jugadores, el juego iniciara automaticamente")
-        raiz.destroy()
-        devolver = False
-
-    elif [usuario,0,0] in jugadores:
+    if [usuario,0,0] in jugadores:
         mensaje_al_usuario(YA_INGRESADO)
-        devolver = False
+        jugador_valido = False
     
     else:
+        jugador_valido = contrasenia_comprobada(usuario,contrasenia)
 
-        with open("contrasenia.csv","r") as archivo_contrasenia:
-            usuario_encontrado = False
-            contrasenia_correcta = True
-            usuario_almacenado , contrasenia_almacenada = leer_Archivo(archivo_contrasenia)
+    return(jugador_valido)
 
-            while usuario_almacenado and contrasenia_correcta and not usuario_encontrado:
-                if (usuario_almacenado == usuario):
-                    usuario_encontrado = True
-                    if contrasenia_almacenada != contrasenia:
-                        contrasenia_correcta = False
-                            
-                else:
-                    usuario_almacenado, contrasenia_almacenada = leer_Archivo(archivo_contrasenia)
-                
-            if not usuario_encontrado:
-                mensaje_al_usuario(INEXISTENTE)
-                devolver = False
-                
-            elif usuario_encontrado and not contrasenia_correcta:
-                mensaje_al_usuario(INCORRECTO)
-                devolver = False
-                    
-            else:
-                devolver = True
+def contrasenia_comprobada(usuario, contrasenia):
+    """Rodrigo: comprueba que el usuario se encuentre en el diccionario de contraseñas, si lo esta, comprueba si la contraseña coincide
+    si ambas situaciones se dan, se devuelve True, caso contrario devuelve False y un mensaje apto para cada caso"""
+    if usuario in diccionario_usuarios_contrasenias:
             
-            archivo_contrasenia.seek(0)
-
-        return devolver
+            if contrasenia == diccionario_usuarios_contrasenias[usuario]:
+                contrasenia_validada = True   
+            else:
+                mensaje_al_usuario(INCORRECTO)
+                contrasenia_validada = False
+        
+    else:
+        mensaje_al_usuario(INEXISTENTE)
+        contrasenia_validada = False
     
+    return contrasenia_validada
+           
 def mensaje_al_usuario(mensaje):
     """
     Fátima: cuadro de mensaje ante un error. El mensaje es pasado por parámetro.
@@ -227,17 +215,8 @@ def obtener_nombres():
 def mensaje_jugadores():
     mensaje_al_usuario("Los jugadores al momento son: \n\n" + obtener_nombres())
 
-def leer_Archivo(archivo):
-    """
-    Rodrigo: lee un archivo linea a linea
-    """
-    linea = archivo.readline()
-    linea = linea.rstrip('\n')
-    if linea:
-        return linea.split(',')
-    else:
-        return None, None 
 
 
 crear_interfaz()
-print(obtener_nombres())
+
+

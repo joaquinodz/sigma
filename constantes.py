@@ -8,7 +8,7 @@ FICHAS_POR_FILA = 4
 NOMBRE = 0
 INTENTOS = 1
 ACIERTOS = 2
-MAXIMO_JUGADORES = 2
+
 
 #mensajes al usuario
 INEXISTENTE = "Usuario inexistente. Por favor, registrese"
@@ -18,3 +18,8 @@ NO_VALIDO_USUARIO = "Usuario no válido. Debe contener como mínimo un largo de 
 YA_INGRESADO = "Ese usuario ya ha sido ingresado"
 EXITO = "Usuario ingresado con exito"
 LISTA_JUGADORES_VACIA = "No se ha ingresado ningun jugador"
+
+#validacion de los usuarios
+USUARIO = 0
+CONTRASENIA = 1
+MAXIMO_JUGADORES = 2
