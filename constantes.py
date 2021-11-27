@@ -18,6 +18,8 @@ NO_VALIDO_USUARIO = "Usuario no válido. Debe contener como mínimo un largo de 
 YA_INGRESADO = "Ese usuario ya ha sido ingresado"
 EXITO = "Usuario ingresado con exito"
 LISTA_JUGADORES_VACIA = "No se ha ingresado ningun jugador"
+YA_REGISTRADO = "Nombre usuario no disponible. Ingrese otro"
+CONTRASENIAS_DISTINTAS = "Las contraseñas no coinciden. Intente nuevamente"
 
 #validacion de los usuarios
 USUARIO = 0
