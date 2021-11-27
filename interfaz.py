@@ -4,7 +4,7 @@ import os
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-from constantes import INEXISTENTE,INCORRECTO,NO_VALIDO_CONTRA, NO_VALIDO_USUARIO , YA_INGRESADO ,EXITO ,LISTA_JUGADORES_VACIA, MAXIMO_JUGADORES,USUARIO,CONTRASENIA
+from constantes import INEXISTENTE,INCORRECTO,NO_VALIDO_CONTRA, NO_VALIDO_USUARIO , YA_INGRESADO ,EXITO ,LISTA_JUGADORES_VACIA, MAXIMO_JUGADORES,USUARIO,CONTRASENIA, YA_REGISTRADO, CONTRASENIAS_DISTINAS
 from manejo_de_archivos import convertir_contraseña_a_diccionario
 
 diccionario_usuarios_contrasenia = {}
@@ -12,7 +12,8 @@ jugadores = []
 jugador_actual = 0
 diccionario_usuarios_contrasenias = convertir_contraseña_a_diccionario()
 
-def crear_interfaz():
+def crear_interfaz(diccionario_usuarios_contrasenias):
+
     """
     Fátima: se crea interfaz gráfica para el ingreso de jugadores.
     """
@@ -28,7 +29,7 @@ def crear_interfaz():
 
     menubar = Menu(raiz)
     raiz.config(menu=menubar)
-    menubar.add_command(label="Registrame", command= lambda:ventana_de_registro())
+    menubar.add_command(label="Registrame", command= lambda:ventana_de_registro(diccionario_usuarios_contrasenias))
 
 
     img= PhotoImage(file='fondo.png')
@@ -79,7 +80,7 @@ def limpiar(entry_nombre_usuario, entry_contrasenia):
     entry_contrasenia.delete(0, 'end')
     
     
-def ventana_de_registro():
+def ventana_de_registro(diccionario_usuarios_contrasenias):
 
     """
     Fátima: se crea interfaz gráfica para el registro de jugadores.
@@ -127,11 +128,76 @@ def ventana_de_registro():
     entry_contrasenia_repetida.config(bg="black", width=27, insertbackground="blue", fg="white",font=10)
     entry_contrasenia_repetida.grid(padx=10, pady=10, row=3, column=1, ipady=6)
 
-    boton_jugar = Button(raiz_registro, text="Registrar", command= raiz_registro.destroy)
+    boton_jugar = Button(raiz_registro, text="Registrar", command= registrar_nuevo_usuario(raiz_registro,entry_usuario,entry_contrasenia, entry_contrasenia_repetida, diccionario_usuarios_contrasenias))
     boton_jugar.config(width=35, font=("Courier", 14), bg="whitesmoke")
     boton_jugar.pack(side=BOTTOM, fill=BOTH,padx=20, pady=27, ipady=15)   
 
     raiz_registro.mainloop()
+
+def registrar_nuevo_usuario(raiz_registro,entry_usuario,entry_contrasenia, entry_contrasenia_repetida, diccionario_usuarios_contrasenias):
+    """
+    Fátima: se registra nuevo usuario si tanto el nombre de usuario como la contraseña son válidas. A su vez, se suma usuario
+    a la lista de jugadores de la partida y al diccionario con los datos de los usuarios
+    """
+    lista_usuarios = diccionario_usuarios_contrasenias.keys()
+    nombre_usuario = entry_usuario
+    contrasenia = entry_contrasenia
+    contrasenia_repetida = entry_contrasenia_repetida
+
+    if nombre_usuario not in lista_usuarios:
+
+        if es_valida_contrasenia(contrasenia, contrasenia_repetida) and es_valido_nombre_usuario(nombre_usuario):
+            jugadores.append([nombre_usuario,0,0])
+            diccionario_usuarios_contrasenias[nombre_usuario] = contrasenia
+            raiz_registro.destroy() 
+        else:
+            mensaje_al_usuario(CONTRASENIAS_DISTINAS)          
+    else:
+        mensaje_al_usuario(YA_REGISTRADO)
+
+
+def cadena_validada(cadena_a_validar):
+    """
+    Fátima: recibe el cadena a validar, sea nombre de usuario o contraseña para verificar que no haya tildes
+    """
+
+    tildes = ["á", "é", "í", "ó"] 
+    cadena_validada = True
+
+    for caracter in cadena_a_validar:
+        if caracter in tildes:
+            cadena_validada = False
+
+    return cadena_validada
+
+def es_valido_nombre_usuario(nombre_usuario):
+    """
+    Fátima: recibe el nombre de usuario como paramétro y hace comprobaciones necesarias
+    """
+    guiones = "-_"
+    nombre_usuario_sin_guion = ''.join(caracter for caracter in nombre_usuario if caracter not in guiones)
+
+    if 4 <= len(nombre_usuario) <= 15:
+        if cadena_validada(nombre_usuario_sin_guion) and nombre_usuario_sin_guion.isalnum():
+            nombre_valido = True
+        else:
+            nombre_valido = False
+    return nombre_valido
+
+def es_valida_contrasenia(contrasenia, contrasenia_repetida):
+    """ 
+    Fátima: recibe la contraseña como paramétro y hace comprobaciones necesarias
+    """
+    contrasenia_valida = False
+
+    if 8 <= len(contrasenia) <= 12 and contrasenia == contrasenia_repetida:
+        if cadena_validada(contrasenia) and not contrasenia.islower() and (contrasenia.find("-") != -1 or contrasenia.find("_") != -1) and any(caracter.isdigit() for caracter in contrasenia): 
+            contrasenia_valida = True
+    
+    return contrasenia_valida
+
+
+
 
 def comenzar_el_juego(raiz):
     """Rodrigo: se fija si la lista de jugadores esta vacia, si lo esta, da un mensaje de error, caso contrario, mezcla el orden de jugadores
@@ -178,6 +244,7 @@ def usuario_valido(usuario , contrasenia):
 
     return(jugador_valido)
 
+
 def contrasenia_comprobada(usuario, contrasenia):
     """Rodrigo: comprueba que el usuario se encuentre en el diccionario de contraseñas, si lo esta, comprueba si la contraseña coincide
     si ambas situaciones se dan, se devuelve True, caso contrario devuelve False y un mensaje apto para cada caso"""
@@ -214,9 +281,3 @@ def obtener_nombres():
 
 def mensaje_jugadores():
     mensaje_al_usuario("Los jugadores al momento son: \n\n" + obtener_nombres())
-
-
-
-crear_interfaz()
-
-
