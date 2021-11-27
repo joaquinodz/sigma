@@ -22,6 +22,4 @@ YA_REGISTRADO = "Nombre usuario no disponible. Ingrese otro"
 CONTRASENIAS_DISTINTAS = "Las contraseñas no coinciden. Intente nuevamente"
 
 #validacion de los usuarios
-USUARIO = 0
-CONTRASENIA = 1
-MAXIMO_JUGADORES = 2
+MAXIMO_JUGADORES = 3
