@@ -4,13 +4,12 @@ import os
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-from constantes import INEXISTENTE,INCORRECTO,NO_VALIDO_CONTRA, NO_VALIDO_USUARIO , YA_INGRESADO ,EXITO ,LISTA_JUGADORES_VACIA, MAXIMO_JUGADORES,USUARIO,CONTRASENIA, YA_REGISTRADO, CONTRASENIAS_DISTINAS
-from manejo_de_archivos import convertir_contraseña_a_diccionario
+from constantes import INEXISTENTE,INCORRECTO,NO_VALIDO_CONTRA, NO_VALIDO_USUARIO , YA_INGRESADO ,EXITO ,LISTA_JUGADORES_VACIA, MAXIMO_JUGADORES,USUARIO,CONTRASENIA, YA_REGISTRADO, CONTRASENIAS_DISTINTAS
+import comprobaciones
 
-diccionario_usuarios_contrasenia = {}
 jugadores = []
 jugador_actual = 0
-diccionario_usuarios_contrasenias = convertir_contraseña_a_diccionario()
+
 
 def crear_interfaz(diccionario_usuarios_contrasenias):
 
@@ -65,7 +64,7 @@ def crear_interfaz(diccionario_usuarios_contrasenias):
     boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_jugar.place(x= 20, y=430)
 
-    boton_otro_usuario = Button(raiz, text="Ingresar usuario", command= lambda:obtener_jugadores(raiz, entry_nombre_usuario, entry_contrasenia))
+    boton_otro_usuario = Button(raiz, text="Ingresar usuario", command= lambda:obtener_jugadores(raiz, entry_nombre_usuario, entry_contrasenia,diccionario_usuarios_contrasenias))
     boton_otro_usuario.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_otro_usuario.place(x= 290, y=430)
 
@@ -146,57 +145,14 @@ def registrar_nuevo_usuario(raiz_registro,entry_usuario,entry_contrasenia, entry
 
     if nombre_usuario not in lista_usuarios:
 
-        if es_valida_contrasenia(contrasenia, contrasenia_repetida) and es_valido_nombre_usuario(nombre_usuario):
+        if comprobaciones.es_valida_contrasenia(contrasenia, contrasenia_repetida) and comprobaciones.es_valido_nombre_usuario(nombre_usuario):
             jugadores.append([nombre_usuario,0,0])
             diccionario_usuarios_contrasenias[nombre_usuario] = contrasenia
             raiz_registro.destroy() 
         else:
-            mensaje_al_usuario(CONTRASENIAS_DISTINAS)          
+            mensaje_al_usuario(CONTRASENIAS_DISTINTAS)          
     else:
         mensaje_al_usuario(YA_REGISTRADO)
-
-
-def cadena_validada(cadena_a_validar):
-    """
-    Fátima: recibe el cadena a validar, sea nombre de usuario o contraseña para verificar que no haya tildes
-    """
-
-    tildes = ["á", "é", "í", "ó"] 
-    cadena_validada = True
-
-    for caracter in cadena_a_validar:
-        if caracter in tildes:
-            cadena_validada = False
-
-    return cadena_validada
-
-def es_valido_nombre_usuario(nombre_usuario):
-    """
-    Fátima: recibe el nombre de usuario como paramétro y hace comprobaciones necesarias
-    """
-    guiones = "-_"
-    nombre_usuario_sin_guion = ''.join(caracter for caracter in nombre_usuario if caracter not in guiones)
-
-    if 4 <= len(nombre_usuario) <= 15:
-        if cadena_validada(nombre_usuario_sin_guion) and nombre_usuario_sin_guion.isalnum():
-            nombre_valido = True
-        else:
-            nombre_valido = False
-    return nombre_valido
-
-def es_valida_contrasenia(contrasenia, contrasenia_repetida):
-    """ 
-    Fátima: recibe la contraseña como paramétro y hace comprobaciones necesarias
-    """
-    contrasenia_valida = False
-
-    if 8 <= len(contrasenia) <= 12 and contrasenia == contrasenia_repetida:
-        if cadena_validada(contrasenia) and not contrasenia.islower() and (contrasenia.find("-") != -1 or contrasenia.find("_") != -1) and any(caracter.isdigit() for caracter in contrasenia): 
-            contrasenia_valida = True
-    
-    return contrasenia_valida
-
-
 
 
 def comenzar_el_juego(raiz):
@@ -210,14 +166,14 @@ def comenzar_el_juego(raiz):
         raiz.destroy()
 
 
-def obtener_jugadores(raiz ,nombre,contrasenia):
+def obtener_jugadores(raiz ,nombre,contrasenia,diccionario_usuarios_contrasenias):
     """
     Rodrigo: obtiene los jugadores ingresados en la interfaz grafica, comprueba mediante la funcion "usuario_valido", en caso de que 
     pase las comprobaciones appendea al jugador a la lista de jugadores, con sus intentos y puntos inicializados en 0.
     Luego comprueba si la cantidad maxima de jugadores fue alcanzada.
     """
 
-    if usuario_valido(nombre.get(),contrasenia.get()):
+    if comprobaciones.usuario_valido(nombre.get(),contrasenia.get(),diccionario_usuarios_contrasenias):
         global jugadores
         jugadores.append([nombre.get(),0,0])
         mensaje_al_usuario(EXITO)
@@ -228,39 +184,6 @@ def obtener_jugadores(raiz ,nombre,contrasenia):
             mensaje_al_usuario("Se alcanzo el limite de jugadores, el juego iniciara automaticamente")
             raiz.destroy()    
 
-def usuario_valido(usuario , contrasenia):
-    """
-    Rodrigo: primero comprueba que el usuario ingresado se encuentre 
-    en la lista de jugadores si lo esta, devuelve un mensaje de error, luego, comprueba la contrasenia mediante contrasenia_comprobada()
-    si es valida, devuelve True
-    """
-    
-    if [usuario,0,0] in jugadores:
-        mensaje_al_usuario(YA_INGRESADO)
-        jugador_valido = False
-    
-    else:
-        jugador_valido = contrasenia_comprobada(usuario,contrasenia)
-
-    return(jugador_valido)
-
-
-def contrasenia_comprobada(usuario, contrasenia):
-    """Rodrigo: comprueba que el usuario se encuentre en el diccionario de contraseñas, si lo esta, comprueba si la contraseña coincide
-    si ambas situaciones se dan, se devuelve True, caso contrario devuelve False y un mensaje apto para cada caso"""
-    if usuario in diccionario_usuarios_contrasenias:
-            
-            if contrasenia == diccionario_usuarios_contrasenias[usuario]:
-                contrasenia_validada = True   
-            else:
-                mensaje_al_usuario(INCORRECTO)
-                contrasenia_validada = False
-        
-    else:
-        mensaje_al_usuario(INEXISTENTE)
-        contrasenia_validada = False
-    
-    return contrasenia_validada
            
 def mensaje_al_usuario(mensaje):
     """
