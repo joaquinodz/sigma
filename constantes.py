@@ -23,3 +23,5 @@ CONTRASENIAS_DISTINTAS = "Las contraseñas no coinciden. Intente nuevamente"
 
 #validacion de los usuarios
 MAXIMO_JUGADORES = 3
+USUARIO = 0
+CONTRASENIA = 1

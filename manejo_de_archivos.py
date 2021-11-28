@@ -15,7 +15,7 @@ def leer_archivo(archivo):
     return linea_procesada
 
 
-def convertir_contraseña_a_diccionario():
+def convertir_contrasenia_a_diccionario():
     """Rodrigo: convierte el archivo de contrasenias a un diccionario"""
     contrasenias = open("contrasenia.csv","r")
     diccionario_contrasenias = {}
