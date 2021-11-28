@@ -139,9 +139,9 @@ def registrar_nuevo_usuario(raiz_registro,entry_usuario,entry_contrasenia, entry
     a la lista de jugadores de la partida y al diccionario con los datos de los usuarios
     """
     lista_usuarios = diccionario_usuarios_contrasenias.keys()
-    nombre_usuario = entry_usuario
-    contrasenia = entry_contrasenia
-    contrasenia_repetida = entry_contrasenia_repetida
+    nombre_usuario = entry_usuario.get()
+    contrasenia = entry_contrasenia.get()
+    contrasenia_repetida = entry_contrasenia_repetida.get()
 
     if nombre_usuario not in lista_usuarios:
 
