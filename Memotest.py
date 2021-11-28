@@ -36,15 +36,18 @@ def finalizar_turno():
 def main():
     diccionario_usuarios_contrasenias = convertir_contrasenia_a_diccionario()
     interfaz.crear_interfaz(diccionario_usuarios_contrasenias)
-    inicializar_tablero()
-    inicio = time.time()
+    try:
+        inicializar_tablero()
+        inicio = time.time()
 
-    memotest_juego()
+        memotest_juego()
 
-    tiempo_de_juego(inicio)
+        tiempo_de_juego(inicio)
 
-    mostrar_resultados()
-    #la variable finalizar permite que el usuario lea el resultado antes de que se cierre la ventana
+        mostrar_resultados()
+    except IndexError:
+        print("La ventana de registro fue cerrada.\n")
+    #permite que el usuario lea el resultado antes de que se cierre la ventana
     input("Pulse enter para finalizar\n\n")
 
 main()
