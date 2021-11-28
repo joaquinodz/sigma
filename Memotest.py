@@ -5,7 +5,7 @@ import interfaz
 from tablero import inicializar_tablero, refresca_tablero, pedir_datos, finalizar
 from jugador import procesar_resultados, mostrar_resultados
 from util import limpiar_consola, tiempo_de_juego
-from manejo_de_archivos import convertir_contrasenia_a_diccionario
+from manejo_de_archivos import convertir_contrasenia_a_diccionario, cargar_configuracion
 
 def memotest_juego():
     """
@@ -34,6 +34,8 @@ def finalizar_turno():
     limpiar_consola()
 
 def main():
+    cargar_configuracion()
+    return
     diccionario_usuarios_contrasenias = convertir_contrasenia_a_diccionario()
     interfaz.crear_interfaz(diccionario_usuarios_contrasenias)
     try:
