@@ -35,7 +35,7 @@ def finalizar_turno():
 
 def main():
     cargar_configuracion()
-    return
+    
     diccionario_usuarios_contrasenias = convertir_contrasenia_a_diccionario()
     interfaz.crear_interfaz(diccionario_usuarios_contrasenias)
     try:
