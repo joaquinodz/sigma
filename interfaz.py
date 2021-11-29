@@ -72,13 +72,13 @@ def crear_interfaz(diccionario_usuarios_contrasenias):
     raiz.mainloop()
     
     
-def limpiar(entry_nombre_usuario, entry_contrasenia):
+def limpiar(*entrys_a_limpiar):
     """
     Fátima: limpia los entrys para un nuevo ingreso
     """
-    entry_nombre_usuario.delete(0, 'end')
-    entry_contrasenia.delete(0, 'end')
-    
+    for entry in entrys_a_limpiar:
+        entry.delete(0, 'end')
+        
     
 def ventana_de_registro(diccionario_usuarios_contrasenias):
 
@@ -125,7 +125,7 @@ def ventana_de_registro(diccionario_usuarios_contrasenias):
     label_contrasenia.grid(padx=10, pady=10, row=4, column=0)
 
     entry_contrasenia = Entry(mi_frame)
-    entry_contrasenia.config(bg="black", width=27, insertbackground="blue", fg="white",font=10, show ="*")
+    entry_contrasenia.config(bg="black", width=27, insertbackground="blue", fg="white",font=10)
     entry_contrasenia.grid(padx=10, pady=10, row=4, column=1, ipady=6)
 
     label_contrasenia_repetida = Label(mi_frame, text="Repetir contraseña")
@@ -133,7 +133,7 @@ def ventana_de_registro(diccionario_usuarios_contrasenias):
     label_contrasenia_repetida.grid(padx=10, pady=10, row=5, column=0)
 
     entry_contrasenia_repetida = Entry(mi_frame)
-    entry_contrasenia_repetida.config(bg="black", width=27, insertbackground="blue", fg="white",font=10, show ="*")
+    entry_contrasenia_repetida.config(bg="black", width=27, insertbackground="blue", fg="white",font=10)
     entry_contrasenia_repetida.grid(padx=10, pady=10, row=5, column=1, ipady=6)
 
     boton_jugar = Button(raiz_registro, text="Registrar", command= lambda:registrar_nuevo_usuario(raiz_registro,entry_usuario,entry_contrasenia, entry_contrasenia_repetida, diccionario_usuarios_contrasenias))
@@ -142,7 +142,7 @@ def ventana_de_registro(diccionario_usuarios_contrasenias):
 
     raiz_registro.mainloop()
 
-def registrar_nuevo_usuario(raiz_registro,entry_usuario,entry_contrasenia, entry_contrasenia_repetida, diccionario_usuarios_contrasenias):
+def registrar_nuevo_usuario(raiz_registro,entry_usuario, entry_contrasenia, entry_contrasenia_repetida, diccionario_usuarios_contrasenias):
     """
     Fátima: se registra nuevo usuario si tanto el nombre de usuario como la contraseña son válidas. A su vez, se suma usuario
     a la lista de jugadores de la partida y al diccionario con los datos de los usuarios
@@ -151,15 +151,14 @@ def registrar_nuevo_usuario(raiz_registro,entry_usuario,entry_contrasenia, entry
     nombre_usuario = entry_usuario.get()
     contrasenia = entry_contrasenia.get()
     contrasenia_repetida = entry_contrasenia_repetida.get()
-
+    
     if nombre_usuario not in lista_usuarios:
-
+        
         if comprobaciones.es_valida_contrasenia(contrasenia, contrasenia_repetida) and comprobaciones.es_valido_nombre_usuario(nombre_usuario):
             jugadores.append([nombre_usuario,0,0])
             diccionario_usuarios_contrasenias[nombre_usuario] = contrasenia
-            raiz_registro.destroy() 
-        else:
-            mensaje_al_usuario(CONTRASENIAS_DISTINTAS)          
+        limpiar(entry_usuario, entry_contrasenia, entry_contrasenia_repetida)  
+              
     else:
         mensaje_al_usuario(YA_REGISTRADO)
 
@@ -187,11 +186,13 @@ def obtener_jugadores(raiz ,nombre,contrasenia,diccionario_usuarios_contrasenias
         jugadores.append([nombre.get(),0,0])
         mensaje_al_usuario(EXITO)
         mensaje_jugadores()
-        limpiar(nombre,contrasenia)
 
         if len(jugadores) == constantes.configuracion["MAXIMO_JUGADORES"]:
             mensaje_al_usuario("Se alcanzo el limite de jugadores, el juego iniciara automaticamente")
-            raiz.destroy()    
+            raiz.destroy()
+
+    limpiar(nombre,contrasenia)
+        
 
            
 def mensaje_al_usuario(mensaje):

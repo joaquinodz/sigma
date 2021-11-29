@@ -1,5 +1,5 @@
-import interfaz
-from constantes import YA_INGRESADO, INCORRECTO, INEXISTENTE
+import interfaz 
+from constantes import YA_INGRESADO, INCORRECTO, INEXISTENTE, CONTRASENIAS_DISTINTAS, NO_VALIDO_CONTRA, NO_VALIDO_USUARIO
 
 
 
@@ -17,22 +17,21 @@ def cadena_validada(cadena_a_validar):
 
     return cadena_validada
 
-
-
-
-
 def es_valido_nombre_usuario(nombre_usuario):
     """
     Fátima: recibe el nombre de usuario como paramétro y hace comprobaciones necesarias
     """
-    guiones = "-_"
+    nombre_valido = False
+    guiones = "_"
     nombre_usuario_sin_guion = ''.join(caracter for caracter in nombre_usuario if caracter not in guiones)
 
     if 4 <= len(nombre_usuario) <= 15:
+    
         if cadena_validada(nombre_usuario_sin_guion) and nombre_usuario_sin_guion.isalnum():
             nombre_valido = True
-        else:
-            nombre_valido = False
+    else:
+        interfaz.mensaje_al_usuario(NO_VALIDO_USUARIO)
+
     return nombre_valido
 
 
@@ -44,9 +43,15 @@ def es_valida_contrasenia(contrasenia, contrasenia_repetida):
     """
     contrasenia_valida = False
 
-    if 8 <= len(contrasenia) <= 12 and contrasenia == contrasenia_repetida:
-        if cadena_validada(contrasenia) and not contrasenia.islower() and (contrasenia.find("-") != -1 or contrasenia.find("_") != -1) and any(caracter.isdigit() for caracter in contrasenia): 
-            contrasenia_valida = True
+    if 8 <= len(contrasenia) <= 12:
+        if contrasenia == contrasenia_repetida:
+            if cadena_validada(contrasenia) and not contrasenia.islower() and (contrasenia.find("-") != -1 or contrasenia.find("_") != -1) and any(caracter.isdigit() for caracter in contrasenia): 
+                contrasenia_valida = True
+            else:
+                interfaz.mensaje_al_usuario(NO_VALIDO_CONTRA)
+
+        else:
+            interfaz.mensaje_al_usuario(CONTRASENIAS_DISTINTAS)
     
     return contrasenia_valida
 
