@@ -104,7 +104,7 @@ def ventana_de_registro(diccionario_usuarios_contrasenias):
     label_inicial.config(font=("Courier", 18), bg="white")
     label_inicial.grid(padx=10, pady=10, row=0, column=0, columnspan=2)
 
-    label_requisitos_nombre = Label(mi_frame, text="El nombre debe tener una longitud entre 4 y 15 caracteres \n, y estar formado sólo por letras, números y el guión bajo.")
+    label_requisitos_nombre = Label(mi_frame, text="El nombre debe tener una longitud entre 4 y 15 caracteres,\n y estar formado sólo por letras, números y el guión bajo.")
     label_requisitos_nombre.config(font=("Courier", 11), bg="white")
     label_requisitos_nombre.grid(padx=10, pady=10, row=1, column=0, columnspan=2)
 
