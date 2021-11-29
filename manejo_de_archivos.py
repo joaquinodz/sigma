@@ -1,5 +1,5 @@
+import constantes
 from constantes import USUARIO,CONTRASENIA, CONFIGURACION_DEFAULT
-
 
 def leer_archivo(archivo):
     """
@@ -29,8 +29,8 @@ def convertir_contrasenia_a_diccionario():
 
 def cargar_configuracion():
     """Joaquin: Carga la configuración del juego desde un archivo"""
-    with open("configuracion.csv", 'r') as f:
-        configuracion = f.readlines()
+    with open("configuracion.csv", 'r') as archivo_configuracion:
+        configuracion = archivo_configuracion.readlines()
     
     # Saco el salto de linea al final de cada linea
     # Convierto los valores separados por coma en listas - [clave, valor]
@@ -44,8 +44,8 @@ def cargar_configuracion():
         if key not in configuracion:
             configuracion[key] = CONFIGURACION_DEFAULT[key]
 
-    print(configuracion)
-
+    return configuracion
+    
 def smart_cast(value):
     """Joaquin: Infiere el tipo de dato a partir de un string y realiza la conversion correspondiente"""
     if value.isnumeric():

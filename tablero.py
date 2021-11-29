@@ -1,5 +1,6 @@
 import random
-from constantes import IMAGEN_FICHA, ESTADO_FICHA, CANTIDAD_DE_FICHAS, FICHAS_POR_FILA
+import constantes
+from constantes import IMAGEN_FICHA, ESTADO_FICHA, FICHAS_POR_FILA
 
 """
 tablero es una lista cuyos elementos representan cada "casillero" de el tablero
@@ -18,7 +19,7 @@ def inicializar_tablero():
     Al final, al tablero se le hace un shuffle para mezclar el tablero.
     Rodrigo, Fátima.
     """
-    cantidad_de_pares = CANTIDAD_DE_FICHAS / 2
+    cantidad_de_pares = constantes.configuracion["CANTIDAD_FICHAS"] / 2
     fichas = ['S', 'I', 'G', 'M', 'A', 'X', 'Y', 'Z', 'W', 'O', 'Q', 'R', 'U', 't', 'p','a','b','c','d','f','r','j','F','s']
     ciclo = 1
     

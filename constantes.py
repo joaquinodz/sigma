@@ -1,7 +1,6 @@
 #Constantes del tablero.
 IMAGEN_FICHA = 0
 ESTADO_FICHA = 1
-CANTIDAD_DE_FICHAS = 16
 FICHAS_POR_FILA = 4
 
 #Constantes del Jugador.
@@ -26,6 +25,7 @@ MAXIMO_JUGADORES = 3
 USUARIO = 0
 CONTRASENIA = 1
 
+configuracion = {}
 CONFIGURACION_DEFAULT = {
     "CANTIDAD_FICHAS" : 16,
     "MAXIMO_JUGADORES": 2,

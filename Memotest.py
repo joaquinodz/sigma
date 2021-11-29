@@ -1,7 +1,8 @@
 import time
   
-from constantes import *
+import constantes
 import interfaz
+
 from tablero import inicializar_tablero, refresca_tablero, pedir_datos, finalizar
 from jugador import procesar_resultados, mostrar_resultados
 from util import limpiar_consola, tiempo_de_juego
@@ -34,7 +35,7 @@ def finalizar_turno():
     limpiar_consola()
 
 def main():
-    cargar_configuracion()
+    constantes.configuracion = cargar_configuracion()
     
     diccionario_usuarios_contrasenias = convertir_contrasenia_a_diccionario()
     interfaz.crear_interfaz(diccionario_usuarios_contrasenias)

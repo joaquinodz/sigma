@@ -1,15 +1,16 @@
 import random
 import os
+import sys
+import comprobaciones
+import constantes 
 
 from tkinter import *
-from tkinter import ttk
-from tkinter import messagebox
-from constantes import NO_VALIDO_CONTRA, NO_VALIDO_USUARIO ,EXITO ,LISTA_JUGADORES_VACIA, MAXIMO_JUGADORES, YA_REGISTRADO, CONTRASENIAS_DISTINTAS
-import comprobaciones
+from tkinter import ttk, messagebox
+
+from constantes import NO_VALIDO_CONTRA, NO_VALIDO_USUARIO,EXITO, LISTA_JUGADORES_VACIA, MAXIMO_JUGADORES, YA_REGISTRADO, CONTRASENIAS_DISTINTAS, configuracion
 
 jugadores = []
 jugador_actual = 0
-
 
 def crear_interfaz(diccionario_usuarios_contrasenias):
 
@@ -180,7 +181,7 @@ def obtener_jugadores(raiz ,nombre,contrasenia,diccionario_usuarios_contrasenias
         mensaje_jugadores()
         limpiar(nombre,contrasenia)
 
-        if len(jugadores) == MAXIMO_JUGADORES:
+        if len(jugadores) == constantes.configuracion["MAXIMO_JUGADORES"]:
             mensaje_al_usuario("Se alcanzo el limite de jugadores, el juego iniciara automaticamente")
             raiz.destroy()    
 
