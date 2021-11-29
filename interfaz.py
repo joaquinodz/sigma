@@ -128,7 +128,7 @@ def ventana_de_registro(diccionario_usuarios_contrasenias):
     entry_contrasenia_repetida.config(bg="black", width=27, insertbackground="blue", fg="white",font=10)
     entry_contrasenia_repetida.grid(padx=10, pady=10, row=3, column=1, ipady=6)
 
-    boton_jugar = Button(raiz_registro, text="Registrar", command= registrar_nuevo_usuario(raiz_registro,entry_usuario,entry_contrasenia, entry_contrasenia_repetida, diccionario_usuarios_contrasenias))
+    boton_jugar = Button(raiz_registro, text="Registrar", command= lambda:registrar_nuevo_usuario(raiz_registro,entry_usuario,entry_contrasenia, entry_contrasenia_repetida, diccionario_usuarios_contrasenias))
     boton_jugar.config(width=35, font=("Courier", 14), bg="whitesmoke")
     boton_jugar.pack(side=BOTTOM, fill=BOTH,padx=20, pady=27, ipady=15)   
 
