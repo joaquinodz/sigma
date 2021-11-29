@@ -88,7 +88,7 @@ def ventana_de_registro(diccionario_usuarios_contrasenias):
 
     raiz_registro = Tk()
     raiz_registro.title("Registro de usuario")
-    raiz_registro.geometry("500x300")
+    raiz_registro.geometry("600x500")
     raiz_registro.config(bg="white")
     raiz_registro.resizable(False,False)
 
@@ -96,7 +96,7 @@ def ventana_de_registro(diccionario_usuarios_contrasenias):
     if os.name != 'posix':
         raiz_registro.iconbitmap("sigma.ico")
 
-    mi_frame= Frame(raiz_registro, width="500", height="300")
+    mi_frame= Frame(raiz_registro, width="600", height="500")
     mi_frame.config(bg="white")
     mi_frame.pack()
 
@@ -104,29 +104,37 @@ def ventana_de_registro(diccionario_usuarios_contrasenias):
     label_inicial.config(font=("Courier", 18), bg="white")
     label_inicial.grid(padx=10, pady=10, row=0, column=0, columnspan=2)
 
+    label_requisitos_nombre = Label(mi_frame, text="El nombre debe tener una longitud entre 4 y 15 caracteres \n, y estar formado sólo por letras, números y el guión bajo.")
+    label_requisitos_nombre.config(font=("Courier", 11), bg="white")
+    label_requisitos_nombre.grid(padx=10, pady=10, row=1, column=0, columnspan=2)
+
+    label_requisitos_contrasenia = Label(mi_frame, text="La contraseña debe tener una longitud entre 8 y 12 caracteres, \nal menos una letra mayúscula, una letra minúscula,\n un número, y alguno de los siguientes caracteres: “_” “-“")
+    label_requisitos_contrasenia.config(font=("Courier", 11), bg="white")
+    label_requisitos_contrasenia.grid(padx=10, pady=10, row=2, column=0, columnspan=2)
+
     label_usuario = Label(mi_frame, text="Nombre de usuario")
     label_usuario.config(font=("Courier", 14), bg="white")
-    label_usuario.grid(padx=10, pady=10, row=1, column=0)
+    label_usuario.grid(padx=10, pady=10, row=3, column=0)
 
     entry_usuario = Entry(mi_frame) 
     entry_usuario.config(bg="black", width=27, insertbackground="blue",fg="white",font=10)
-    entry_usuario.grid(padx=10, pady=10, row=1, column=1, ipady=6)
+    entry_usuario.grid(padx=10, pady=10, row=3, column=1, ipady=6)
 
     label_contrasenia = Label(mi_frame, text="Contraseña")
     label_contrasenia.config(font=("Courier", 14), bg="white")
-    label_contrasenia.grid(padx=10, pady=10, row=2, column=0)
+    label_contrasenia.grid(padx=10, pady=10, row=4, column=0)
 
     entry_contrasenia = Entry(mi_frame)
-    entry_contrasenia.config(bg="black", width=27, insertbackground="blue", fg="white",font=10)
-    entry_contrasenia.grid(padx=10, pady=10, row=2, column=1, ipady=6)
+    entry_contrasenia.config(bg="black", width=27, insertbackground="blue", fg="white",font=10, show ="*")
+    entry_contrasenia.grid(padx=10, pady=10, row=4, column=1, ipady=6)
 
     label_contrasenia_repetida = Label(mi_frame, text="Repetir contraseña")
     label_contrasenia_repetida.config(font=("Courier", 14), bg="white")
-    label_contrasenia_repetida.grid(padx=10, pady=10, row=3, column=0)
+    label_contrasenia_repetida.grid(padx=10, pady=10, row=5, column=0)
 
     entry_contrasenia_repetida = Entry(mi_frame)
-    entry_contrasenia_repetida.config(bg="black", width=27, insertbackground="blue", fg="white",font=10)
-    entry_contrasenia_repetida.grid(padx=10, pady=10, row=3, column=1, ipady=6)
+    entry_contrasenia_repetida.config(bg="black", width=27, insertbackground="blue", fg="white",font=10, show ="*")
+    entry_contrasenia_repetida.grid(padx=10, pady=10, row=5, column=1, ipady=6)
 
     boton_jugar = Button(raiz_registro, text="Registrar", command= lambda:registrar_nuevo_usuario(raiz_registro,entry_usuario,entry_contrasenia, entry_contrasenia_repetida, diccionario_usuarios_contrasenias))
     boton_jugar.config(width=35, font=("Courier", 14), bg="whitesmoke")
