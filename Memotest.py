@@ -1,6 +1,7 @@
 import time
   
 import constantes
+
 import interfaz
 
 from tablero import inicializar_tablero, refresca_tablero, pedir_datos, finalizar
@@ -14,7 +15,7 @@ def memotest_juego():
     Hecha por todo el grupo (cada uno implemento su funcion).
     """
     while not finalizar():
-        print(f"Turno de {interfaz.jugadores[interfaz.jugador_actual][NOMBRE]}")
+        print(f"Turno de {interfaz.jugadores[interfaz.jugador_actual][constantes.NOMBRE]}")
         refresca_tablero()
 
         # Solicitamos al usuario la 1° posicion, validamos el valor y mostramos la ficha seleccionada
