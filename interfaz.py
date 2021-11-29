@@ -157,6 +157,7 @@ def registrar_nuevo_usuario(raiz_registro,entry_usuario, entry_contrasenia, entr
         if comprobaciones.es_valida_contrasenia(contrasenia, contrasenia_repetida) and comprobaciones.es_valido_nombre_usuario(nombre_usuario):
             jugadores.append([nombre_usuario,0,0])
             diccionario_usuarios_contrasenias[nombre_usuario] = contrasenia
+            mensaje_al_usuario(EXITO)
         limpiar(entry_usuario, entry_contrasenia, entry_contrasenia_repetida)  
               
     else:
