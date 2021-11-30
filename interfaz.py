@@ -1,13 +1,12 @@
 import random
 import os
-import sys
 import comprobaciones
 import constantes 
 
 from tkinter import *
 from tkinter import ttk, messagebox
 
-from constantes import NO_VALIDO_CONTRA, NO_VALIDO_USUARIO,EXITO, LISTA_JUGADORES_VACIA, MAXIMO_JUGADORES, YA_REGISTRADO, CONTRASENIAS_DISTINTAS, configuracion
+from constantes import EXITO, LISTA_JUGADORES_VACIA, YA_REGISTRADO, NOMBRE, INTENTOS, ACIERTOS
 
 jugadores = []
 jugador_actual = 0
@@ -71,15 +70,13 @@ def crear_interfaz(diccionario_usuarios_contrasenias):
 
     raiz.mainloop()
     
-    
 def limpiar(*entrys_a_limpiar):
     """
     Fátima: limpia los entrys para un nuevo ingreso
     """
     for entry in entrys_a_limpiar:
         entry.delete(0, 'end')
-        
-    
+         
 def ventana_de_registro(diccionario_usuarios_contrasenias):
 
     """
@@ -142,7 +139,7 @@ def ventana_de_registro(diccionario_usuarios_contrasenias):
 
     raiz_registro.mainloop()
 
-def registrar_nuevo_usuario(raiz_registro,entry_usuario, entry_contrasenia, entry_contrasenia_repetida, diccionario_usuarios_contrasenias):
+def registrar_nuevo_usuario(entry_usuario, entry_contrasenia, entry_contrasenia_repetida, diccionario_usuarios_contrasenias):
     """
     Fátima: se registra nuevo usuario si tanto el nombre de usuario como la contraseña son válidas. A su vez, se suma usuario
     a la lista de jugadores de la partida y al diccionario con los datos de los usuarios
@@ -163,7 +160,6 @@ def registrar_nuevo_usuario(raiz_registro,entry_usuario, entry_contrasenia, entr
     else:
         mensaje_al_usuario(YA_REGISTRADO)
 
-
 def comenzar_el_juego(raiz):
     """Rodrigo: se fija si la lista de jugadores esta vacia, si lo esta, da un mensaje de error, caso contrario, mezcla el orden de jugadores
     y destruye la interfaz"""
@@ -173,7 +169,6 @@ def comenzar_el_juego(raiz):
     else:
         random.shuffle(jugadores)
         raiz.destroy()
-
 
 def obtener_jugadores(raiz ,nombre,contrasenia,diccionario_usuarios_contrasenias):
     """
@@ -193,15 +188,12 @@ def obtener_jugadores(raiz ,nombre,contrasenia,diccionario_usuarios_contrasenias
             raiz.destroy()
 
     limpiar(nombre,contrasenia)
-        
-
-           
+                  
 def mensaje_al_usuario(mensaje):
     """
     Fátima: cuadro de mensaje ante un error. El mensaje es pasado por parámetro.
     """
     messagebox.showinfo('Atencion!', mensaje) 
-
 
 def obtener_nombres():
     """
@@ -215,3 +207,61 @@ def obtener_nombres():
 
 def mensaje_jugadores():
     mensaje_al_usuario("Los jugadores al momento son: \n\n" + obtener_nombres())
+
+def pantalla_final():
+    ultima_fila = 0
+    raiz = Tk()
+    raiz.title("Resultados de la partida.")
+    raiz.geometry("560x500")
+    raiz.config(bg="white")
+    raiz.resizable(False,False)
+    
+    # NO funciona en Linux
+    if os.name != 'posix':
+        raiz.iconbitmap("sigma.ico")
+
+    img= PhotoImage(file='fondo.png')
+    fondo = ttk.Label(raiz, image=img, anchor="center", background="white")
+    fondo.pack(side=TOP, fill=BOTH, padx=10, pady=5)
+
+    mi_frame= Frame(raiz, width="560", height="500")
+    mi_frame.config(bg="white")
+    mi_frame.pack()
+
+    calcula_ganador()
+    for jugador in jugadores:
+        if ultima_fila == 0:
+            label_jugador = Label(mi_frame, text=f"{jugadores[0][NOMBRE]}: {jugadores[0][ACIERTOS]} Pts., {jugadores[0][INTENTOS]} intentos. ¡Ganador!")
+            label_jugador.config(font=("Courier", 18), bg="yellow")
+            label_jugador.grid(padx=10, pady=10, row=ultima_fila, column=0, columnspan=2)
+        else:
+            label_jugador = Label(mi_frame, text=f"{jugador[NOMBRE]}: {jugador[ACIERTOS]} Pts., {jugador[INTENTOS]} intentos.")
+            label_jugador.config(font=("Courier", 14), bg="white")
+            label_jugador.grid(padx=10, pady=10, row=ultima_fila, column=0)
+        ultima_fila += 1
+
+    label_promedio = Label(mi_frame, text=f"Promedio de intentos: {promedio_de_intentos()} intentos.")
+    label_promedio.config(font=("Courier", 14), bg="blue")
+    label_promedio.grid(padx=10, pady=10, row=ultima_fila, column=0)
+
+    """boton_jugar = Button(raiz, text="¡Comenzar el juego!", command= lambda:comenzar_el_juego(raiz))
+    boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
+    boton_jugar.place(x= 20, y=430)
+
+    boton_otro_usuario = Button(raiz, text="Ingresar usuario", command= lambda:obtener_jugadores(raiz, entry_nombre_usuario, entry_contrasenia,diccionario_usuarios_contrasenias))
+    boton_otro_usuario.config(width=22, font=("Courier", 14), bg="whitesmoke")
+    boton_otro_usuario.place(x= 290, y=430)"""
+
+    raiz.mainloop()
+
+def calcula_ganador():
+    """Felipe: Ordena la lista de jugadores segun sus aciertos y en caso de empatar segun sus intentos."""
+    jugadores.sort(reverse=True, key=lambda jugador: (jugador[ACIERTOS], -jugador[INTENTOS]))
+
+def promedio_de_intentos():
+    """Felipe: Se calcula el promedio de intentos de los jugadores en la partida."""
+    total_intentos = 0
+    for jugador in jugadores:
+        total_intentos += jugador[INTENTOS]
+
+    return total_intentos / len(jugadores)

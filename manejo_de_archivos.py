@@ -1,4 +1,3 @@
-import constantes
 from constantes import USUARIO,CONTRASENIA, CONFIGURACION_DEFAULT
 
 def leer_archivo(archivo):
@@ -13,7 +12,6 @@ def leer_archivo(archivo):
         linea_procesada =  None, None 
 
     return linea_procesada
-
 
 def convertir_contrasenia_a_diccionario():
     """Rodrigo: convierte el archivo de contrasenias a un diccionario"""

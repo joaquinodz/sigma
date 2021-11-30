@@ -48,7 +48,7 @@ def main():
 
         tiempo_de_juego(inicio)
 
-        mostrar_resultados()
+        interfaz.pantalla_final()
     except IndexError:
         print("La ventana de registro fue cerrada.\n")
     #permite que el usuario lea el resultado antes de que se cierre la ventana

@@ -55,10 +55,7 @@ def es_valida_contrasenia(contrasenia, contrasenia_repetida):
     
     return contrasenia_valida
 
-
-
-
-def usuario_valido(usuario , contrasenia,diccionario_usuarios_contrasenias):
+def usuario_valido(usuario, contrasenia, diccionario_usuarios_contrasenias):
     """
     Rodrigo: primero comprueba que el usuario ingresado se encuentre 
     en la lista de jugadores si lo esta, devuelve un mensaje de error, luego, comprueba la contrasenia mediante contrasenia_comprobada()
@@ -74,11 +71,7 @@ def usuario_valido(usuario , contrasenia,diccionario_usuarios_contrasenias):
 
     return(jugador_valido)
 
-
-
-
-
-def contrasenia_comprobada(usuario, contrasenia,diccionario_usuarios_contrasenias):
+def contrasenia_comprobada(usuario, contrasenia, diccionario_usuarios_contrasenias):
     """Rodrigo: comprueba que el usuario se encuentre en el diccionario de contraseñas, si lo esta, comprueba si la contraseña coincide
     si ambas situaciones se dan, se devuelve True, caso contrario devuelve False y un mensaje apto para cada caso"""
     if usuario in diccionario_usuarios_contrasenias:

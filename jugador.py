@@ -29,7 +29,6 @@ def procesar_resultados(posiciones):
         else:
             interfaz.jugador_actual = 0
 
-    
 def mostrar_resultados():
     """
     Felipe: Calcula el ganador y lo muestra por pantalla junto con los puntos de cada jugador.
