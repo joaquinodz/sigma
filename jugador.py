@@ -2,7 +2,7 @@ from constantes import IMAGEN_FICHA, ACIERTOS, ESTADO_FICHA, INTENTOS, NOMBRE
 from tablero import tablero
 import interfaz
 
-def procesar_resultados(*jugador_actual, posiciones):
+def procesar_resultados(posiciones):
     """
     Joaquin: Determina si el jugador encontó 2 fichas iguales y actualiza sus estadísticas según el caso.
     Devuelve True si acertó, False si no.
@@ -11,11 +11,11 @@ def procesar_resultados(*jugador_actual, posiciones):
     # Estructura de el parámetro posiciones (tupla):
     primera_posicion, segunda_posicion = posiciones
 
-    interfaz.jugadores[jugador_actual][INTENTOS] += 1
+    interfaz.jugadores[interfaz.jugador_actual][INTENTOS] += 1
     
     # Si las posiciones son iguales, se suma 1 al contador de aciertos del jugador actual
     if tablero[primera_posicion][IMAGEN_FICHA] == tablero[segunda_posicion][IMAGEN_FICHA]:
-        interfaz.jugadores[jugador_actual][ACIERTOS] += 1    
+        interfaz.jugadores[interfaz.jugador_actual][ACIERTOS] += 1    
 
     else:
         # Si no, se cambia el estado de la ficha de la 1° y 2° posición a "oculta"
@@ -23,10 +23,10 @@ def procesar_resultados(*jugador_actual, posiciones):
         tablero[segunda_posicion][ESTADO_FICHA] = False
 
         # Es turno de otro jugador
-        if jugador_actual < len(interfaz.jugadores) - 1:
-            jugador_actual += 1
+        if interfaz.jugador_actual < len(interfaz.jugadores) - 1:
+            interfaz.jugador_actual += 1
         else:
-            jugador_actual = 0
+            interfaz.jugador_actual = 0
 
 def mostrar_resultados():
     """

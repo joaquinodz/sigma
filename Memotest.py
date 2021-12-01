@@ -27,7 +27,7 @@ def memotest_juego():
         # Solicitamos al usuario la 2° posicion, validamos el valor y mostramos la ficha seleccionada
         segunda_posicion = pedir_posicion("2° Posición: ")
         
-        procesar_resultados(jugador_actual, (primera_posicion, segunda_posicion))
+        procesar_resultados((primera_posicion, segunda_posicion))
 
         finalizar_turno()
 
