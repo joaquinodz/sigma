@@ -43,7 +43,7 @@ def cargar_configuracion():
 
     # Si no hay configuracion, uso la configuracion por defecto
     for clave in CONFIGURACION_DEFAULT:
-        if clave not in configuracion:
+        if clave not in constantes.configuracion:
             constantes.configuracion[clave] = CONFIGURACION_DEFAULT[clave]
     
 def smart_cast(value):
