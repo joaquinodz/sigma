@@ -11,7 +11,6 @@ from tkinter import ttk, messagebox
 from constantes import EXITO, LISTA_JUGADORES_VACIA, YA_REGISTRADO, NOMBRE, INTENTOS, ACIERTOS
 
 jugadores = []
-jugador_actual = 0
 
 def crear_interfaz(diccionario_usuarios_contrasenias):
 

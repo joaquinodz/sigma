@@ -52,15 +52,15 @@ def refresca_tablero():
     
     print(tablero_string)
 
-def pedir_datos(mensaje):
+def pedir_posicion(mensaje):
     """
     Joaquin: Le pide las posiciones al usuario las veces que sea necesario hasta que ingrese datos válidos
     Devuelve un entero con la posición que introdujo el usuario
     """
-    pedir = True
+    seguir_pidiendo_posicion = True
     valor = 0
 
-    while (pedir):
+    while seguir_pidiendo_posicion:
         try:
             valor = int(input(mensaje)) - 1
 
@@ -71,7 +71,7 @@ def pedir_datos(mensaje):
                 print("Esa posición ya se encuentra visible. Elige otra...")
 
             else:
-                pedir = False
+                seguir_pidiendo_posicion = False
 
         except ValueError:
             print("Has ingresado un número inválido. Intente nuevamente...")

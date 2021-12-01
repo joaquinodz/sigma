@@ -5,7 +5,7 @@
 import time
 import os
 
-def tiempo_de_juego(inicio):
+def mostrar_tiempo_de_juego(inicio):
     """ Sandra: Muestra el  tiempo que ha tomado la partida."""
     fin = time.time()
     tiempo_transcurrido = fin - inicio
