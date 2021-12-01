@@ -3,8 +3,9 @@ import time
 import constantes
 
 import interfaz
+import tablero
 
-from tablero import inicializar_tablero, refresca_tablero, pedir_datos, finalizar
+from tablero import inicializar_tablero, refresca_tablero, pedir_datos, finalizar, reinicio_tablero
 from jugador import procesar_resultados, mostrar_resultados
 from util import limpiar_consola, tiempo_de_juego
 from manejo_de_archivos import convertir_contrasenia_a_diccionario, cargar_configuracion
@@ -35,12 +36,11 @@ def finalizar_turno():
     time.sleep(2)
     limpiar_consola()
 
-def main():
-    constantes.configuracion = cargar_configuracion()
+def funcion_englobadora_de_funciones():
+    """Rodrigo: esta funcion engloba las funciones principales del programa"""
     
-    diccionario_usuarios_contrasenias = convertir_contrasenia_a_diccionario()
-    interfaz.crear_interfaz(diccionario_usuarios_contrasenias)
     try:
+        
         inicializar_tablero()
         inicio = time.time()
 
@@ -49,9 +49,8 @@ def main():
         tiempo_de_juego(inicio)
 
         interfaz.pantalla_final()
+            
     except IndexError:
         print("La ventana de registro fue cerrada.\n")
-    #permite que el usuario lea el resultado antes de que se cierre la ventana
-    input("Pulse enter para finalizar\n\n")
 
-main()
+

@@ -19,6 +19,7 @@ def inicializar_tablero():
     Al final, al tablero se le hace un shuffle para mezclar el tablero.
     Rodrigo, Fátima.
     """
+    
     cantidad_de_pares = constantes.configuracion["CANTIDAD_FICHAS"] / 2
     fichas = ['S', 'I', 'G', 'M', 'A', 'X', 'Y', 'Z', 'W', 'O', 'Q', 'R', 'U', 't', 'p','a','b','c','d','f','r','j','F','s']
     ciclo = 1
@@ -92,3 +93,8 @@ def finalizar():
             casillero +=1
 
     return estado_tablero
+
+def reinicio_tablero():
+    """Esta funcion reinicia el tablero a su estado original, dejandolo listo para jugar una nueva partida"""
+    global tablero
+    tablero = []

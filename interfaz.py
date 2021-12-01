@@ -2,6 +2,8 @@ import random
 import os
 import comprobaciones
 import constantes 
+import Memotest
+import tablero
 
 from tkinter import *
 from tkinter import ttk, messagebox
@@ -244,13 +246,13 @@ def pantalla_final():
     label_promedio.config(font=("Courier", 14), bg="blue")
     label_promedio.grid(padx=10, pady=10, row=ultima_fila, column=0)
 
-    """boton_jugar = Button(raiz, text="¡Comenzar el juego!", command= lambda:comenzar_el_juego(raiz))
+    boton_jugar = Button(raiz, text="terminar", command= lambda:raiz.destroy())
     boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_jugar.place(x= 20, y=430)
 
-    boton_otro_usuario = Button(raiz, text="Ingresar usuario", command= lambda:obtener_jugadores(raiz, entry_nombre_usuario, entry_contrasenia,diccionario_usuarios_contrasenias))
+    boton_otro_usuario = Button(raiz, text="continuar", command= lambda:jugar_otra_partida(raiz))
     boton_otro_usuario.config(width=22, font=("Courier", 14), bg="whitesmoke")
-    boton_otro_usuario.place(x= 290, y=430)"""
+    boton_otro_usuario.place(x= 290, y=430)
 
     raiz.mainloop()
 
@@ -265,3 +267,12 @@ def promedio_de_intentos():
         total_intentos += jugador[INTENTOS]
 
     return total_intentos / len(jugadores)
+
+
+def jugar_otra_partida(raiz):
+    """Rodrigo: esta funcion destruye la raiz y permite seguir jugando"""
+    raiz.destroy()
+    tablero.reinicio_tablero()
+    Memotest.funcion_englobadora_de_funciones()
+    
+    
