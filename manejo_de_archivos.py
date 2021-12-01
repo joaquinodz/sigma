@@ -10,7 +10,7 @@ def leer_archivo(archivo):
     if linea:
         linea_procesada = linea.split(',')
     else:
-        linea_procesada = None
+        linea_procesada = None, None
 
     return linea_procesada
 
