@@ -202,9 +202,9 @@ def obtener_nombres():
     Fátima: obtener todos los nombres de los jugadores
     """
     nombres = ""
-    if jugadores!= "":
-        for elemento in jugadores: 
-            nombres += elemento[0] +"\n"
+    if jugadores:
+        for jugador in jugadores: 
+            nombres += jugador[NOMBRE] +"\n"
     return nombres
 
 def mensaje_jugadores():
