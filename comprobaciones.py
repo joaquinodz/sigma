@@ -29,7 +29,8 @@ def es_valido_nombre_usuario(nombre_usuario):
     
         if cadena_validada(nombre_usuario_sin_guion) and nombre_usuario_sin_guion.isalnum():
             nombre_valido = True
-    else:
+
+    if not nombre_valido:
         interfaz.mensaje_al_usuario(NO_VALIDO_USUARIO)
 
     return nombre_valido
