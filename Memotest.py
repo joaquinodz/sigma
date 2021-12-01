@@ -18,7 +18,7 @@ def memotest_juego():
     jugador_actual = 0
 
     while not finalizar():
-        print(f"Turno de {interfaz.jugadores[interfaz.jugador_actual][constantes.NOMBRE]}")
+        print(f"Turno de {interfaz.jugadores[jugador_actual][constantes.NOMBRE]}")
         refresca_tablero()
 
         # Solicitamos al usuario la 1° posicion, validamos el valor y mostramos la ficha seleccionada
@@ -27,7 +27,7 @@ def memotest_juego():
         # Solicitamos al usuario la 2° posicion, validamos el valor y mostramos la ficha seleccionada
         segunda_posicion = pedir_posicion("2° Posición: ")
         
-        procesar_resultados((primera_posicion, segunda_posicion))
+        jugador_actual = procesar_resultados(jugador_actual, (primera_posicion, segunda_posicion))
 
         finalizar_turno()
 
