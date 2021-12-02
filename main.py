@@ -9,6 +9,6 @@ def main():
     
     diccionario_usuarios_contrasenias = convertir_contrasenia_a_diccionario()
     interfaz.crear_interfaz(diccionario_usuarios_contrasenias)
-    Memotest.funcion_englobadora_de_funciones()
+    Memotest.jugar_memotest()
 
 main()

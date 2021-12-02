@@ -20,16 +20,16 @@ def inicializar_tablero():
     Rodrigo, Fátima.
     """
     
-    cantidad_de_pares = constantes.configuracion["CANTIDAD_FICHAS"] / 2
+    cantidad_de_pares_de_fichas_totales = constantes.configuracion["CANTIDAD_FICHAS"] / 2
     fichas = ['S', 'I', 'G', 'M', 'A', 'X', 'Y', 'Z', 'W', 'O', 'Q', 'R', 'U', 't', 'p','a','b','c','d','f','r','j','F','s']
-    ciclo = 1
+    cantidad_de_fichas_inicializadas = 1
     
-    while ciclo <= cantidad_de_pares:
+    while cantidad_de_fichas_inicializadas <= cantidad_de_pares_de_fichas_totales:
         ficha_random = random.choice(fichas)
         tablero.append([ficha_random, False])
         tablero.append([ficha_random, False])
         fichas.remove(ficha_random)
-        ciclo += 1
+        cantidad_de_fichas_inicializadas += 1
     
     random.shuffle(tablero)
 
@@ -81,7 +81,7 @@ def pedir_posicion(mensaje):
 
     return valor
 
-def finalizar():
+def juego_finalizado():
     """ rodrigo: chequea que todos los valores del tablero sean True, si lo son devuelve True, si no, devuelve False """
     estado_tablero = True
     casillero = 0
@@ -94,7 +94,7 @@ def finalizar():
 
     return estado_tablero
 
-def reinicio_tablero():
+def reiniciar_tablero():
     """Esta funcion reinicia el tablero a su estado original, dejandolo listo para jugar una nueva partida"""
     global tablero
     tablero = []

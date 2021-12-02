@@ -210,7 +210,7 @@ def obtener_nombres():
 def mensaje_jugadores():
     mensaje_al_usuario("Los jugadores al momento son: \n\n" + obtener_nombres())
 
-def pantalla_final():
+def pantalla_final(cantidad_de_partidas_jugadas):
     ultima_fila = 0
     raiz = Tk()
     raiz.title("Resultados de la partida.")
@@ -250,9 +250,11 @@ def pantalla_final():
     boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_jugar.place(x= 20, y=430)
 
-    boton_otro_usuario = Button(raiz, text="continuar", command= lambda:jugar_otra_partida(raiz))
-    boton_otro_usuario.config(width=22, font=("Courier", 14), bg="whitesmoke")
-    boton_otro_usuario.place(x= 290, y=430)
+
+    if cantidad_de_partidas_jugadas < constantes.configuracion["MAXIMO_PARTIDAS"]:
+        boton_otro_usuario = Button(raiz, text="continuar", command= lambda:jugar_otra_partida(raiz,cantidad_de_partidas_jugadas))
+        boton_otro_usuario.config(width=22, font=("Courier", 14), bg="whitesmoke")
+        boton_otro_usuario.place(x= 290, y=430)
 
     raiz.mainloop()
 
@@ -269,10 +271,11 @@ def promedio_de_intentos():
     return total_intentos / len(jugadores)
 
 
-def jugar_otra_partida(raiz):
+def jugar_otra_partida(raiz,cantidad_de_partidas_jugadas):
     """Rodrigo: esta funcion destruye la raiz y permite seguir jugando"""
     raiz.destroy()
-    tablero.reinicio_tablero()
-    Memotest.funcion_englobadora_de_funciones()
+    tablero.reiniciar_tablero()
+    Memotest.jugar_memotest(cantidad_de_partidas_jugadas+1)
+    
     
     

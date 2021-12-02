@@ -5,7 +5,7 @@ import constantes
 import interfaz
 import tablero
 
-from tablero import inicializar_tablero, refresca_tablero, pedir_posicion, finalizar, reinicio_tablero
+from tablero import inicializar_tablero, juego_finalizado, refresca_tablero, pedir_posicion, juego_finalizado, reiniciar_tablero
 from jugador import procesar_resultados, mostrar_resultados
 from util import limpiar_consola, mostrar_tiempo_de_juego
 from manejo_de_archivos import convertir_contrasenia_a_diccionario, cargar_configuracion
@@ -17,7 +17,7 @@ def memotest_juego():
     """
     jugador_actual = 0
 
-    while not finalizar():
+    while not juego_finalizado():
         print(f"Turno de {interfaz.jugadores[jugador_actual][constantes.NOMBRE]}")
         refresca_tablero()
 
@@ -38,10 +38,11 @@ def finalizar_turno():
     time.sleep(2)
     limpiar_consola()
 
-def funcion_englobadora_de_funciones():
+def jugar_memotest(cantidad_de_partidas_jugadas=0):
     """Rodrigo: esta funcion engloba las funciones principales del programa"""
     
     try:
+        print(cantidad_de_partidas_jugadas)
         inicializar_tablero()
         
         inicio = time.time()
@@ -50,7 +51,7 @@ def funcion_englobadora_de_funciones():
 
         mostrar_tiempo_de_juego(inicio)
 
-        interfaz.pantalla_final()
+        interfaz.pantalla_final(cantidad_de_partidas_jugadas)
             
     except IndexError:
         print("La ventana de registro fue cerrada.\n")
