@@ -42,7 +42,6 @@ def jugar_memotest(cantidad_de_partidas_jugadas=0):
     """Rodrigo: esta funcion engloba las funciones principales del programa"""
     
     try:
-        print(cantidad_de_partidas_jugadas)
         inicializar_tablero()
         
         inicio = time.time()
