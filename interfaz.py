@@ -72,7 +72,7 @@ def crear_interfaz(diccionario_usuarios_contrasenias):
 
     raiz.mainloop()
     
-def limpiar(*entrys_a_limpiar):
+def limpiar_entradas_de_texto(*entrys_a_limpiar):
     """
     Fátima: limpia los entrys para un nuevo ingreso
     """
@@ -157,7 +157,7 @@ def registrar_nuevo_usuario(entry_usuario, entry_contrasenia, entry_contrasenia_
             jugadores.append([nombre_usuario,0,0])
             diccionario_usuarios_contrasenias[nombre_usuario] = contrasenia
             mensaje_al_usuario(EXITO)
-        limpiar(entry_usuario, entry_contrasenia, entry_contrasenia_repetida)  
+        limpiar_entradas_de_texto(entry_usuario, entry_contrasenia, entry_contrasenia_repetida)  
               
     else:
         mensaje_al_usuario(YA_REGISTRADO)
@@ -189,7 +189,7 @@ def obtener_jugadores(raiz ,nombre,contrasenia,diccionario_usuarios_contrasenias
             mensaje_al_usuario("Se alcanzo el limite de jugadores, el juego iniciara automaticamente")
             raiz.destroy()
 
-    limpiar(nombre,contrasenia)
+    limpiar_entradas_de_texto(nombre,contrasenia)
                   
 def mensaje_al_usuario(mensaje):
     """

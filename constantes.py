@@ -20,6 +20,9 @@ LISTA_JUGADORES_VACIA = "No se ha ingresado ningun jugador"
 YA_REGISTRADO = "Nombre usuario no disponible. Ingrese otro"
 CONTRASENIAS_DISTINTAS = "Las contraseñas no coinciden. Intente nuevamente"
 
+#comprobaciones
+NO_ENCONTRADO = -1
+
 #validacion de los usuarios
 MAXIMO_JUGADORES = 3
 USUARIO = 0

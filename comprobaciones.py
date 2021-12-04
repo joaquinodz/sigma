@@ -1,19 +1,23 @@
 import interfaz 
-from constantes import YA_INGRESADO, INCORRECTO, INEXISTENTE, CONTRASENIAS_DISTINTAS, NO_VALIDO_CONTRA, NO_VALIDO_USUARIO
+from constantes import YA_INGRESADO, INCORRECTO, INEXISTENTE, CONTRASENIAS_DISTINTAS, NO_VALIDO_CONTRA, NO_VALIDO_USUARIO, NO_ENCONTRADO
 
 
 
-def cadena_validada(cadena_a_validar):
+def cadena_sin_tildes(cadena_a_validar):
     """
-    Fátima: recibe el cadena a validar, sea nombre de usuario o contraseña para verificar que no haya tildes
+    Fátima: recibe el cadena a validar (nombre de usuario o contraseña) y devuelve True si no contiene tildes
     """
 
-    tildes = ["á", "é", "í", "ó"] 
-    cadena_validada = True
+    tildes = ["á", "é", "í", "ó", "ú"] 
+    cadena_validada = False
+    cadena_a_lista = list(cadena_a_validar.lower())
+    caracter = 0
 
-    for caracter in cadena_a_validar:
-        if caracter in tildes:
-            cadena_validada = False
+    while cadena_a_lista and caracter < len(cadena_a_lista):
+
+        if not cadena_a_lista[caracter] in tildes:
+            cadena_validada = True
+        caracter += 1
 
     return cadena_validada
 
@@ -22,12 +26,12 @@ def es_valido_nombre_usuario(nombre_usuario):
     Fátima: recibe el nombre de usuario como paramétro y hace comprobaciones necesarias
     """
     nombre_valido = False
-    guiones = "_"
-    nombre_usuario_sin_guion = ''.join(caracter for caracter in nombre_usuario if caracter not in guiones)
+    caracter_permitido = "_"
+    nombre_usuario_sin_guion = ''.join(caracter for caracter in nombre_usuario if caracter not in caracter_permitido)
 
     if 4 <= len(nombre_usuario) <= 15:
     
-        if cadena_validada(nombre_usuario_sin_guion) and nombre_usuario_sin_guion.isalnum():
+        if cadena_sin_tildes(nombre_usuario_sin_guion) and nombre_usuario_sin_guion.isalnum():
             nombre_valido = True
 
     if not nombre_valido:
@@ -46,7 +50,7 @@ def es_valida_contrasenia(contrasenia, contrasenia_repetida):
 
     if 8 <= len(contrasenia) <= 12:
         if contrasenia == contrasenia_repetida:
-            if cadena_validada(contrasenia) and not contrasenia.islower() and (contrasenia.find("-") != -1 or contrasenia.find("_") != -1) and any(caracter.isdigit() for caracter in contrasenia): 
+            if cadena_sin_tildes(contrasenia) and not contrasenia.islower() and (contrasenia.find("-") != NO_ENCONTRADO or contrasenia.find("_") != NO_ENCONTRADO) and any(caracter.isdigit() for caracter in contrasenia): 
                 contrasenia_valida = True
             else:
                 interfaz.mensaje_al_usuario(NO_VALIDO_CONTRA)
