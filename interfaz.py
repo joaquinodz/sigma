@@ -222,9 +222,28 @@ def pantalla_final(cantidad_de_partidas_jugadas):
     if os.name != 'posix':
         raiz.iconbitmap("sigma.ico")
 
-    img= PhotoImage(file='fondo.png')
+    framesNum = 50 # Numero de frames que tiene el gif
+    archivo = "fuegos-artificiales.gif"
+
+    # Lista de todas las imagenes del gif
+    frames = [PhotoImage(file=archivo, format='gif -index %i' %(i)) for i in range(framesNum)]
+
+    def update(ind):
+        """ Actualiza la imagen gif """
+        frame = frames[ind]
+        ind += 1
+        if ind == framesNum:
+            ind = 0
+        label.configure(image=frame)
+        raiz.after(100, update, ind) # Numero que regula la velocidad del gif
+
+    label = Label(raiz)
+    label.pack()
+    raiz.after(0, update, 0)
+
+    """img= PhotoImage(file='fondo.png')
     fondo = ttk.Label(raiz, image=img, anchor="center", background="white")
-    fondo.pack(side=TOP, fill=BOTH, padx=10, pady=5)
+    fondo.pack(side=TOP, fill=BOTH, padx=10, pady=5)"""
 
     mi_frame= Frame(raiz, width="560", height="500")
     mi_frame.config(bg="white")
@@ -233,26 +252,26 @@ def pantalla_final(cantidad_de_partidas_jugadas):
     calcula_ganador()
     for jugador in jugadores:
         if ultima_fila == 0:
-            label_jugador = Label(mi_frame, text=f"{jugadores[0][NOMBRE]}: {jugadores[0][ACIERTOS]} Pts., {jugadores[0][INTENTOS]} intentos. ¡Ganador!")
-            label_jugador.config(font=("Courier", 18), bg="yellow")
+            label_jugador = Label(mi_frame, text=f"El ganador es...\n¡{jugadores[0][NOMBRE]}! con {jugadores[0][ACIERTOS]} puntos y {jugadores[0][INTENTOS]} intentos.")
+            label_jugador.config(font=("Courier", 14), bg="gold")
             label_jugador.grid(padx=10, pady=10, row=ultima_fila, column=0, columnspan=2)
         else:
-            label_jugador = Label(mi_frame, text=f"{jugador[NOMBRE]}: {jugador[ACIERTOS]} Pts., {jugador[INTENTOS]} intentos.")
+            label_jugador = Label(mi_frame, text=f"Seguí mejorando \n¡{jugador[NOMBRE]}! obtuviste {jugador[ACIERTOS]} puntos en {jugador[INTENTOS]} intentos.")
             label_jugador.config(font=("Courier", 14), bg="white")
             label_jugador.grid(padx=10, pady=10, row=ultima_fila, column=0)
         ultima_fila += 1
 
-    label_promedio = Label(mi_frame, text=f"Promedio de intentos: {promedio_de_intentos()} intentos.")
-    label_promedio.config(font=("Courier", 14), bg="blue")
+    label_promedio = Label(mi_frame, text=f"Promedio de intentos: {promedio_de_intentos()} intentos.\n")
+    label_promedio.config(font=("Courier", 14), fg="green")
     label_promedio.grid(padx=10, pady=10, row=ultima_fila, column=0)
 
-    boton_jugar = Button(raiz, text="terminar", command= lambda:raiz.destroy())
+    boton_jugar = Button(raiz, text="Terminar", command= lambda:raiz.destroy())
     boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_jugar.place(x= 20, y=430)
 
 
     if cantidad_de_partidas_jugadas < constantes.configuracion["MAXIMO_PARTIDAS"]:
-        boton_otro_usuario = Button(raiz, text="continuar", command= lambda:jugar_otra_partida(raiz,cantidad_de_partidas_jugadas))
+        boton_otro_usuario = Button(raiz, text="Continuar", command= lambda:jugar_otra_partida(raiz,cantidad_de_partidas_jugadas))
         boton_otro_usuario.config(width=22, font=("Courier", 14), bg="whitesmoke")
         boton_otro_usuario.place(x= 290, y=430)
 
@@ -276,6 +295,4 @@ def jugar_otra_partida(raiz,cantidad_de_partidas_jugadas):
     raiz.destroy()
     tablero.reiniciar_tablero()
     Memotest.jugar_memotest(cantidad_de_partidas_jugadas+1)
-    
-    
     
