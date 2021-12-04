@@ -261,19 +261,19 @@ def pantalla_final(cantidad_de_partidas_jugadas):
             label_jugador.grid(padx=10, pady=10, row=ultima_fila, column=0)
         ultima_fila += 1
 
-    label_promedio = Label(mi_frame, text=f"Promedio de intentos: {promedio_de_intentos()} intentos.\n")
+    label_promedio = Label(mi_frame, text=f"Promedio de intentos: {promedio_de_intentos()} intentos.")
     label_promedio.config(font=("Courier", 14), fg="green")
     label_promedio.grid(padx=10, pady=10, row=ultima_fila, column=0)
 
     boton_jugar = Button(raiz, text="Terminar", command= lambda:raiz.destroy())
     boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
-    boton_jugar.place(x= 20, y=430)
+    boton_jugar.place(x= 20, y=440)
 
 
     if cantidad_de_partidas_jugadas < constantes.configuracion["MAXIMO_PARTIDAS"]:
         boton_otro_usuario = Button(raiz, text="Continuar", command= lambda:jugar_otra_partida(raiz,cantidad_de_partidas_jugadas))
         boton_otro_usuario.config(width=22, font=("Courier", 14), bg="whitesmoke")
-        boton_otro_usuario.place(x= 290, y=430)
+        boton_otro_usuario.place(x= 290, y=440)
 
     raiz.mainloop()
 
