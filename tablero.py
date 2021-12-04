@@ -89,8 +89,8 @@ def juego_finalizado():
     while estado_tablero and casillero < len(tablero):
         if not tablero[casillero][ESTADO_FICHA]:
             estado_tablero = False
-        else:
-            casillero +=1
+        
+        casillero +=1
 
     return estado_tablero
 
