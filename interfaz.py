@@ -209,6 +209,9 @@ def obtener_nombres():
 
 #Mensaje jugadores lo cambio a una ventana nueva tipo splash
 def ventana_jugadores():
+    """
+    Fátima: ventana jugadores conectados (ingresados y aceptados)
+    """
     raiz = Tk()
     raiz.title("Jugadores aceptados:")
     raiz.geometry("250x250")
