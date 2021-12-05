@@ -183,7 +183,7 @@ def obtener_jugadores(raiz ,nombre,contrasenia,diccionario_usuarios_contrasenias
         global jugadores
         jugadores.append([nombre.get(),0,0])
         mensaje_al_usuario(EXITO)
-        mensaje_jugadores()
+        ventana_jugadores()
 
         if len(jugadores) == constantes.configuracion["MAXIMO_JUGADORES"]:
             mensaje_al_usuario("Se alcanzo el limite de jugadores, el juego iniciara automaticamente")
@@ -207,8 +207,35 @@ def obtener_nombres():
             nombres += jugador[NOMBRE] +"\n"
     return nombres
 
-def mensaje_jugadores():
-    mensaje_al_usuario("Los jugadores al momento son: \n\n" + obtener_nombres())
+#Mensaje jugadores lo cambio a una ventana nueva tipo splash
+def ventana_jugadores():
+    raiz = Tk()
+    raiz.title("Jugadores aceptados:")
+    raiz.geometry("250x250")
+    raiz.config(bg="white")
+    raiz.resizable(False,False)
+    
+    # NO funciona en Linux
+    if os.name != 'posix':
+        raiz.iconbitmap("sigma.ico")
+
+    mi_frame= Frame(raiz, width="250", height="250")
+    mi_frame.config(bg="white")
+    mi_frame.pack()
+
+    jugadores_ingresados = "CONECTADOS: \n{}".format(obtener_nombres())
+    
+    label_jugadores = Label(mi_frame, text = jugadores_ingresados)
+    label_jugadores.config(font=("Courier", 14), bg="white", fg ="green") 
+    label_jugadores.pack()
+
+    def cerrar_ventana(raiz):
+        raiz.quit()
+        raiz.destroy()  
+
+    raiz.after(1500,lambda: cerrar_ventana(raiz))
+    raiz.mainloop()
+    
 
 def pantalla_final(cantidad_de_partidas_jugadas):
     ultima_fila = 0
