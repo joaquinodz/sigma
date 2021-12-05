@@ -220,6 +220,7 @@ def ventana_jugadores():
     raiz.geometry("250x250")
     raiz.config(bg="white")
     raiz.resizable(False,False)
+    raiz.attributes('-disabled', True)
     
     # NO funciona en Linux
     if os.name != 'posix':
@@ -239,7 +240,7 @@ def ventana_jugadores():
         raiz.quit()
         raiz.destroy()  
 
-    raiz.after(1200,lambda: cerrar_ventana(raiz))
+    raiz.after(1300,lambda: cerrar_ventana(raiz))
     raiz.mainloop()
     
 
