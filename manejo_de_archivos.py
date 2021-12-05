@@ -1,6 +1,7 @@
 import constantes
 from constantes import USUARIO,CONTRASENIA, CONFIGURACION_DEFAULT
 
+
 def leer_archivo(archivo):
     """
     Rodrigo: lee un archivo linea a linea
@@ -55,3 +56,26 @@ def smart_cast(value):
         return bool(value)
     
     return value
+
+#----------------------------ESCRITURA----------------------------#
+def escribir_archivo(archivo, linea):
+    """
+    Fátima: escribe linea pasada por parámetro al archivo
+    """
+    archivo.write(linea)
+
+def registrar_jugadores_en_archivo(jugadores_nuevos):
+    """
+    Fátima: registro nuevos usuarios al archivo partir de la lista de jugadores nuevos.
+    Como anteriormente ya fueron verificados, es seguro escribirlos directo en el archivo
+    """
+    usuarios = open("usuarios.csv" ,"a")
+
+    #la lista del tipo jugadores_nuevos=[ ["juan","perez"] , ["alan","gomez"] ]
+
+    if jugadores_nuevos:
+        for usuario in jugadores_nuevos: 
+            nuevo_usuario =  usuario[USUARIO] + "," + usuario[CONTRASENIA] + "\n"
+            escribir_archivo(usuarios, nuevo_usuario)        
+
+    usuarios.close()

@@ -9,8 +9,10 @@ from tkinter import *
 from tkinter import ttk, messagebox
 
 from constantes import EXITO, LISTA_JUGADORES_VACIA, YA_REGISTRADO, NOMBRE, INTENTOS, ACIERTOS
+from manejo_de_archivos import registrar_jugadores_en_archivo
 
 jugadores = []
+jugadores_nuevos = []
 jugador_actual = 0
 
 def crear_interfaz(diccionario_usuarios_contrasenias):
@@ -62,7 +64,7 @@ def crear_interfaz(diccionario_usuarios_contrasenias):
     entry_contrasenia.config(bg="black", width=35, insertbackground="blue", fg="white",font=10)
     entry_contrasenia.grid(padx=10, pady=10, row=2, column=1, ipady=8)
 
-    boton_jugar = Button(raiz, text="¡Comenzar el juego!", command= lambda:comenzar_el_juego(raiz))
+    boton_jugar = Button(raiz, text="¡Comenzar el juego!", command= lambda:comenzar_el_juego(raiz, diccionario_usuarios_contrasenias))
     boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_jugar.place(x= 20, y=430)
 
@@ -156,13 +158,14 @@ def registrar_nuevo_usuario(entry_usuario, entry_contrasenia, entry_contrasenia_
         if comprobaciones.es_valida_contrasenia(contrasenia, contrasenia_repetida) and comprobaciones.es_valido_nombre_usuario(nombre_usuario):
             jugadores.append([nombre_usuario,0,0])
             diccionario_usuarios_contrasenias[nombre_usuario] = contrasenia
+            jugadores_nuevos.append([nombre_usuario, contrasenia])
             mensaje_al_usuario(EXITO)
         limpiar_entradas_de_texto(entry_usuario, entry_contrasenia, entry_contrasenia_repetida)  
               
     else:
         mensaje_al_usuario(YA_REGISTRADO)
 
-def comenzar_el_juego(raiz):
+def comenzar_el_juego(raiz, diccionario_usuarios_contrasenias):
     """Rodrigo: se fija si la lista de jugadores esta vacia, si lo esta, da un mensaje de error, caso contrario, mezcla el orden de jugadores
     y destruye la interfaz"""
     global jugadores
@@ -236,7 +239,7 @@ def ventana_jugadores():
         raiz.quit()
         raiz.destroy()  
 
-    raiz.after(1500,lambda: cerrar_ventana(raiz))
+    raiz.after(1200,lambda: cerrar_ventana(raiz))
     raiz.mainloop()
     
 
@@ -295,7 +298,7 @@ def pantalla_final(cantidad_de_partidas_jugadas):
     label_promedio.config(font=("Courier", 14), fg="green")
     label_promedio.grid(padx=10, pady=10, row=ultima_fila, column=0)
 
-    boton_jugar = Button(raiz, text="Terminar", command= lambda:raiz.destroy())
+    boton_jugar = Button(raiz, text="Terminar", command= lambda:final_del_juego(raiz))
     boton_jugar.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_jugar.place(x= 20, y=440)
 
@@ -306,6 +309,13 @@ def pantalla_final(cantidad_de_partidas_jugadas):
         boton_otro_usuario.place(x= 290, y=440)
 
     raiz.mainloop()
+
+def final_del_juego(raiz):
+    """
+    Fátima: final del juego, cierra ventana y escribe nuevos usuarios en el archivo
+    """
+    registrar_jugadores_en_archivo(jugadores_nuevos)
+    raiz.destroy()
 
 def calcula_ganador():
     """Felipe: Ordena la lista de jugadores segun sus aciertos y en caso de empatar segun sus intentos."""
