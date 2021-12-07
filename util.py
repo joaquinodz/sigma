@@ -1,7 +1,6 @@
 """
     Acá van las funciones conceptualmente independientes al manejo del tablero y de la partida.
 """
-
 import time
 import os
 
@@ -21,3 +20,13 @@ def mostrar_tiempo_de_juego(inicio):
 def limpiar_consola():
     """Joaquin: Limpiamos la consola (compatible con Windows, Linix y Mac)"""
     os.system('cls' if os.name == 'nt' else 'clear')
+
+def smart_cast(value):
+    """Joaquin: Infiere el tipo de dato a partir de un string y realiza la conversion correspondiente"""
+    if value.isnumeric():
+        return int(value)
+    
+    if "True" in value or "False" in value:
+        return bool(value)
+    
+    return value

@@ -1,5 +1,4 @@
 import random
-import constantes
 from constantes import IMAGEN_FICHA, ESTADO_FICHA, FICHAS_POR_FILA
 
 """
@@ -10,7 +9,7 @@ y el segundo valor representa si esta descubierto o no.
 """
 tablero = []
 
-def inicializar_tablero():
+def inicializar_tablero(configuracion):
     """
     Inicializar tablero genera un tablero aleatoriamente a través de random.
     Comienza escogiendo una ficha al azar de la lista de fichas.
@@ -20,7 +19,7 @@ def inicializar_tablero():
     Rodrigo, Fátima.
     """
     
-    cantidad_de_pares_de_fichas_totales = constantes.configuracion["CANTIDAD_FICHAS"] / 2
+    cantidad_de_pares_de_fichas_totales = configuracion["CANTIDAD_FICHAS"] / 2
     fichas = ['S', 'I', 'G', 'M', 'A', 'X', 'Y', 'Z', 'W', 'O', 'Q', 'R', 'U', 't', 'p','a','b','c','d','f','r','j','F','s']
     cantidad_de_fichas_inicializadas = 1
     
@@ -32,6 +31,19 @@ def inicializar_tablero():
         cantidad_de_fichas_inicializadas += 1
     
     random.shuffle(tablero)
+
+def juego_finalizado():
+    """ rodrigo: chequea que todos los valores del tablero sean True, si lo son devuelve True, si no, devuelve False """
+    estado_tablero = True
+    casillero = 0
+
+    while estado_tablero and casillero < len(tablero):
+        if not tablero[casillero][ESTADO_FICHA]:
+            estado_tablero = False
+        
+        casillero +=1
+
+    return estado_tablero
 
 def refresca_tablero():
     """ Felipe: esta funcion se encarga de printear por pantalla el tablero dado por parametro """
@@ -81,18 +93,13 @@ def pedir_posicion(mensaje):
 
     return valor
 
-def juego_finalizado():
-    """ rodrigo: chequea que todos los valores del tablero sean True, si lo son devuelve True, si no, devuelve False """
-    estado_tablero = True
-    casillero = 0
+def los_casilleros_son_iguales(primera_posicion, segunda_posicion):
+    """Felipe: Devuelve si dos posiciones del tablero contienen la misma imagen o no."""
+    return tablero[primera_posicion][IMAGEN_FICHA] == tablero[segunda_posicion][IMAGEN_FICHA]
 
-    while estado_tablero and casillero < len(tablero):
-        if not tablero[casillero][ESTADO_FICHA]:
-            estado_tablero = False
-        
-        casillero +=1
-
-    return estado_tablero
+def cambiar_de_estado_al_casillero(posicion, estado):
+    """Felipe: Le asigna al casillero en la posicion indicada el estado pasado por parametros."""
+    tablero[posicion][ESTADO_FICHA] = estado
 
 def reiniciar_tablero():
     """Esta funcion reinicia el tablero a su estado original, dejandolo listo para jugar una nueva partida"""

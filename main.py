@@ -1,14 +1,22 @@
-import interfaz
-
-import manejo_de_archivos
-from manejo_de_archivos import convertir_contrasenia_a_diccionario, cargar_configuracion
-import Memotest
+from manejo_de_archivos import cargar_configuracion
+from interfaz import crear_interfaz, pantalla_final
+from Memotest import logica_principal
+from manejo_de_archivos import convertir_contrasenia_a_diccionario, registrar_jugadores_en_archivo
 
 def main():
-    cargar_configuracion()
+    configuracion = cargar_configuracion()
+
+    #Interfaz de inicio.
+    crear_interfaz(configuracion, convertir_contrasenia_a_diccionario())
+
+    #inicio = time.time()
+    cantidad_de_partidas_jugadas = 1
+    logica_principal(configuracion)
+
+    #Interfaz final.
+    #mostrar_tiempo_de_juego(inicio)
+    pantalla_final(configuracion, cantidad_de_partidas_jugadas)
     
-    diccionario_usuarios_contrasenias = convertir_contrasenia_a_diccionario()
-    interfaz.crear_interfaz(diccionario_usuarios_contrasenias)
-    Memotest.jugar_memotest()
+    registrar_jugadores_en_archivo()
 
 main()

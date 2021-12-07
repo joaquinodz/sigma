@@ -1,57 +1,91 @@
-from constantes import IMAGEN_FICHA, ACIERTOS, ESTADO_FICHA, INTENTOS, NOMBRE
-from tablero import tablero
-import interfaz
+import random
+from constantes import ACIERTOS, INTENTOS, NOMBRE
+from tablero import los_casilleros_son_iguales, cambiar_de_estado_al_casillero
 
-def procesar_resultados(jugador_actual, posiciones):
+jugadores = []
+jugador_actual = 0
+jugadores_nuevos = []
+
+def procesar_resultados(posiciones):
     """
     Joaquin: Determina si el jugador encontó 2 fichas iguales y actualiza sus estadísticas según el caso.
     Devuelve el indice del jugador que le corresponde el siguiente turno
     """
+    global jugador_actual
     
     # Estructura de el parámetro posiciones (tupla):
     primera_posicion, segunda_posicion = posiciones
 
-    interfaz.jugadores[jugador_actual][INTENTOS] += 1
+    jugadores[jugador_actual][INTENTOS] += 1
     
     # Si las posiciones son iguales, se suma 1 al contador de aciertos del jugador actual
-    if tablero[primera_posicion][IMAGEN_FICHA] == tablero[segunda_posicion][IMAGEN_FICHA]:
-        interfaz.jugadores[jugador_actual][ACIERTOS] += 1    
+    if los_casilleros_son_iguales(primera_posicion, segunda_posicion):
+        jugadores[jugador_actual][ACIERTOS] += 1    
 
     else:
         # Si no, se cambia el estado de la ficha de la 1° y 2° posición a "oculta"
-        tablero[primera_posicion][ESTADO_FICHA] = False
-        tablero[segunda_posicion][ESTADO_FICHA] = False
+        cambiar_de_estado_al_casillero(primera_posicion, False)
+        cambiar_de_estado_al_casillero(segunda_posicion, False)
 
         # Es turno de otro jugador
-        if jugador_actual < len(interfaz.jugadores) - 1:
+        if jugador_actual < len(jugadores) - 1:
             jugador_actual += 1
         else:
             jugador_actual = 0
-    
-    return jugador_actual
 
-def mostrar_resultados():
+def calcula_ganador():
     """
-    Felipe: Calcula el ganador y lo muestra por pantalla junto con los puntos de cada jugador.
+    Felipe: Devuelve la lista de jugadores ordenada  segun sus aciertos,
+            en caso de empatar segun sus intentos.
     """
-    ganador = -1
-    msj_resultados = ""
-    
+    return sorted(jugadores, reverse=True, key=lambda jugador: (jugador[ACIERTOS], -jugador[INTENTOS]))
 
-    msj_resultados += f"\n {interfaz.jugadores[0][NOMBRE]}: {interfaz.jugadores[0][ACIERTOS]} pts., Intentos: {interfaz.jugadores[0][INTENTOS]} \n"
-    msj_resultados += f"{interfaz.jugadores[1][NOMBRE]}: {interfaz.jugadores[1][ACIERTOS]} pts., Intentos: {interfaz.jugadores[1][INTENTOS]} \n"
+def nombre_jugador_actual():
+    """Felipe: Devuelve el nombre del jugador actual."""
+    return jugadores[jugador_actual][NOMBRE]
 
-    if interfaz.jugadores[0][ACIERTOS] > interfaz.jugadores[1][ACIERTOS]:
-        ganador = 0
-    elif interfaz.jugadores[1][ACIERTOS] > interfaz.jugadores[0][ACIERTOS]:
-        ganador = 1
-    else:
-        if interfaz.jugadores[0][INTENTOS] > interfaz.jugadores[1][INTENTOS]:
-            ganador = 1
-        else:
-            ganador = 0
+def agregar_jugador(nombre_nuevo):
+    """Felipe: agrega un jugador a la lista de jugadores con sus variables inicializadas en 0."""
+    jugadores.append([nombre_nuevo,0,0])
 
-    msj_resultados += f"\n Ganador: {interfaz.jugadores[ganador][NOMBRE]}"
-    msj_resultados += ", por menor cantidad de intentos \n" if interfaz.jugadores[0][ACIERTOS] == interfaz.jugadores[1][ACIERTOS] else "\n"
+def agregar_jugador_nuevo(nombre_usuario, contrasenia):
+    """Felipe: agrega un jugador a la lista de jugadores nuevos."""
+    jugadores_nuevos.append([nombre_usuario, contrasenia])
 
-    print(msj_resultados)
+def hay_jugadores():
+    """Felipe: Indica si la lista de jugadores esta vacia o no."""
+    return jugadores
+
+def hay_jugadores_nuevos():
+    """Felipe: Indica si la lista de jugadores nuevos esta vacia o no."""
+    return jugadores_nuevos
+
+def mezclar_jugadores():
+    """Felipe: Mezcla la lista de jugadores con random.shuffle."""
+    random.shuffle(jugadores)
+
+def existe_jugador(usuario):
+    """Felipe: Indica si el jugador se encuentra en la lista de jugadores."""
+    return [usuario, 0, 0] in jugadores
+
+def obtener_nombres_de_jugadores():
+    """
+    Fátima: obtener todos los nombres de los jugadores
+    """
+    nombres = ""
+    if jugadores:
+        for jugador in jugadores: 
+            nombres += jugador[NOMBRE] +"\n"
+    return nombres
+
+def obtener_cantidad_de_jugadores():
+    """Felipe: Indica la cantidad de jugadores."""
+    return len(jugadores)
+
+def obtener_promedio_de_intentos():
+    """Felipe: Se calcula el promedio de intentos de los jugadores en la partida."""
+    total_intentos = 0
+    for jugador in jugadores:
+        total_intentos += jugador[INTENTOS]
+
+    return total_intentos / len(jugadores)

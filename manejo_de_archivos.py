@@ -1,6 +1,38 @@
-import constantes
-from constantes import USUARIO,CONTRASENIA, CONFIGURACION_DEFAULT
+from constantes import CONFIGURACION_DEFAULT, CLAVE, VALOR
+from util import smart_cast
+from jugador import hay_jugadores_nuevos
 
+def cargar_configuracion():
+    """Joaquin: Carga la configuración del juego desde un archivo"""
+
+    with open("configuracion.csv", 'r') as archivo_configuracion:
+        lista_de_lineas = archivo_configuracion.readlines()
+    
+    # Saco el salto de linea al final de cada linea
+    # Convierto los valores separados por coma en listas - [clave, valor]
+    lista_de_lineas = [linea.rstrip('\n').split(',') for linea in lista_de_lineas]
+    
+    # {'nombre_del_parametro': valor_del_parametro}
+    configuracion = {linea[CLAVE]:smart_cast(linea[VALOR]) for linea in lista_de_lineas}
+
+    # Si no hay configuracion, uso la configuracion por defecto
+    for clave in CONFIGURACION_DEFAULT:
+        if clave not in configuracion:
+            configuracion[clave] = CONFIGURACION_DEFAULT[clave]
+    
+    return configuracion
+
+def convertir_contrasenia_a_diccionario():
+    """Rodrigo: convierte el archivo de contrasenias a un diccionario"""
+    contrasenias = open("usuarios.csv","r")
+    diccionario_contrasenias = {}
+    linea = leer_archivo(contrasenias)
+    while linea[CLAVE]:
+        diccionario_contrasenias[linea[CLAVE]] = linea[VALOR]
+        linea = leer_archivo(contrasenias)
+    contrasenias.close()
+    
+    return diccionario_contrasenias
 
 def leer_archivo(archivo):
     """
@@ -15,48 +47,6 @@ def leer_archivo(archivo):
 
     return linea_procesada
 
-def convertir_contrasenia_a_diccionario():
-    """Rodrigo: convierte el archivo de contrasenias a un diccionario"""
-    contrasenias = open("usuarios.csv","r")
-    diccionario_contrasenias = {}
-    linea = leer_archivo(contrasenias)
-    while linea[USUARIO]:
-        diccionario_contrasenias[linea[USUARIO]] = linea[CONTRASENIA]
-        linea = leer_archivo(contrasenias)
-    contrasenias.close()
-    
-    return diccionario_contrasenias
-
-def cargar_configuracion():
-    """Joaquin: Carga la configuración del juego desde un archivo"""
-    CLAVE = 0
-    VALOR = 1
-
-    with open("configuracion.csv", 'r') as archivo_configuracion:
-        lista_de_lineas = archivo_configuracion.readlines()
-    
-    # Saco el salto de linea al final de cada linea
-    # Convierto los valores separados por coma en listas - [clave, valor]
-    lista_de_lineas = [linea.rstrip('\n').split(',') for linea in lista_de_lineas]
-    
-    # {'nombre_del_parametro': valor_del_parametro}
-    constantes.configuracion = {linea[CLAVE]:smart_cast(linea[VALOR]) for linea in lista_de_lineas}
-
-    # Si no hay configuracion, uso la configuracion por defecto
-    for clave in CONFIGURACION_DEFAULT:
-        if clave not in constantes.configuracion:
-            constantes.configuracion[clave] = CONFIGURACION_DEFAULT[clave]
-    
-def smart_cast(value):
-    """Joaquin: Infiere el tipo de dato a partir de un string y realiza la conversion correspondiente"""
-    if value.isnumeric():
-        return int(value)
-    
-    if "True" in value or "False" in value:
-        return bool(value)
-    
-    return value
-
 #----------------------------ESCRITURA----------------------------#
 def escribir_archivo(archivo, linea):
     """
@@ -64,7 +54,7 @@ def escribir_archivo(archivo, linea):
     """
     archivo.write(linea)
 
-def registrar_jugadores_en_archivo(jugadores_nuevos):
+def registrar_jugadores_en_archivo():
     """
     Fátima: registro nuevos usuarios al archivo partir de la lista de jugadores nuevos.
     Como anteriormente ya fueron verificados, es seguro escribirlos directo en el archivo
@@ -73,9 +63,9 @@ def registrar_jugadores_en_archivo(jugadores_nuevos):
 
     #la lista del tipo jugadores_nuevos=[ ["juan","perez"] , ["alan","gomez"] ]
 
-    if jugadores_nuevos:
-        for usuario in jugadores_nuevos: 
-            nuevo_usuario =  usuario[USUARIO] + "," + usuario[CONTRASENIA] + "\n"
+    if hay_jugadores_nuevos():
+        for usuario in hay_jugadores_nuevos(): 
+            nuevo_usuario =  usuario[CLAVE] + "," + usuario[VALOR] + "\n"
             escribir_archivo(usuarios, nuevo_usuario)        
 
     usuarios.close()

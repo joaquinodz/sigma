@@ -8,7 +8,6 @@ NOMBRE = 0
 INTENTOS = 1
 ACIERTOS = 2
 
-
 #mensajes al usuario
 INEXISTENTE = "Usuario inexistente. Por favor, registrese"
 INCORRECTO = "Usuario y/o contraseña incorrectos. Ingrese nuevamente."
@@ -28,7 +27,11 @@ MAXIMO_JUGADORES = 3
 USUARIO = 0
 CONTRASENIA = 1
 
-configuracion = {}
+#Constantes de lectura de archivos
+CLAVE = 0
+VALOR = 1
+
+#Constante de Configuracion.
 CONFIGURACION_DEFAULT = {
     "CANTIDAD_FICHAS" : 16,
     "MAXIMO_JUGADORES": 2,
