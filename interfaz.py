@@ -2,11 +2,12 @@ from tkinter import *
 from tkinter import ttk, messagebox
 import os
 import comprobaciones
+import Memotest
+import jugador
 
+from util import mezclar_lista
 from constantes import EXITO, LISTA_JUGADORES_VACIA, YA_REGISTRADO, NOMBRE, INTENTOS, ACIERTOS
-from jugador import agregar_jugador, agregar_jugador_nuevo, hay_jugadores, mezclar_jugadores, obtener_nombres_de_jugadores, obtener_cantidad_de_jugadores, calcula_ganador, obtener_promedio_de_intentos
 from tablero import reiniciar_tablero
-from Memotest import logica_principal
 
 
 #Interfaz inicial y sus funciones.
@@ -71,10 +72,10 @@ def crear_interfaz(configuracion, diccionario_usuarios_contrasenias):
 def comenzar_el_juego(raiz):
     """Rodrigo: se fija si la lista de jugadores esta vacia, si lo esta, da un mensaje de error, caso contrario, mezcla el orden de jugadores
     y destruye la interfaz"""
-    if not hay_jugadores():
+    if not jugador.jugadores:
         mensaje_al_usuario(LISTA_JUGADORES_VACIA)
     else:
-        mezclar_jugadores()
+        mezclar_lista(jugador.jugadores)
         raiz.destroy()
 
 def obtener_jugadores(raiz, nombre, contrasenia, configuracion, diccionario_usuarios_contrasenias):
@@ -85,11 +86,11 @@ def obtener_jugadores(raiz, nombre, contrasenia, configuracion, diccionario_usua
     """
 
     if comprobaciones.usuario_valido(nombre.get(), contrasenia.get(), diccionario_usuarios_contrasenias):
-        agregar_jugador(nombre.get())
+        jugador.agregar_jugador(nombre.get())
         mensaje_al_usuario(EXITO)
         ventana_jugadores()
 
-        if obtener_cantidad_de_jugadores() == configuracion["MAXIMO_JUGADORES"]:
+        if len(jugador.jugadores) == configuracion["MAXIMO_JUGADORES"]:
             mensaje_al_usuario("Se alcanzo el limite de jugadores, el juego iniciara automaticamente")
             raiz.destroy()
 
@@ -115,7 +116,7 @@ def ventana_jugadores():
     mi_frame.config(bg="white")
     mi_frame.pack()
 
-    jugadores_ingresados = "CONECTADOS: \n{}".format(obtener_nombres_de_jugadores())
+    jugadores_ingresados = "CONECTADOS: \n{}".format(jugador.obtener_nombres_de_jugadores())
     
     label_jugadores = Label(mi_frame, text = jugadores_ingresados)
     label_jugadores.config(font=("Courier", 14), bg="white", fg ="green") 
@@ -204,8 +205,8 @@ def registrar_nuevo_usuario(entry_usuario, entry_contrasenia, entry_contrasenia_
     if nombre_usuario not in lista_usuarios:
         
         if comprobaciones.es_valida_contrasenia(contrasenia, contrasenia_repetida) and comprobaciones.es_valido_nombre_usuario(nombre_usuario):
-            agregar_jugador(nombre_usuario)
-            agregar_jugador_nuevo(nombre_usuario, contrasenia)
+            jugador.agregar_jugador(nombre_usuario)
+            jugador.jugadores_nuevos.append([nombre_usuario, contrasenia])
             diccionario_usuarios_contrasenias[nombre_usuario] = contrasenia
             mensaje_al_usuario(EXITO)
             
@@ -229,14 +230,14 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas):
     if os.name != 'posix':
         raiz.iconbitmap("sigma.ico")
 
-    framesNum = 50 # Numero de frames que tiene el gif
+    """framesNum = 50 # Numero de frames que tiene el gif
     archivo = "fuegos-artificiales.gif"
 
     
     frames = [PhotoImage(file=archivo, format='gif -index %i' %(i)) for i in range(framesNum)]
 
     def update(ind):
-        """Actualiza la imagen gif"""
+        Actualiza la imagen gif
         frame = frames[ind]
         ind += 1
         if ind == framesNum:
@@ -246,25 +247,28 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas):
 
     label = Label(raiz)
     label.pack()
-    raiz.after(0, update, 0)
+    raiz.after(0, update, 0)"""
 
+    img= PhotoImage(file='fondo.png')
+    fondo = ttk.Label(raiz, image=img, anchor="center", background="white")
+    fondo.pack(side=TOP, fill=BOTH, padx=10, pady=5)
 
     mi_frame= Frame(raiz, width="560", height="500")
     mi_frame.config(bg="white")
     mi_frame.pack()
 
-    for jugador in calcula_ganador():
+    for usuario in jugador.calcula_ganador():
         if ultima_fila == 0:
-            label_jugador = Label(mi_frame, text=f"El ganador es...\n¡{jugador[NOMBRE]}! con {jugador[ACIERTOS]} puntos y {jugador[INTENTOS]} intentos.")
+            label_jugador = Label(mi_frame, text=f"El ganador es...\n¡{usuario[NOMBRE]}! con {usuario[ACIERTOS]} puntos y {usuario[INTENTOS]} intentos.")
             label_jugador.config(font=("Courier", 14), bg="gold")
             label_jugador.grid(padx=10, pady=10, row=ultima_fila, column=0)
         else:
-            label_jugador = Label(mi_frame, text=f"Seguí mejorando \n¡{jugador[NOMBRE]}! obtuviste {jugador[ACIERTOS]} puntos en {jugador[INTENTOS]} intentos.")
+            label_jugador = Label(mi_frame, text=f"Seguí mejorando \n¡{usuario[NOMBRE]}! obtuviste {usuario[ACIERTOS]} puntos en {usuario[INTENTOS]} intentos.")
             label_jugador.config(font=("Courier", 14), bg="white")
             label_jugador.grid(padx=10, pady=10, row=ultima_fila, column=0)
         ultima_fila += 1
 
-    label_promedio = Label(mi_frame, text=f"Promedio de intentos: {obtener_promedio_de_intentos()} intentos.")
+    label_promedio = Label(mi_frame, text=f"Promedio de intentos: {jugador.obtener_promedio_de_intentos()} intentos.")
     label_promedio.config(font=("Courier", 14), fg="green")
     label_promedio.grid(padx=10, pady=10, row=ultima_fila, column=0)
     ultima_fila += 1
@@ -289,8 +293,7 @@ def jugar_otra_partida(raiz, configuracion, cantidad_de_partidas_jugadas):
     """Rodrigo: esta funcion destruye la raiz y permite seguir jugando"""
     raiz.destroy()
     reiniciar_tablero()
-    logica_principal(configuracion)
-    pantalla_final(configuracion, cantidad_de_partidas_jugadas + 1)
+    Memotest.jugar_memotest(configuracion, cantidad_de_partidas_jugadas + 1)
 
 
 #Funciones generales de interfaz.

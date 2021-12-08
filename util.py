@@ -3,6 +3,7 @@
 """
 import time
 import os
+import random
 
 def mostrar_tiempo_de_juego(inicio):
     """ Sandra: Muestra el  tiempo que ha tomado la partida."""
@@ -30,3 +31,7 @@ def smart_cast(value):
         return bool(value)
     
     return value
+
+def mezclar_lista(lista):
+    """Rodrigo: Mezcla la lista pasada por parametros."""
+    random.shuffle(lista)

@@ -1,5 +1,6 @@
 import random
 from constantes import IMAGEN_FICHA, ESTADO_FICHA, FICHAS_POR_FILA
+from util import mezclar_lista
 
 """
 tablero es una lista cuyos elementos representan cada "casillero" de el tablero
@@ -30,7 +31,7 @@ def inicializar_tablero(configuracion):
         fichas.remove(ficha_random)
         cantidad_de_fichas_inicializadas += 1
     
-    random.shuffle(tablero)
+    mezclar_lista(tablero)
 
 def juego_finalizado():
     """ rodrigo: chequea que todos los valores del tablero sean True, si lo son devuelve True, si no, devuelve False """
@@ -45,7 +46,7 @@ def juego_finalizado():
 
     return estado_tablero
 
-def refresca_tablero():
+def refrescar_tablero():
     """ Felipe: esta funcion se encarga de printear por pantalla el tablero dado por parametro """
     
     tablero_string = "Fichas y Posiciones: \n"
@@ -89,12 +90,12 @@ def pedir_posicion(mensaje):
             print("Has ingresado un número inválido. Intente nuevamente...")
 
     tablero[valor][ESTADO_FICHA] = True
-    refresca_tablero()
+    refrescar_tablero()
 
     return valor
 
 def los_casilleros_son_iguales(primera_posicion, segunda_posicion):
-    """Felipe: Devuelve si dos posiciones del tablero contienen la misma imagen o no."""
+    """Joaquin: Devuelve si dos posiciones del tablero contienen la misma imagen o no."""
     return tablero[primera_posicion][IMAGEN_FICHA] == tablero[segunda_posicion][IMAGEN_FICHA]
 
 def cambiar_de_estado_al_casillero(posicion, estado):
@@ -102,6 +103,6 @@ def cambiar_de_estado_al_casillero(posicion, estado):
     tablero[posicion][ESTADO_FICHA] = estado
 
 def reiniciar_tablero():
-    """Esta funcion reinicia el tablero a su estado original, dejandolo listo para jugar una nueva partida"""
+    """Rodrigo: Esta funcion reinicia el tablero a su estado original, dejandolo listo para jugar una nueva partida"""
     global tablero
     tablero = []

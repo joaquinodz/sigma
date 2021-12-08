@@ -1,7 +1,7 @@
 import interfaz
 
 from constantes import YA_INGRESADO, INCORRECTO, INEXISTENTE, CONTRASENIAS_DISTINTAS, NO_VALIDO_CONTRA, NO_VALIDO_USUARIO, NO_ENCONTRADO
-from jugador import existe_jugador
+from jugador import jugadores
 
 def usuario_valido(usuario, contrasenia, diccionario_usuarios_contrasenias):
     """
@@ -10,7 +10,7 @@ def usuario_valido(usuario, contrasenia, diccionario_usuarios_contrasenias):
     si es valida, devuelve True
     """
     
-    if existe_jugador(usuario):
+    if [usuario, 0, 0] in jugadores:
         interfaz.mensaje_al_usuario(YA_INGRESADO)
         jugador_valido = False
     

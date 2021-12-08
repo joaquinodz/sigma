@@ -1,12 +1,13 @@
 import time
+import interfaz
 
-from tablero import inicializar_tablero, juego_finalizado, refresca_tablero, pedir_posicion
+from tablero import inicializar_tablero, juego_finalizado, refrescar_tablero, pedir_posicion
 from jugador import nombre_jugador_actual, procesar_resultados
 from util import limpiar_consola
 
-def logica_principal(configuracion):
+def jugar_memotest(configuracion, cantidad_de_partidas_jugadas = 1):
     """
-    Esta funcion engloba las funciones principales del programa
+    Rodrigo: Esta funcion engloba las funciones principales del programa
     Hecha por todo el grupo (cada uno implemento su funcion)
     """
 
@@ -16,6 +17,10 @@ def logica_principal(configuracion):
 
         #Loop principal del juego.
         memotest_juego()
+
+        #Interfaz final.
+        #mostrar_tiempo_de_juego(inicio)
+        interfaz.pantalla_final(configuracion, cantidad_de_partidas_jugadas)
             
     except IndexError:
         print("La ventana de registro fue cerrada.\n")
@@ -28,7 +33,7 @@ def memotest_juego():
 
     while not juego_finalizado():
         print(f"Turno de {nombre_jugador_actual()}")
-        refresca_tablero()
+        refrescar_tablero()
 
         # Solicitamos al usuario la 1° posicion, validamos el valor y mostramos la ficha seleccionada
         primera_posicion = pedir_posicion("1° Posición: ")
