@@ -39,7 +39,7 @@ def contrasenia_comprobada(usuario, contrasenia, diccionario_usuarios_contraseni
 
 def es_valida_contrasenia(contrasenia, contrasenia_repetida):
     """ 
-    Fátima: recibe la contraseña como paramétro y hace comprobaciones necesarias
+    Fátima: recibe la contraseña como paramétro y hace comprobaciones necesarias sean de longitud, caracteres válidos o no.
     """
     contrasenia_valida = False
 
@@ -57,7 +57,7 @@ def es_valida_contrasenia(contrasenia, contrasenia_repetida):
 
 def es_valido_nombre_usuario(nombre_usuario):
     """
-    Fátima: recibe el nombre de usuario como paramétro y hace comprobaciones necesarias
+    Fátima: recibe el nombre de usuario como paramétro y hace comprobaciones necesarias sean de longitud, caracteres válidos o no.
     """
     nombre_valido = False
     caracter_permitido = "_"

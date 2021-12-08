@@ -208,6 +208,7 @@ def registrar_nuevo_usuario(entry_usuario, entry_contrasenia, entry_contrasenia_
             agregar_jugador_nuevo(nombre_usuario, contrasenia)
             diccionario_usuarios_contrasenias[nombre_usuario] = contrasenia
             mensaje_al_usuario(EXITO)
+            
         limpiar_entradas_de_texto(entry_usuario, entry_contrasenia, entry_contrasenia_repetida)  
               
     else:
@@ -231,7 +232,7 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas):
     framesNum = 50 # Numero de frames que tiene el gif
     archivo = "fuegos-artificiales.gif"
 
-    # Lista de todas las imagenes del gif
+    
     frames = [PhotoImage(file=archivo, format='gif -index %i' %(i)) for i in range(framesNum)]
 
     def update(ind):
@@ -241,15 +242,12 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas):
         if ind == framesNum:
             ind = 0
         label.configure(image=frame)
-        raiz.after(100, update, ind) # Numero que regula la velocidad del gif
+        raiz.after(100, update, ind)
 
     label = Label(raiz)
     label.pack()
     raiz.after(0, update, 0)
 
-    """img= PhotoImage(file='fondo.png')
-    fondo = ttk.Label(raiz, image=img, anchor="center", background="white")
-    fondo.pack(side=TOP, fill=BOTH, padx=10, pady=5)"""
 
     mi_frame= Frame(raiz, width="560", height="500")
     mi_frame.config(bg="white")
@@ -275,7 +273,7 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas):
     frame_botones.config(bg="white")
     frame_botones.pack()
 
-    boton_terminar = Button(frame_botones, text="Terminar", command= lambda:final_del_juego(raiz))
+    boton_terminar = Button(frame_botones, text="Terminar", command= raiz.destroy)
     boton_terminar.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_terminar.grid(padx=10, pady=10, row=0, column=0)
 
@@ -286,11 +284,6 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas):
 
     raiz.mainloop()
 
-def final_del_juego(raiz):
-    """
-    Fátima: final del juego, cierra ventana y escribe nuevos usuarios en el archivo
-    """
-    raiz.destroy()
 
 def jugar_otra_partida(raiz, configuracion, cantidad_de_partidas_jugadas):
     """Rodrigo: esta funcion destruye la raiz y permite seguir jugando"""

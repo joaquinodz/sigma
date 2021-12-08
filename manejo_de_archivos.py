@@ -61,7 +61,6 @@ def registrar_jugadores_en_archivo():
     """
     usuarios = open("usuarios.csv" ,"a")
 
-    #la lista del tipo jugadores_nuevos=[ ["juan","perez"] , ["alan","gomez"] ]
 
     if hay_jugadores_nuevos():
         for usuario in hay_jugadores_nuevos(): 
