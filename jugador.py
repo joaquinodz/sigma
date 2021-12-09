@@ -3,7 +3,6 @@ from tablero import los_casilleros_son_iguales, cambiar_de_estado_al_casillero
 
 jugadores = []
 jugador_actual = 0
-jugadores_nuevos = []
 
 def procesar_resultados(posiciones):
     """
@@ -40,9 +39,6 @@ def agregar_jugador(nombre_nuevo):
     """Fatima/Rodrigo: agrega un jugador a la lista de jugadores con sus variables inicializadas en 0."""
     jugadores.append([nombre_nuevo,0,0])
 
-def hay_jugadores_nuevos():
-    """Felipe: Indica si la lista de jugadores nuevos esta vacia o no."""
-    return jugadores_nuevos
 
 def obtener_nombres_de_jugadores():
     """

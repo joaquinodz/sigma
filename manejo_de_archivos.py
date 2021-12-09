@@ -1,6 +1,5 @@
 from constantes import CONFIGURACION_DEFAULT, CLAVE, VALOR
 from util import smart_cast
-from jugador import hay_jugadores_nuevos
 
 def cargar_configuracion():
     """Joaquin: Carga la configuración del juego desde un archivo"""
@@ -54,7 +53,7 @@ def escribir_archivo(archivo, linea):
     """
     archivo.write(linea)
 
-def registrar_jugadores_en_archivo():
+def registrar_jugadores_en_archivo(nuevos_jugadores_registrados):
     """
     Fátima: registro nuevos usuarios al archivo partir de la lista de jugadores nuevos.
     Como anteriormente ya fueron verificados, es seguro escribirlos directo en el archivo
@@ -62,8 +61,8 @@ def registrar_jugadores_en_archivo():
     usuarios = open("usuarios.csv" ,"a")
 
 
-    if hay_jugadores_nuevos():
-        for usuario in hay_jugadores_nuevos(): 
+    if nuevos_jugadores_registrados:
+        for usuario in nuevos_jugadores_registrados: 
             nuevo_usuario =  usuario[CLAVE] + "," + usuario[VALOR] + "\n"
             escribir_archivo(usuarios, nuevo_usuario)        
 

@@ -8,7 +8,9 @@ import jugador
 from util import mezclar_lista
 from constantes import EXITO, LISTA_JUGADORES_VACIA, YA_REGISTRADO, NOMBRE, INTENTOS, ACIERTOS
 from tablero import reiniciar_tablero
+from manejo_de_archivos import registrar_jugadores_en_archivo
 
+nuevos_jugadores_registrados = []
 
 #Interfaz inicial y sus funciones.
 def crear_interfaz(configuracion, diccionario_usuarios_contrasenias):
@@ -190,7 +192,7 @@ def ventana_de_registro(diccionario_usuarios_contrasenias):
     boton_jugar.config(width=20, font=("Courier", 14), bg="whitesmoke")
     boton_jugar.place(x= 60, y=430)
 
-    boton_cerrar = Button(raiz_registro, text="Cerrar", command= raiz_registro.destroy)
+    boton_cerrar = Button(raiz_registro, text="Cerrar", command= lambda: registrar_usuarios_en_archivo(raiz_registro))
     boton_cerrar.config(width=20, font=("Courier", 14), bg="whitesmoke")
     boton_cerrar.place(x= 300, y=430) 
 
@@ -210,7 +212,7 @@ def registrar_nuevo_usuario(entry_usuario, entry_contrasenia, entry_contrasenia_
         
         if comprobaciones.es_valida_contrasenia(contrasenia, contrasenia_repetida) and comprobaciones.es_valido_nombre_usuario(nombre_usuario):
             jugador.agregar_jugador(nombre_usuario)
-            jugador.jugadores_nuevos.append([nombre_usuario, contrasenia])
+            nuevos_jugadores_registrados.append([nombre_usuario, contrasenia])
             diccionario_usuarios_contrasenias[nombre_usuario] = contrasenia
             mensaje_al_usuario(EXITO)
             
@@ -219,6 +221,14 @@ def registrar_nuevo_usuario(entry_usuario, entry_contrasenia, entry_contrasenia_
     else:
         mensaje_al_usuario(YA_REGISTRADO)
     
+def registrar_usuarios_en_archivo(raiz_registro):
+    """
+    Fátima: registra nuevos usuarios en archivo y cierra ventana registro
+    """
+    registrar_jugadores_en_archivo(nuevos_jugadores_registrados)
+    
+    raiz_registro.destroy()
+
 
 #Interfaz de pantallas finales.
 def pantalla_final(configuracion, cantidad_de_partidas_jugadas):
