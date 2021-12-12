@@ -65,3 +65,9 @@ def calcula_ganador():
             en caso de empatar segun sus intentos.
     """
     return sorted(jugadores, reverse=True, key=lambda jugador: (jugador[ACIERTOS], -jugador[INTENTOS]))
+
+def reiniciar_puntos_e_intentos():
+    for jugador in range(len(jugadores)):
+        for datos in range(len(jugadores[jugador])):
+            if datos != NOMBRE:
+                jugadores[jugador][datos] = 0
