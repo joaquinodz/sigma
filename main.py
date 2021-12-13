@@ -9,7 +9,6 @@ def main():
     #Interfaz de inicio.
     crear_interfaz(configuracion, convertir_contrasenia_a_diccionario())
 
-    #inicio = time.time()
     jugar_memotest(configuracion)
     
     registrar_jugadores_en_archivo()

@@ -8,6 +8,11 @@ NOMBRE = 0
 INTENTOS = 1
 ACIERTOS = 2
 
+#Constantes del tiempo.
+HORAS = 0
+MINUTOS = 1
+SEGUNDOS = 2
+
 #mensajes al usuario
 INEXISTENTE = "Usuario inexistente. Por favor, registrese"
 INCORRECTO = "Usuario y/o contraseña incorrectos. Ingrese nuevamente."
