@@ -1,5 +1,8 @@
-from constantes import CONFIGURACION_DEFAULT, CLAVE, VALOR
+import jugador
+
+from constantes import CONFIGURACION_DEFAULT, CLAVE, VALOR, NOMBRE, ACIERTOS, INTENTOS
 from util import smart_cast
+from datetime import datetime
 
 def cargar_configuracion():
     """Joaquin: Carga la configuración del juego desde un archivo"""
@@ -67,3 +70,14 @@ def registrar_jugadores_en_archivo(nuevos_jugadores_registrados):
             escribir_archivo(usuarios, nuevo_usuario)        
 
     usuarios.close()
+
+def grabar_datos_de_la_partida():
+    """
+    Felipe: Graba los datos de los jugadores obtenidos por cada partida en el archivo partidas.csv
+    """
+    datos_de_la_partida = open("partidas.csv" ,"a")
+
+    for usuario in jugador.jugadores:
+        escribir_archivo(datos_de_la_partida, datetime.today().strftime("%Y/%m/%d") + "," + datetime.now().strftime("%H:%M:%S") + f",{usuario[NOMBRE]},{usuario[ACIERTOS]},{usuario[INTENTOS]}" + "\n")        
+
+    datos_de_la_partida.close()
