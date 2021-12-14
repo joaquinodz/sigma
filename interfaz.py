@@ -6,7 +6,7 @@ import Memotest
 import jugador
 
 from util import mezclar_lista
-from constantes import EXITO, LISTA_JUGADORES_VACIA, YA_REGISTRADO, NOMBRE, INTENTOS, ACIERTOS
+from constantes import EXITO, LISTA_JUGADORES_VACIA, YA_REGISTRADO, NOMBRE, INTENTOS, ACIERTOS, HORAS, MINUTOS, SEGUNDOS
 from tablero import reiniciar_tablero 
 from manejo_de_archivos import registrar_jugadores_en_archivo, grabar_datos_de_la_partida
 

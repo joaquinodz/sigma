@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.messagebox import showinfo
+from manejo_de_archivos import leer_archivo
 
 def crear_raiz():
     """
@@ -69,21 +70,6 @@ def mostrar_ventana():
 
     # muestro la ventana
     raiz.mainloop()
-
-
-def leer_archivo(archivo):
-    """
-    Rodrigo: lee un archivo linea a linea
-    """
-    linea = archivo.readline()
-    linea = linea.rstrip('\n')
-
-    if linea:
-        linea_procesada = linea.split(',')
-    else:
-        linea_procesada = None
-
-    return linea_procesada
 
 def obtener_partidas(tree):
     """
