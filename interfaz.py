@@ -310,7 +310,6 @@ def jugar_otra_partida(raiz, configuracion, cantidad_de_partidas_jugadas):
     reiniciar_tablero()
     Memotest.jugar_memotest(configuracion, cantidad_de_partidas_jugadas + 1)
 
-
 #Funciones generales de interfaz.
 def mensaje_al_usuario(mensaje):
     """

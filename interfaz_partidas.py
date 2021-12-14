@@ -100,5 +100,3 @@ def obtener_partidas(tree):
         partida = leer_archivo(archivo)
 
     archivo.close()
-
-mostrar_ventana()
