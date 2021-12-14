@@ -231,7 +231,7 @@ def registrar_usuarios_en_archivo(raiz_registro):
 
 
 #Interfaz de pantallas finales.
-def pantalla_final(configuracion, cantidad_de_partidas_jugadas):
+def pantalla_final(configuracion, cantidad_de_partidas_jugadas, tiempo_de_juego):
     """Felipe: Se crea la pantalla final con el resumen del juego."""
     ultima_fila = 0
     raiz = Tk()
@@ -287,6 +287,11 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas):
     label_promedio.grid(padx=10, pady=10, row=ultima_fila, column=0)
     ultima_fila += 1
 
+    label_tiempo_de_partida = Label(mi_frame, text=f"Tiempo de juego, horas: {tiempo_de_juego[HORAS]}  minutos: {tiempo_de_juego[MINUTOS]}  segundos: {tiempo_de_juego[SEGUNDOS]}")
+    label_tiempo_de_partida.config(font=("Courier", 14), fg="green")
+    label_tiempo_de_partida.grid(padx=10, pady=10, row=ultima_fila, column=0)
+    ultima_fila += 1
+
     frame_botones = Frame(raiz, width="560", height="500")
     frame_botones.config(bg="white")
     frame_botones.pack()
@@ -308,6 +313,7 @@ def jugar_otra_partida(raiz, configuracion, cantidad_de_partidas_jugadas):
     raiz.destroy()
     grabar_datos_de_la_partida()
     reiniciar_tablero()
+    jugador.reiniciar_puntos_e_intentos()
     Memotest.jugar_memotest(configuracion, cantidad_de_partidas_jugadas + 1)
 
 #Funciones generales de interfaz.

@@ -5,7 +5,7 @@ import time
 import os
 import random
 
-def mostrar_tiempo_de_juego(inicio):
+def calcular_tiempo_de_juego(inicio):
     """ Sandra: Muestra el  tiempo que ha tomado la partida."""
     fin = time.time()
     tiempo_transcurrido = fin - inicio
@@ -16,7 +16,7 @@ def mostrar_tiempo_de_juego(inicio):
     minutos = round(segundos_a_minutos) % 60
     segundos = round(tiempo_transcurrido % 60)
 
-    print(f"Tiempo de juego = horas: {horas}  minutos: {minutos}  segundos: {segundos}")
+    return (horas, minutos, segundos)
    
 def limpiar_consola():
     """Joaquin: Limpiamos la consola (compatible con Windows, Linix y Mac)"""

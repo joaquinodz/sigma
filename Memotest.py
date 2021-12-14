@@ -3,7 +3,7 @@ import interfaz
 
 from tablero import inicializar_tablero, juego_finalizado, refrescar_tablero, pedir_posicion
 from jugador import nombre_jugador_actual, procesar_resultados
-from util import limpiar_consola
+from util import limpiar_consola, calcular_tiempo_de_juego
 
 def jugar_memotest(configuracion, cantidad_de_partidas_jugadas = 1):
     """
@@ -13,14 +13,14 @@ def jugar_memotest(configuracion, cantidad_de_partidas_jugadas = 1):
 
     try:
         #Inicializa variables.
+        inicio = time.time()
         inicializar_tablero(configuracion)
 
         #Loop principal del juego.
         memotest_juego()
 
         #Interfaz final.
-        #mostrar_tiempo_de_juego(inicio)
-        interfaz.pantalla_final(configuracion, cantidad_de_partidas_jugadas)
+        interfaz.pantalla_final(configuracion, cantidad_de_partidas_jugadas, calcular_tiempo_de_juego(inicio))
             
     except IndexError:
         print("La ventana de registro fue cerrada.\n")

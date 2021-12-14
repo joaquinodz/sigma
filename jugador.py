@@ -65,3 +65,13 @@ def calcula_ganador():
             en caso de empatar segun sus intentos.
     """
     return sorted(jugadores, reverse=True, key=lambda jugador: (jugador[ACIERTOS], -jugador[INTENTOS]))
+
+def reiniciar_puntos_e_intentos():
+    """
+    Rodrigo: itera la lista en busca de los puntos e intentos, al encontrarlos, los reinicia 
+    para jugar otra partida
+    """
+    for jugador in range(len(jugadores)):
+        for datos in range(len(jugadores[jugador])):
+            if datos != NOMBRE:
+                jugadores[jugador][datos] = 0
