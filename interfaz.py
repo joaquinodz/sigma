@@ -7,8 +7,8 @@ import jugador
 
 from util import mezclar_lista
 from constantes import EXITO, LISTA_JUGADORES_VACIA, YA_REGISTRADO, NOMBRE, INTENTOS, ACIERTOS
-from tablero import reiniciar_tablero
-from manejo_de_archivos import registrar_jugadores_en_archivo
+from tablero import reiniciar_tablero 
+from manejo_de_archivos import registrar_jugadores_en_archivo, grabar_datos_de_la_partida
 
 nuevos_jugadores_registrados = []
 
@@ -306,6 +306,7 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas):
 def jugar_otra_partida(raiz, configuracion, cantidad_de_partidas_jugadas):
     """Rodrigo: esta funcion destruye la raiz y permite seguir jugando"""
     raiz.destroy()
+    grabar_datos_de_la_partida()
     reiniciar_tablero()
     Memotest.jugar_memotest(configuracion, cantidad_de_partidas_jugadas + 1)
 
