@@ -26,7 +26,7 @@ def convertir_contrasenia_a_diccionario():
     contrasenias = open("usuarios.csv","r")
     diccionario_contrasenias = {}
     linea = leer_archivo(contrasenias)
-    while linea[CLAVE]:
+    while linea:
         diccionario_contrasenias[linea[CLAVE]] = linea[VALOR]
         linea = leer_archivo(contrasenias)
     contrasenias.close()
@@ -42,7 +42,7 @@ def leer_archivo(archivo):
     if linea:
         linea_procesada = linea.split(',')
     else:
-        linea_procesada = None, None
+        linea_procesada = None
 
     return linea_procesada
 
