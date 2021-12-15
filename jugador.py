@@ -57,7 +57,7 @@ def obtener_promedio_de_intentos():
     for jugador in jugadores:
         total_intentos += jugador[INTENTOS]
 
-    return total_intentos / len(jugadores)
+    return round(total_intentos / len(jugadores), 3)
 
 def calcula_ganador():
     """

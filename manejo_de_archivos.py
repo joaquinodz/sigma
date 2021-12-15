@@ -1,4 +1,5 @@
 import jugador
+import os
 
 from constantes import CONFIGURACION_DEFAULT, CLAVE, VALOR, NOMBRE, ACIERTOS, INTENTOS
 from util import smart_cast
@@ -71,10 +72,14 @@ def registrar_jugadores_en_archivo(nuevos_jugadores_registrados):
 
     usuarios.close()
 
-def grabar_datos_de_la_partida():
+def grabar_datos_de_la_partida(configuracion):
     """
     Felipe: Graba los datos de los jugadores obtenidos por cada partida en el archivo partidas.csv
     """
+
+    if configuracion["REINICIAR_ARCHIVO_PARTIDAS"] and os.path.exists("partidas.csv"):
+        os.remove("partidas.csv")
+
     datos_de_la_partida = open("partidas.csv" ,"a")
 
     for usuario in jugador.jugadores:
