@@ -1,7 +1,7 @@
 import jugador
 import os
 
-from constantes import CONFIGURACION_DEFAULT, CLAVE, VALOR, NOMBRE, ACIERTOS, INTENTOS, PROVIENE_DE_ARCHIVO_CONFIGURACION , PROVIENE_DE_CONSTANTES_ESTABLECIDAS
+from constantes import CONFIGURACION_DEFAULT, CLAVE, CONTRASENIA, USUARIO, VALOR, NOMBRE, ACIERTOS, INTENTOS, PROVIENE_DE_ARCHIVO_CONFIGURACION , PROVIENE_DE_CONSTANTES_ESTABLECIDAS
 from util import castear_valor
 from datetime import datetime
 import interfaz
@@ -39,7 +39,7 @@ def convertir_contrasenia_a_diccionario():
     diccionario_contrasenias = {}
     linea = leer_linea(contrasenias)
     while linea:
-        diccionario_contrasenias[linea[CLAVE]] = linea[VALOR]
+        diccionario_contrasenias[linea[USUARIO]] = linea[CONTRASENIA]
         linea = leer_linea(contrasenias)
     contrasenias.close()
     
