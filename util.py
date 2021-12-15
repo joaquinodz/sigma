@@ -26,16 +26,17 @@ def castear_valor(valor):
     """Joaquin: Infiere el tipo de dato a partir de un string y realiza la conversion correspondiente a su tipo de dato primitivo"""
     valor_convertido = None
 
-    if value.isnumeric():
-        valor_convertido = int(valor)
-    
     """
-    Hago esto asi porque no puedo usar el bool(value) debido a que:
+    Para el casteo a booleano hago esto asi porque:
         bool('False') = True
         bool('True') = True
         bool('') = False
     """
-    if valor.lower() in ['true', 'True']:
+
+    if value.isnumeric():
+        valor_convertido = int(valor)
+    
+    elif valor.lower() in ['true', 'True']:
         valor_convertido = True
     
     elif valor.lower() in ['false', 'False']:
