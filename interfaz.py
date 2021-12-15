@@ -238,32 +238,13 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas, tiempo_de_juego)
     ultima_fila = 0
     raiz = Tk()
     raiz.title("Resultados de la partida.")
-    raiz.geometry("560x500")
+    raiz.geometry(f"600x{360 + (len(jugador.jugadores) * 75)}")
     raiz.config(bg="white")
     #raiz.resizable(False,False)
     
     # NO funciona en Linux
     if os.name != 'posix':
         raiz.iconbitmap("sigma.ico")
-
-    """framesNum = 50 # Numero de frames que tiene el gif
-    archivo = "fuegos-artificiales.gif"
-
-    
-    frames = [PhotoImage(file=archivo, format='gif -index %i' %(i)) for i in range(framesNum)]
-
-    def update(ind):
-        Actualiza la imagen gif
-        frame = frames[ind]
-        ind += 1
-        if ind == framesNum:
-            ind = 0
-        label.configure(image=frame)
-        raiz.after(100, update, ind)
-
-    label = Label(raiz)
-    label.pack()
-    raiz.after(0, update, 0)"""
 
     img= PhotoImage(file='fondo.png')
     fondo = ttk.Label(raiz, image=img, anchor="center", background="white")
@@ -308,7 +289,6 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas, tiempo_de_juego)
         boton_otra_partida.grid(padx=10, pady=10, row=0, column=1)
         
     raiz.mainloop()
-
 
 def jugar_otra_partida(raiz, configuracion, cantidad_de_partidas_jugadas):
     """Rodrigo: esta funcion destruye la raiz y permite seguir jugando"""

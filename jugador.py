@@ -1,6 +1,7 @@
 from constantes import ACIERTOS, INTENTOS, NOMBRE
 from tablero import los_casilleros_son_iguales, cambiar_de_estado_al_casillero
 
+# [ [nombre, intentos, aciertos], [nombre, intentos, aciertos], ... ]
 jugadores = []
 jugador_actual = 0
 
@@ -57,7 +58,7 @@ def obtener_promedio_de_intentos():
     for jugador in jugadores:
         total_intentos += jugador[INTENTOS]
 
-    return total_intentos / len(jugadores)
+    return round(total_intentos / len(jugadores), 3)
 
 def calcula_ganador():
     """

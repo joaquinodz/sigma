@@ -1,7 +1,8 @@
 import jugador
+import os
 
 from constantes import CONFIGURACION_DEFAULT, CLAVE, VALOR, NOMBRE, ACIERTOS, INTENTOS, PROVIENE_DE_ARCHIVO_CONFIGURACION , PROVIENE_DE_CONSTANTES_ESTABLECIDAS
-from util import smart_cast
+from util import castear_valor
 from datetime import datetime
 import interfaz
 
@@ -19,7 +20,7 @@ def cargar_configuracion():
     lista_de_lineas = [linea.rstrip('\n').split(',') for linea in lista_de_lineas]
     
     # {'nombre_del_parametro': valor_del_parametro}
-    configuracion = {linea[CLAVE]:smart_cast(linea[VALOR]) for linea in lista_de_lineas}
+    configuracion = {linea[CLAVE]:castear_valor(linea[VALOR]) for linea in lista_de_lineas}
 
     # Si no hay configuracion, uso la configuracion por defecto
     for clave in CONFIGURACION_DEFAULT:
@@ -79,10 +80,14 @@ def registrar_jugadores_en_archivo(nuevos_jugadores_registrados):
 
     usuarios.close()
 
-def grabar_datos_de_la_partida():
+def grabar_datos_de_la_partida(configuracion):
     """
     Felipe: Graba los datos de los jugadores obtenidos por cada partida en el archivo partidas.csv
     """
+
+    if configuracion["REINICIAR_ARCHIVO_PARTIDAS"] and os.path.exists("partidas.csv"):
+        os.remove("partidas.csv")
+
     datos_de_la_partida = open("partidas.csv" ,"a")
 
     for usuario in jugador.jugadores:

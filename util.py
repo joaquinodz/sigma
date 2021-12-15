@@ -22,15 +22,27 @@ def limpiar_consola():
     """Joaquin: Limpiamos la consola (compatible con Windows, Linix y Mac)"""
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def smart_cast(value):
-    """Joaquin: Infiere el tipo de dato a partir de un string y realiza la conversion correspondiente"""
+def castear_valor(valor):
+    """Joaquin: Infiere el tipo de dato a partir de un string y realiza la conversion correspondiente a su tipo de dato primitivo"""
+    valor_convertido = None
+
+    """
+    Para el casteo a booleano hago esto asi porque:
+        bool('False') = True
+        bool('True') = True
+        bool('') = False
+    """
+
     if value.isnumeric():
-        return int(value)
+        valor_convertido = int(valor)
     
-    if "True" in value or "False" in value:
-        return bool(value)
+    elif valor.lower() in ['true', 'True']:
+        valor_convertido = True
     
-    return value
+    elif valor.lower() in ['false', 'False']:
+        valor_convertido = False
+
+    return valor_convertido
 
 def mezclar_lista(lista):
     """Rodrigo: Mezcla la lista pasada por parametros."""

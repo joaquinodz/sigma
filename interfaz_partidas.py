@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import ttk
 from tkinter.messagebox import showinfo
@@ -11,6 +12,12 @@ def crear_raiz():
     root = tk.Tk()
     root.title('Memotest: Historial de Partidas')
     root.geometry('1080x300')
+    root.config(bg="white")
+    root.resizable(False,False)
+
+    # NO funciona en Linux
+    if os.name != 'posix':
+        root.iconbitmap("sigma.ico")
 
     # configuracion del grid
     root.rowconfigure(0, weight=1)
