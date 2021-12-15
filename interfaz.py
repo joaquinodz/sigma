@@ -319,7 +319,7 @@ def mostrar_orden_de_jugadores():
     """
     raiz = Tk()
     raiz.title("Orden de los jugadores")
-    raiz.geometry("250x250")
+    raiz.geometry("280x250")
     raiz.config(bg="white")
     raiz.resizable(False,False)
     raiz.attributes('-disabled', True)
@@ -342,7 +342,7 @@ def mostrar_orden_de_jugadores():
         raiz.quit()
         raiz.destroy()  
 
-    raiz.after(1800,lambda: cerrar_ventana(raiz))
+    raiz.after(2300,lambda: cerrar_ventana(raiz))
     raiz.mainloop()
 
 def mostrar_configuracion(configuracion, proveniencia_de_configuracion):

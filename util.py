@@ -33,7 +33,7 @@ def castear_valor(valor):
         bool('') = False
     """
 
-    if value.isnumeric():
+    if valor.isnumeric():
         valor_convertido = int(valor)
     
     elif valor.lower() in ['true', 'True']:
