@@ -6,7 +6,7 @@ from manejo_de_archivos import cargar_configuracion, convertir_contrasenia_a_dic
 
 def main():
     configuracion = cargar_configuracion()
-
+    
     #Interfaz de inicio.
     crear_interfaz(configuracion, convertir_contrasenia_a_diccionario())
 

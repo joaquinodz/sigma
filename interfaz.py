@@ -6,9 +6,9 @@ import Memotest
 import jugador
 
 from util import mezclar_lista
-from constantes import EXITO, LISTA_JUGADORES_VACIA, YA_REGISTRADO, NOMBRE, INTENTOS, ACIERTOS, HORAS, MINUTOS, SEGUNDOS
+from constantes import EXITO, LISTA_JUGADORES_VACIA, PROVIENE_DE_ARCHIVO_CONFIGURACION, YA_REGISTRADO, NOMBRE, INTENTOS, ACIERTOS, HORAS, MINUTOS, SEGUNDOS
 from tablero import reiniciar_tablero 
-from manejo_de_archivos import registrar_jugadores_en_archivo, grabar_datos_de_la_partida
+import manejo_de_archivos
 
 nuevos_jugadores_registrados = []
 
@@ -227,7 +227,7 @@ def registrar_usuarios_en_archivo(raiz_registro):
     """
     Fátima: registra nuevos usuarios en archivo y cierra ventana registro
     """
-    registrar_jugadores_en_archivo(nuevos_jugadores_registrados)
+    manejo_de_archivos.registrar_jugadores_en_archivo(nuevos_jugadores_registrados)
     
     raiz_registro.destroy()
 
@@ -313,7 +313,7 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas, tiempo_de_juego)
 def jugar_otra_partida(raiz, configuracion, cantidad_de_partidas_jugadas):
     """Rodrigo: esta funcion destruye la raiz y permite seguir jugando"""
     raiz.destroy()
-    grabar_datos_de_la_partida()
+    manejo_de_archivos.grabar_datos_de_la_partida()
     reiniciar_tablero()
     jugador.reiniciar_puntos_e_intentos()
     Memotest.jugar_memotest(configuracion, cantidad_de_partidas_jugadas + 1)
@@ -352,15 +352,65 @@ def mostrar_orden_de_jugadores():
     mi_frame.config(bg="white")
     mi_frame.pack()
 
-    orden_de_juego = "Orden: \n{}".format(jugador.obtener_nombres_de_jugadores())
+    orden_de_juego = "Orden de los jugadores: \n{}".format(jugador.obtener_nombres_de_jugadores())
     
     label_orden_de_jugadores = Label(mi_frame, text = orden_de_juego)
-    label_orden_de_jugadores.config(font=("Courier", 14), bg="white", fg ="green") 
+    label_orden_de_jugadores.config(font=("Courier", 14), bg="white") 
     label_orden_de_jugadores.pack()
 
     def cerrar_ventana(raiz):
         raiz.quit()
         raiz.destroy()  
 
-    raiz.after(1500,lambda: cerrar_ventana(raiz))
+    raiz.after(1800,lambda: cerrar_ventana(raiz))
+    raiz.mainloop()
+
+def mostrar_configuracion(configuracion, proveniencia_de_configuracion):
+        
+    """
+    Rodrigo: Funcion que indica al usuario cual es la configuracion usada y de donde proviene.
+    """
+    raiz = Tk()
+    raiz.title("Configuracion:")
+    raiz.geometry("800x180")
+    raiz.config(bg="white")
+    raiz.resizable(False,False)
+    
+    
+    # NO funciona en Linux
+    if os.name != 'posix':
+        raiz.iconbitmap("sigma.ico")
+
+    mi_frame= Frame(raiz, width="250", height="300")
+    mi_frame.config(bg="white")
+    mi_frame.pack()
+
+    
+    cantidad_fichas = configuracion["CANTIDAD_FICHAS"]
+    maximo_jugadores = configuracion["MAXIMO_JUGADORES"]
+    maximo_partidas = configuracion["MAXIMO_PARTIDAS"]
+    reinicio_del_archivo_partidas = configuracion["REINICIAR_ARCHIVO_PARTIDAS"]
+    
+    label_configuracion = Label(mi_frame, text =f"""Cantidad de fichas: {cantidad_fichas} 
+    Maxima cantidad de jugadores: {maximo_jugadores}
+    Maxima cantidad de partidas: {maximo_partidas}
+    Reinicio del archivo partidas: {reinicio_del_archivo_partidas} """)    
+    
+
+    label_configuracion.config(font=("Courier", 14), bg="white" ) 
+    label_configuracion.pack()
+
+    if proveniencia_de_configuracion == PROVIENE_DE_ARCHIVO_CONFIGURACION:
+        label_proveniencia = Label(mi_frame, text = "La configuracion fue cargada desde el archivo de configuracion.")
+    else:
+        label_proveniencia = Label(mi_frame, text = "La configuracion fue cargada con los ajustes por defecto.")
+
+    label_proveniencia.config(font=("Courier", 14), bg="white") 
+    label_proveniencia.pack()
+
+
+    boton_cerrar_ventana = Button(raiz, text="Cerrar", command= lambda:raiz.destroy())
+    boton_cerrar_ventana.config(width=22, font=("Courier", 14), bg="whitesmoke")
+    boton_cerrar_ventana.pack()        
+
     raiz.mainloop()

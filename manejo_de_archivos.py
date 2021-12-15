@@ -1,11 +1,15 @@
 import jugador
 
-from constantes import CONFIGURACION_DEFAULT, CLAVE, VALOR, NOMBRE, ACIERTOS, INTENTOS
+from constantes import CONFIGURACION_DEFAULT, CLAVE, VALOR, NOMBRE, ACIERTOS, INTENTOS, PROVIENE_DE_ARCHIVO_CONFIGURACION , PROVIENE_DE_CONSTANTES_ESTABLECIDAS
 from util import smart_cast
 from datetime import datetime
+import interfaz
+
 
 def cargar_configuracion():
     """Joaquin: Carga la configuración del juego desde un archivo"""
+
+    proveniencia_de_configuracion = PROVIENE_DE_ARCHIVO_CONFIGURACION
 
     with open("configuracion.csv", 'r') as archivo_configuracion:
         lista_de_lineas = archivo_configuracion.readlines()
@@ -21,8 +25,12 @@ def cargar_configuracion():
     for clave in CONFIGURACION_DEFAULT:
         if clave not in configuracion:
             configuracion[clave] = CONFIGURACION_DEFAULT[clave]
+            proveniencia_de_configuracion = PROVIENE_DE_CONSTANTES_ESTABLECIDAS
+    
+    interfaz.mostrar_configuracion(configuracion , proveniencia_de_configuracion)
     
     return configuracion
+    
 
 def convertir_contrasenia_a_diccionario():
     """Rodrigo: convierte el archivo de contrasenias a un diccionario"""
