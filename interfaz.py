@@ -381,10 +381,11 @@ def mostrar_configuracion(configuracion, proveniencia_de_configuracion):
     label_configuracion.pack()
 
     if proveniencia_de_configuracion == PROVIENE_DE_ARCHIVO_CONFIGURACION:
-        label_proveniencia = Label(mi_frame, text = "La configuracion fue cargada desde el archivo de configuracion.")
+        mensaje_proveniencia = "La configuracion fue cargada desde el archivo de configuracion."
     else:
-        label_proveniencia = Label(mi_frame, text = "La configuracion fue cargada con los ajustes por defecto.")
+        mensaje_proveniencia = "La configuracion fue cargada con los ajustes por defecto."
 
+    label_proveniencia = Label(mi_frame, text = mensaje_proveniencia)
     label_proveniencia.config(font=("Courier", 14), bg="white") 
     label_proveniencia.pack()
 
