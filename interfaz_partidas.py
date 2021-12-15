@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.messagebox import showinfo
-from manejo_de_archivos import leer_archivo
+from manejo_de_archivos import leer_linea
 
 def crear_raiz():
     """
@@ -76,13 +76,13 @@ def obtener_partidas(tree):
     Joaquin: obtiene las partidas registradas en la base de datos y las agrega al TreeView
     """
     archivo = open('partidas.csv', 'r')
-    partida = leer_archivo(archivo)
+    partida = leer_linea(archivo)
 
     while partida:
         # agregamos los datos de la linea a la lista
         tree.insert('', tk.END, values=partida)
 
         # leo la siguiente linea
-        partida = leer_archivo(archivo)
+        partida = leer_linea(archivo)
 
     archivo.close()

@@ -73,11 +73,12 @@ def crear_interfaz(configuracion, diccionario_usuarios_contrasenias):
 
 def comenzar_el_juego(raiz):
     """Rodrigo: se fija si la lista de jugadores esta vacia, si lo esta, da un mensaje de error, caso contrario, mezcla el orden de jugadores
-    y destruye la interfaz"""
+    y cierra la interfaz"""
     if not jugador.jugadores:
         mensaje_al_usuario(LISTA_JUGADORES_VACIA)
     else:
         mezclar_lista(jugador.jugadores)
+        mostrar_orden_de_jugadores()
         raiz.destroy()
 
 def obtener_jugadores(raiz, nombre, contrasenia, configuracion, diccionario_usuarios_contrasenias):
@@ -91,12 +92,13 @@ def obtener_jugadores(raiz, nombre, contrasenia, configuracion, diccionario_usua
         jugador.agregar_jugador(nombre.get())
         mensaje_al_usuario(EXITO)
         ventana_jugadores()
+        limpiar_entradas_de_texto(nombre,contrasenia)
 
         if len(jugador.jugadores) == configuracion["MAXIMO_JUGADORES"]:
             mensaje_al_usuario("Se alcanzo el limite de jugadores, el juego iniciara automaticamente")
-            raiz.destroy()
+            comenzar_el_juego(raiz)
 
-    limpiar_entradas_de_texto(nombre,contrasenia)
+    
 
 #Mensaje jugadores lo cambio a una ventana nueva tipo splash
 def ventana_jugadores():
@@ -120,9 +122,9 @@ def ventana_jugadores():
 
     jugadores_ingresados = "CONECTADOS: \n{}".format(jugador.obtener_nombres_de_jugadores())
     
-    label_jugadores = Label(mi_frame, text = jugadores_ingresados)
-    label_jugadores.config(font=("Courier", 14), bg="white", fg ="green") 
-    label_jugadores.pack()
+    label_orden_de_jugadores = Label(mi_frame, text = jugadores_ingresados)
+    label_orden_de_jugadores.config(font=("Courier", 14), bg="white", fg ="green") 
+    label_orden_de_jugadores.pack()
 
     def cerrar_ventana(raiz):
         raiz.quit()
@@ -238,7 +240,7 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas, tiempo_de_juego)
     raiz.title("Resultados de la partida.")
     raiz.geometry("560x500")
     raiz.config(bg="white")
-    raiz.resizable(False,False)
+    #raiz.resizable(False,False)
     
     # NO funciona en Linux
     if os.name != 'posix':
@@ -299,12 +301,12 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas, tiempo_de_juego)
     boton_terminar = Button(frame_botones, text="Terminar", command= raiz.destroy)
     boton_terminar.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_terminar.grid(padx=10, pady=10, row=0, column=0)
-
+    
     if cantidad_de_partidas_jugadas < configuracion["MAXIMO_PARTIDAS"]:
         boton_otra_partida = Button(frame_botones, text="Continuar", command= lambda:jugar_otra_partida(raiz, configuracion, cantidad_de_partidas_jugadas))
         boton_otra_partida.config(width=22, font=("Courier", 14), bg="whitesmoke")
         boton_otra_partida.grid(padx=10, pady=10, row=0, column=1)
-
+        
     raiz.mainloop()
 
 
@@ -329,3 +331,36 @@ def limpiar_entradas_de_texto(*entrys_a_limpiar):
     """
     for entry in entrys_a_limpiar:
         entry.delete(0, 'end')
+
+def mostrar_orden_de_jugadores():
+    
+    """
+    Rodrigo: la funcion indica el orden de jugadores.
+    """
+    raiz = Tk()
+    raiz.title("Orden de los jugadores")
+    raiz.geometry("250x250")
+    raiz.config(bg="white")
+    raiz.resizable(False,False)
+    raiz.attributes('-disabled', True)
+    
+    # NO funciona en Linux
+    if os.name != 'posix':
+        raiz.iconbitmap("sigma.ico")
+
+    mi_frame= Frame(raiz, width="250", height="300")
+    mi_frame.config(bg="white")
+    mi_frame.pack()
+
+    orden_de_juego = "Orden: \n{}".format(jugador.obtener_nombres_de_jugadores())
+    
+    label_orden_de_jugadores = Label(mi_frame, text = orden_de_juego)
+    label_orden_de_jugadores.config(font=("Courier", 14), bg="white", fg ="green") 
+    label_orden_de_jugadores.pack()
+
+    def cerrar_ventana(raiz):
+        raiz.quit()
+        raiz.destroy()  
+
+    raiz.after(1500,lambda: cerrar_ventana(raiz))
+    raiz.mainloop()
