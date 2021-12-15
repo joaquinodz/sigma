@@ -4,11 +4,12 @@ import os
 import comprobaciones
 import Memotest
 import jugador
+import manejo_de_archivos
 
 from util import mezclar_lista
 from constantes import EXITO, LISTA_JUGADORES_VACIA, PROVIENE_DE_ARCHIVO_CONFIGURACION, YA_REGISTRADO, NOMBRE, INTENTOS, ACIERTOS, HORAS, MINUTOS, SEGUNDOS
 from tablero import reiniciar_tablero 
-import manejo_de_archivos
+
 
 nuevos_jugadores_registrados = []
 

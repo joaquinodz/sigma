@@ -1,10 +1,11 @@
 import jugador
 import os
+import interfaz
 
 from constantes import CONFIGURACION_DEFAULT, CLAVE, CONTRASENIA, USUARIO, VALOR, NOMBRE, ACIERTOS, INTENTOS, PROVIENE_DE_ARCHIVO_CONFIGURACION , PROVIENE_DE_CONSTANTES_ESTABLECIDAS
 from util import castear_valor
 from datetime import datetime
-import interfaz
+
 
 
 def cargar_configuracion():

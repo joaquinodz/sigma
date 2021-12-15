@@ -1,4 +1,5 @@
 import random
+
 from constantes import IMAGEN_FICHA, ESTADO_FICHA, FICHAS_POR_FILA
 from util import mezclar_lista
 
