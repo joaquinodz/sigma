@@ -2,7 +2,7 @@ import jugador
 import os
 
 from constantes import CONFIGURACION_DEFAULT, CLAVE, VALOR, NOMBRE, ACIERTOS, INTENTOS
-from util import smart_cast
+from util import castear_valor
 from datetime import datetime
 
 def cargar_configuracion():
@@ -16,7 +16,7 @@ def cargar_configuracion():
     lista_de_lineas = [linea.rstrip('\n').split(',') for linea in lista_de_lineas]
     
     # {'nombre_del_parametro': valor_del_parametro}
-    configuracion = {linea[CLAVE]:smart_cast(linea[VALOR]) for linea in lista_de_lineas}
+    configuracion = {linea[CLAVE]:castear_valor(linea[VALOR]) for linea in lista_de_lineas}
 
     # Si no hay configuracion, uso la configuracion por defecto
     for clave in CONFIGURACION_DEFAULT:

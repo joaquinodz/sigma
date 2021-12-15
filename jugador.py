@@ -1,6 +1,7 @@
 from constantes import ACIERTOS, INTENTOS, NOMBRE
 from tablero import los_casilleros_son_iguales, cambiar_de_estado_al_casillero
 
+# [ [nombre, intentos, aciertos], [nombre, intentos, aciertos], ... ]
 jugadores = []
 jugador_actual = 0
 
