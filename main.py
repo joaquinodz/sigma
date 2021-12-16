@@ -12,7 +12,6 @@ def main():
 
     jugar_memotest(configuracion)
     
-    grabar_datos_de_la_partida(configuracion)
 
     interfaz_partidas.mostrar_ventana()
 

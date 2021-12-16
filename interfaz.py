@@ -281,7 +281,7 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas, tiempo_de_juego)
     frame_botones.config(bg="white")
     frame_botones.pack()
 
-    boton_terminar = Button(frame_botones, text="Terminar", command= raiz.destroy)
+    boton_terminar = Button(frame_botones, text="Terminar", command= lambda:[raiz.destroy(),manejo_de_archivos.grabar_datos_de_la_partida(configuracion)])
     boton_terminar.config(width=22, font=("Courier", 14), bg="whitesmoke")
     boton_terminar.grid(padx=10, pady=10, row=0, column=0)
     
@@ -295,7 +295,7 @@ def pantalla_final(configuracion, cantidad_de_partidas_jugadas, tiempo_de_juego)
 def jugar_otra_partida(raiz, configuracion, cantidad_de_partidas_jugadas):
     """Rodrigo: esta funcion destruye la raiz y permite seguir jugando"""
     raiz.destroy()
-    manejo_de_archivos.grabar_datos_de_la_partida()
+    manejo_de_archivos.grabar_datos_de_la_partida(configuracion)
     reiniciar_tablero()
     jugador.reiniciar_puntos_e_intentos()
     Memotest.jugar_memotest(configuracion, cantidad_de_partidas_jugadas + 1)
