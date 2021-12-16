@@ -58,7 +58,7 @@ def crear_interfaz(configuracion, diccionario_usuarios_contrasenias):
     label_contrasenia.config(font=("Courier", 14), bg="white")
     label_contrasenia.grid(padx=10, pady=10, row=2, column=0)
 
-    entry_contrasenia = Entry(mi_frame)
+    entry_contrasenia = Entry(mi_frame , show = '*')
     entry_contrasenia.config(bg="black", width=35, insertbackground="blue", fg="white",font=10)
     entry_contrasenia.grid(padx=10, pady=10, row=2, column=1, ipady=8)
 
