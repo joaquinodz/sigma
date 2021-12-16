@@ -8,7 +8,7 @@ from util import limpiar_consola, calcular_tiempo_de_juego
 def jugar_memotest(configuracion, cantidad_de_partidas_jugadas = 1):
     """
     Rodrigo: Esta funcion engloba las funciones principales del programa
-    Hecha por todo el grupo (cada uno implemento su funcion)
+    al estar englobada de esta manera permite recursividad indirecta.
     """
 
     try:

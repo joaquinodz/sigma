@@ -73,7 +73,8 @@ def crear_interfaz(configuracion, diccionario_usuarios_contrasenias):
     raiz.mainloop()
 
 def comenzar_el_juego(raiz):
-    """Rodrigo: se fija si la lista de jugadores esta vacia, si lo esta, da un mensaje de error, caso contrario, mezcla el orden de jugadores
+    """Rodrigo: se fija si la lista de jugadores esta vacia, si lo esta, da un mensaje de error,
+    caso contrario, mezcla el orden de jugadores
     y cierra la interfaz"""
     if not jugador.jugadores:
         mensaje_al_usuario(LISTA_JUGADORES_VACIA)
