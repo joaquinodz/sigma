@@ -91,7 +91,7 @@ def grabar_datos_de_la_partida(configuracion):
 
     datos_de_la_partida = open("partidas.csv" ,"a")
 
-    for usuario in jugador.jugadores:
+    for usuario in jugador.calcula_ganador():
         escribir_archivo(datos_de_la_partida, datetime.today().strftime("%Y/%m/%d") + "," + datetime.now().strftime("%H:%M:%S") + f",{usuario[NOMBRE]},{usuario[ACIERTOS]},{usuario[INTENTOS]}" + "\n")        
 
     datos_de_la_partida.close()
